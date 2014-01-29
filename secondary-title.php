@@ -1,16 +1,5 @@
 <?php
 	/**
-	 * Plugin Name: Secondary Title
-	 * Plugin URI: http://www.koljanolte.com/wordpress/plugins/secondary-title/
-	 * Description: Adds an alternative title to posts or certain custom post types, making it look more like a news magazine.
-	 * Version: 1.0
-	 * Author: Kolja Nolte
-	 * Author URI: http://www.koljanolte.com
-	 * License: GPLv2 or later
-	 * Last updated: January 28th, 2014
-	 */
-
-	/**
 	 * Stop script when the file is called directly.
 	 */
 	if(!function_exists("add_action")) {
@@ -18,7 +7,7 @@
 	}
 
 	/**
-	 * Load the text domain for localization.
+	 * Load the text domain for localization. blabla
 	 */
 	function init_languages() {
 		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/languages/");
