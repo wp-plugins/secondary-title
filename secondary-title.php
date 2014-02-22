@@ -3,13 +3,19 @@
 	/**
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
-	 * Description:  Adds a secondary title to posts, pages and custom post types
+	 * Description:  Adds a secondary title to posts, pages and custom post types.
 	 * Version:      0.2
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
+	 * License URI:  http://www.gnu.org/licenses/gpl-2.0.html
 	 */
-	
+
+	/**
+	 * To do:
+	 * - Translation to Thai
+	 */
+
 	/**
 	 * Stop script when the file is called directly.
 	 */
@@ -18,7 +24,28 @@
 	}
 
 	/**
-	 * Load the text domain for localization. blabla
+	 * Sets the default settings when plugin is activated.
+	 */
+	function init_default_settings() {
+		/** Setting up default settings and values */
+		$default_settings = array(
+			"secondary_title_post_types"   => array(),
+			"secondary_title_categories"   => array(),
+			"secondary_title_post_ids"     => array(),
+			"secondary_title_auto_show"    => "on",
+			"secondary_title_title_format" => "%secondary_title%: %title%",
+		);
+		/** Uses update_option() to create the default options  */
+		foreach($default_settings as $setting => $value) {
+			add_option($setting, $value);
+		}
+	}
+
+	register_activation_hook(__FILE__, "init_default_settings");
+
+
+	/**
+	 * Loads the text domain for localization.
 	 */
 	function init_languages() {
 		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/languages/");
@@ -26,7 +53,7 @@
 
 	add_action("init", "init_languages");
 	/**
-	 * Get selected post IDs.
+	 * Gets selected post IDs.
 	 *
 	 * @return array|mixed|void Post IDs
 	 */
@@ -39,7 +66,7 @@
 	}
 
 	/**
-	 * Get selected post types.
+	 * Gets selected post types.
 	 *
 	 * @return array|mixed|void Post types
 	 */
@@ -52,7 +79,7 @@
 	}
 
 	/**
-	 * Get selected categories.
+	 * Gets selected categories.
 	 *
 	 * @return array|mixed|void Selected categories
 	 */
@@ -67,12 +94,14 @@
 	/**
 	 * Get the secondary title from post ID $post_id
 	 *
-	 * @param int $post_id ID of target post
+	 * @param int    $post_id ID of target post
+	 *
+	 * @param string $suffix  To be added after the secondary title
+	 * @param string $prefix  To be added in front of the secondary title
 	 *
 	 * @return mixed The secondary title
-	 *
 	 */
-	function get_secondary_title($post_id = 0) {
+	function get_secondary_title($post_id = 0, $suffix = "", $prefix = "") {
 		/** If $post_id not set, use current post ID */
 		if(!$post_id) {
 			$post_id = get_the_ID();
@@ -82,7 +111,8 @@
 			return false;
 		}
 		/** Return the secondary title */
-		return get_post_meta($post_id, "_secondary_title", true);
+		$secondary_title = $prefix . get_post_meta($post_id, "_secondary_title", true) . $suffix;
+		return $secondary_title;
 	}
 
 	/**
@@ -90,9 +120,10 @@
 	 *
 	 * @param int    $post_id ID of target post
 	 * @param string $suffix  To be added after the secondary title
+	 * @param string $prefix To be added in front of the secondary title
 	 */
-	function the_secondary_title($post_id = 0, $suffix = "") {
-		echo get_secondary_title($post_id) . $suffix;
+	function the_secondary_title($post_id = 0, $suffix = "", $prefix = "") {
+		echo get_secondary_title($post_id, $suffix, $prefix);
 	}
 
 	/**
@@ -105,7 +136,7 @@
 		$post_types = get_post_types();
 		$output     = array();
 		foreach($post_types as $post_type) {
-			/** Filters out useless post types  */
+			/** Filters out "useless" post types  */
 			if($post_type != "attachment" && $post_type != "revision" && $post_type != "nav_menu_item") {
 				/** Saves the remaining post types in $output */
 				array_push($output, $post_type);
@@ -355,14 +386,17 @@
 						<td>
 							<fieldset>
 								<?php
+									/** Get filtered post types and set up variables */
 									$filtered_post_types = get_filtered_post_types();
 									$post_types = get_secondary_title_post_types();
 									$checked = "";
 									$counter = 0;
 									foreach($filtered_post_types as $post_type) {
+										/** Checks whether the displayed post type is set */
 										$post_type = get_post_type_object($post_type);
 										if(is_array($post_types)) {
 											if(in_array($post_type->name, $post_types)) {
+												/** Add HTML checked attribute */
 												$checked = " checked";
 											}
 										}
@@ -387,11 +421,12 @@
 								<?php
 									/** Show also empty categories */
 									$categories = get_terms("category", array(
-											"hide_empty" => false
+										"hide_empty" => false
 									));
 									$counter = 0;
 									$categories_counter = count($categories);
 									foreach($categories as $category) {
+										/** Checks selected categories */
 										$checked             = "";
 										$selected_categories = get_option("secondary_title_categories");
 										if(is_array($selected_categories) && in_array($category->slug, $selected_categories)) {
