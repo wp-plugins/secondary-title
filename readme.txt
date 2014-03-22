@@ -19,7 +19,9 @@ The plugin comes with an extra settings page which allows you to customize the p
 *	specific post IDs for which the secondary title should be activated,
 *	whether the secondary title should be automatically inserted with the standard title and
 *	the format both titles are being shown (only works when "auto show" is activated).
+*	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface.
 
+**Please see www.koljanolte.com/wordpress/plugins/secondary-title/ for additional information.**
 
 == Installation ==
 
@@ -117,16 +119,25 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 
 == Changelog ==
 
+= 0.3 =
+* Added HTML support in title format (thanks to C0BALT).
+* Added option to set the position of the secondary title input field within the admin interface (thanks to Vangelis).
+* Added translation to Thai.
+* Updated translation files.
+
 = 0.2 =
-* Installs default values on first plugin activation.
+* Installs default values on plugin activation.
 * Added screenshots.
-* Added $prefix parameter.
+* Added $prefix parameter for get_secondary_title() and the_secondary_title().
 * Updated FAQ.
 
 = 0.1 =
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.3 =
+HTML support and new features.
 
 = 0.2 =
 Major changes, screenshots, FAQ, parameters.

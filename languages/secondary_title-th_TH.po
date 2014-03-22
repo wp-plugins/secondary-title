@@ -1,0 +1,124 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Secondary Title\n"
+"POT-Creation-Date: 2014-03-02 21:57+0700\n"
+"PO-Revision-Date: 2014-03-03 22:23+0700\n"
+"Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
+"Language-Team: thaikolja <kolja.nolte@gmail.com>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: C:\\Users\\Kolja\\Websites\\www\\wptest\\wp-content"
+"\\plugins\\secondary-title\n"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:249
+msgid "Secondary Title settings"
+msgstr "การตั้งค่าSecondary Title"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:287
+msgid "Settings saved."
+msgstr "บันทึกข้อมูล"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:294
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:294
+msgid "Secondary Title"
+msgstr "Secondary Title"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:334
+msgid "I love this plugin"
+msgstr "ผมรักพลักอินนี้"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:335
+msgid "Important news"
+msgstr "ข่าวสด"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:356
+msgid "Preview"
+msgstr "พรีวิว"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:384
+msgid "Post types"
+msgstr "ชนิดโพสท์"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:412
+msgid ""
+"Post types for which secondary titles should be activated.<br /> Select none "
+"to use all available post types."
+msgstr "ชนิดโพสท์ต่างๆ ที่ใช้สำหรับชื่อเรื่องสำรองควรเลือกให้เหมาะสม"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:417
+msgid "Categories"
+msgstr "หมวดหมู่"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:449
+msgid "Show all categories"
+msgstr "แสดงทุกประเภท"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:452
+msgid ""
+"Categories for which secondary titles should be activated.<br /> Select none "
+"to use all available categories."
+msgstr "หมวดหมู่ต่างๆ ที่ใช้สำหรับชื่อเรื่องสำรองควรเลือกให้เหมาะสม"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:458
+msgid "Post IDs"
+msgstr "เบอร์โพสท์"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:461
+msgid "E.g.: 4, 28, 104"
+msgstr "เช่น 4, 28, 104"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:464
+msgid "Only use secondary title for specific posts. Separate IDs with commas."
+msgstr "ใช้เฉพาะชื่อเรื่องที่สำรองเจาะจงในการโพสต์ แยกเบอร์โพสต์กับเครื่องหมายคอมม่า"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:469
+msgid "Insert automatically"
+msgstr "เข้าโดยอัตโนมัติ"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:476
+msgid "Yes"
+msgstr "ใช่"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:481
+msgid "No"
+msgstr "ไม่"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:483
+msgid ""
+"To manually insert the secondary title in your theme, use <code>&lt;?php "
+"get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php "
+"the_secondary_title(); ?&gt;</code>. See readme.txt for additional "
+"parameters."
+msgstr ""
+"โดยการพิมพ์ชื่อเรื่องสำรองในเวบไซด์ ใช้ <code>&lt;?php get_secondary_title(); ?&gt;</"
+"code><br /> หรือ <code>&lt;?php the_secondary_title(); ?&gt;</code> "
+"ดูข้อมูลเพิ่มเติมได้ที่readme.txt"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:489
+msgid "Title format"
+msgstr "การตั้งค่าชื่อเรื่อง"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:492
+msgid "E.g.: %secondary_title%: %title%"
+msgstr "เช่น %secondary_title%: %title%"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:494
+msgid ""
+"Use <code>%title%</code> for the main title and <code>%secondary_title%</"
+"code> for the secondary title."
+msgstr ""
+"พิมพ์ <code>%title%</code> เพื่อแสดงชื่อเรื่องหลักและ <code>%secondary_title%</code> "
+"เพื่อแสดงชื่อเรื่องสำรอง"
+
+#: C:\Users\Kolja\Websites\www\wptest\wp-content\plugins\secondary-title/secondary-title.php:503
+msgid "Save Changes"
+msgstr "บันทึกเปลี่ยนแปลง"

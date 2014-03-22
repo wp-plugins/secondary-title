@@ -4,16 +4,11 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      0.2
+	 * Version:      0.3
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
 	 * License URI:  http://www.gnu.org/licenses/gpl-2.0.html
-	 */
-
-	/**
-	 * To do:
-	 * - Translation to Thai
 	 */
 
 	/**
@@ -24,19 +19,39 @@
 	}
 
 	/**
+	 * @param string $setting
+	 *
+	 * @return array
+	 */
+	function get_secondary_title_default_settings($setting = "") {
+		/** Setting up default settings and values */
+		$default_settings = array(
+			"secondary_title_post_types"           => array(),
+			"secondary_title_categories"           => array(),
+			"secondary_title_post_ids"             => array(),
+			"secondary_title_auto_show"            => "on",
+			"secondary_title_title_format"         => "%secondary_title%: %title%",
+			"secondary_title_title_input_position" => "above",
+		);
+		/** Check if parameter is set */
+		if(!empty($setting)) {
+			/** Check if set setting exists */
+			if(isset($default_settings[$setting])) {
+				$default_settings = $default_settings[$setting];
+			}
+			else {
+				$default_settings = false;
+			}
+		}
+		return $default_settings;
+	}
+
+	/**
 	 * Sets the default settings when plugin is activated.
 	 */
 	function init_default_settings() {
-		/** Setting up default settings and values */
-		$default_settings = array(
-			"secondary_title_post_types"   => array(),
-			"secondary_title_categories"   => array(),
-			"secondary_title_post_ids"     => array(),
-			"secondary_title_auto_show"    => "on",
-			"secondary_title_title_format" => "%secondary_title%: %title%",
-		);
 		/** Uses update_option() to create the default options  */
-		foreach($default_settings as $setting => $value) {
+		foreach(get_secondary_title_default_settings() as $setting => $value) {
 			add_option($setting, $value);
 		}
 	}
@@ -58,9 +73,11 @@
 	 * @return array|mixed|void Post IDs
 	 */
 	function get_secondary_title_post_ids() {
-		$post_ids = get_option("secondary_title_post_ids");
+		$id       = "secondary_title_post_ids";
+		$post_ids = get_option($id);
+		/** If not set, use default value */
 		if(!is_array($post_ids)) {
-			$post_ids = array();
+			$post_ids = get_secondary_title_default_settings($id);
 		}
 		return $post_ids;
 	}
@@ -71,9 +88,11 @@
 	 * @return array|mixed|void Post types
 	 */
 	function get_secondary_title_post_types() {
-		$post_types = get_option("secondary_title_post_types");
+		$id         = "secondary_title_post_types";
+		$post_types = get_option($id);
+		/** If not set, use default value */
 		if(!is_array($post_types)) {
-			$post_types = array();
+			$post_types = get_secondary_title_default_settings($id);
 		}
 		return $post_types;
 	}
@@ -84,9 +103,11 @@
 	 * @return array|mixed|void Selected categories
 	 */
 	function get_secondary_title_post_categories() {
-		$post_categories = get_option("secondary_title_categories");
+		$id              = "secondary_title_categories";
+		$post_categories = get_option($id);
+		/** If not set, use default value */
 		if(!is_array($post_categories)) {
-			$post_categories = array();
+			$post_categories = get_secondary_title_default_settings($id);
 		}
 		return $post_categories;
 	}
@@ -120,14 +141,31 @@
 	 *
 	 * @param int    $post_id ID of target post
 	 * @param string $suffix  To be added after the secondary title
-	 * @param string $prefix To be added in front of the secondary title
+	 * @param string $prefix  To be added in front of the secondary title
 	 */
 	function the_secondary_title($post_id = 0, $suffix = "", $prefix = "") {
 		echo get_secondary_title($post_id, $suffix, $prefix);
 	}
 
 	/**
-	 * Return all available post types except pages, attachments, revision ans nav_menu_items.
+	 * Returns whether the title should be displayed
+	 * "above" or "below" the standard title within the
+	 * admin area.
+	 *
+	 * @return mixed|void
+	 */
+	function get_secondary_title_title_input_position() {
+		$id       = "secondary_title_title_input_position";
+		$position = get_option($id);
+		if(empty($position)) {
+			$position = get_secondary_title_default_settings($id);
+		}
+		return $position;
+	}
+
+	/**
+	 * Return all available post types except pages, attachments,
+	 * revision ans nav_menu_items.
 	 *
 	 * @return array
 	 */
@@ -153,6 +191,9 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
+		if(is_admin()) {
+			return $title;
+		}
 		global $post;
 		$post_category = get_the_category();
 		$post_category = $post_category[0]->slug;
@@ -166,7 +207,7 @@
 			}
 			else {
 				/** Apply title format */
-				$format = get_option("secondary_title_title_format");
+				$format = stripslashes(str_replace('"', "'", get_option("secondary_title_title_format")));
 				$title  = str_replace("%title%", $title, $format);
 				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
 			}
@@ -175,16 +216,6 @@
 	}
 
 	add_filter("the_title", "secondary_title_auto_show", 10, 2);
-
-	/**
-	 * Register and load the plugin's stylesheet.
-	 */
-	function admin_load_css() {
-		wp_register_style("secondary-title", plugin_dir_url(__FILE__) . "style.css", array());
-		wp_enqueue_style("secondary-title");
-	}
-
-	add_action("admin_enqueue_scripts", "admin_load_css");
 
 	/**
 	 * Initialize secondary title within the admin interface.
@@ -208,10 +239,6 @@
 		/** Insert text input on edit post page via jQuery */
 		?>
 		<style type="text/css">
-			#secondary-title-input {
-				margin-bottom: 5px;
-			}
-
 			#secondary-title-text {
 				width:  100%;
 				height: 30px;
@@ -219,7 +246,14 @@
 		</style>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
-				jQuery("#secondary-title-input").insertBefore("#title").removeAttr("hidden");
+				var selector_title_input = jQuery("#secondary-title-input");
+				var title_input_position = "<?php echo get_secondary_title_title_input_position(); ?>";
+				if(title_input_position == "above") {
+					selector_title_input.insertBefore("#title").css("margin-bottom", "5px").removeAttr("hidden");
+				}
+				if(title_input_position == "below") {
+					selector_title_input.insertAfter("#title").css("margin-top", "5px").removeAttr("hidden");
+				}
 			});
 		</script>
 		<div id="secondary-title-input" hidden="hidden">
@@ -236,7 +270,7 @@
 	 * When post is being saved, update post's post meta with the new secondary title.
 	 */
 	function init_admin_save() {
-		update_post_meta(get_the_ID(), "_secondary_title", esc_attr($_POST["secondary_post_title"]));
+		update_post_meta(get_the_ID(), "_secondary_title", $_POST["secondary_post_title"]);
 	}
 
 	add_action("edit_post", "init_admin_save");
@@ -257,7 +291,6 @@
 	function build_admin_settings() {
 		/** Check if the submit button was hit */
 		if(isset($_POST["submitted"])) {
-			print_r($_POST["categories"]);
 			/** If no post type checked, turn the variable into an array */
 			if(!isset($_POST["post_types"])) {
 				update_option("secondary_title_post_types", array());
@@ -489,11 +522,30 @@
 							<label for="title_format"><?php _e("Title format", "secondary_title"); ?></label>
 						</th>
 						<td>
-							<input type="text" name="title_format" id="title_format" class="regular-text" placeholder="<?php _e("E.g.: %secondary_title%: %title%", "secondary_title"); ?>" value="<?php echo get_option("secondary_title_title_format"); ?>" autocomplete="off" />
+							<input type="text" name="title_format" id="title_format" class="regular-text" placeholder="<?php _e("E.g.: %secondary_title%: %title%", "secondary_title"); ?>" value="<?php echo stripslashes(str_replace('"', "'", get_option("secondary_title_title_format"))); ?>" autocomplete="off" />
 
 							<p class="description"><?php _e("Use <code>%title%</code> for the main title and <code>%secondary_title%</code> for the secondary title.", "secondary_title"); ?></p>
 
-							<p class="description" id="title_format_preview" hidden="hidden"></p>
+							<p class="description" id="title_format_preview" hidden="hidden"></p><br />
+
+							<p class="description"><?php echo sprintf(__('<b>Note:</b> To style the output, use the <a href="http://www.w3schools.com/tags/att_global_style.asp" target="_blank">style HTML attribute</a>, e.g.:<br /><code>%s</code>', "secondary_title"), esc_attr("<span style='color:red;font-size:12px;'>%secondary_title%</span>")); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="title_input_position_above"><?php _e("Title input position", "secondary_title"); ?></label>
+						</th>
+						<td>
+							<input type="radio" name="title_input_position" id="title_input_position_above" value="above"<?php if(get_secondary_title_title_input_position() == "above") {
+								echo ' checked="checked"';
+							} ?> />
+							<label for="title_input_position_above"><?php _e("Above", "secondary_title"); ?></label>
+							<input type="radio" name="title_input_position" id="title_input_position_below" value="below"<?php if(get_secondary_title_title_input_position() == "below") {
+								echo ' checked="checked"';
+							} ?> />
+							<label for="title_input_position_below"><?php _e("Below", "secondary_title"); ?></label>
+
+							<p class="description"><?php _e("Defines whether input field for the secondary title should be displayed above or below<br />the standard title <strong>within the add/edit post/page area</strong> on the admin interface.", "secondary_title"); ?></p>
 						</td>
 					</tr>
 				</tbody>
