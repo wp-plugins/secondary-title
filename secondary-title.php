@@ -19,6 +19,8 @@
 	}
 
 	/**
+	 * Returns the plugin's default settings and their values.
+	 *
 	 * @param string $setting
 	 *
 	 * @return array
