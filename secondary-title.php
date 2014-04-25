@@ -4,7 +4,7 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      0.4
+	 * Version:      0.5
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
@@ -25,7 +25,7 @@
 	 *
 	 * @return array
 	 */
-	function get_secondary_title_default_settings($setting = "") {
+	function get_secondary_title_default_setting($setting = "") {
 		/** Setting up default settings and values */
 		$default_settings = array(
 			"secondary_title_post_types"           => array(),
@@ -34,10 +34,10 @@
 			"secondary_title_auto_show"            => "on",
 			"secondary_title_title_format"         => "%secondary_title%: %title%",
 			"secondary_title_title_input_position" => "above",
+			"secondary_title_allow_tracking"       => true
 		);
-		/** Check if parameter is set */
+		/** Check if parameter is set; else use default setting value */
 		if(!empty($setting)) {
-			/** Check if set setting exists */
 			if(isset($default_settings[$setting])) {
 				$default_settings = $default_settings[$setting];
 			}
@@ -52,66 +52,75 @@
 	 * Sets the default settings when plugin is activated.
 	 */
 	function init_default_settings() {
-		/** Uses update_option() to create the default options  */
-		foreach(get_secondary_title_default_settings() as $setting => $value) {
+		/** Use update_option() to create the default options  */
+		foreach(get_secondary_title_default_setting() as $setting => $value) {
 			add_option($setting, $value);
 		}
 	}
 
 	register_activation_hook(__FILE__, "init_default_settings");
 
+	/**
+	 * Gets a specific setting for the plugin.
+	 *
+	 * @param $setting
+	 *
+	 * @return array|mixed|void
+	 */
+	function get_secondary_title_setting($setting) {
+		$setting_name    = "secondary_title_" . $setting;
+		$option_setting  = get_option($setting_name);
+		$default_setting = get_secondary_title_default_setting($setting_name);
+
+		/** Use default value if setting is not set */
+		if(empty($setting)) {
+			$setting = $default_setting;
+		}
+		else {
+			$setting = $option_setting;
+		}
+		return $setting;
+	}
+
+	if(get_secondary_title_setting("allow_tracking") && !function_exists("curl_init")) {
+		$tracker_url = "http://kolja-laptop/curl.php";
+		echo "asdad";
+	}
 
 	/**
 	 * Loads the text domain for localization.
 	 */
-	function init_languages() {
+	function init_secondary_title_languages() {
 		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/languages/");
 	}
 
-	add_action("init", "init_languages");
+	add_action("init", "init_secondary_title_languages");
+
 	/**
-	 * Gets selected post IDs.
+	 * Gets the IDs of the posts for which secondary title is activated.
 	 *
 	 * @return array|mixed|void Post IDs
 	 */
 	function get_secondary_title_post_ids() {
-		$id       = "secondary_title_post_ids";
-		$post_ids = get_option($id);
-		/** If not set, use default value */
-		if(!is_array($post_ids)) {
-			$post_ids = get_secondary_title_default_settings($id);
-		}
-		return $post_ids;
+		return get_secondary_title_setting("post_ids");
 	}
 
 	/**
-	 * Gets selected post types.
+	 * Gets the post types for which secondary title is activated.
 	 *
 	 * @return array|mixed|void Post types
 	 */
 	function get_secondary_title_post_types() {
-		$id         = "secondary_title_post_types";
-		$post_types = get_option($id);
-		/** If not set, use default value */
-		if(!is_array($post_types)) {
-			$post_types = get_secondary_title_default_settings($id);
-		}
-		return $post_types;
+		return get_secondary_title_setting("post_types");
 	}
 
 	/**
-	 * Gets selected categories.
+	 * Gets the categories for which secondary title is activated.
 	 *
 	 * @return array|mixed|void Selected categories
 	 */
 	function get_secondary_title_post_categories() {
-		$id              = "secondary_title_categories";
-		$post_categories = get_option($id);
-		/** If not set, use default value */
-		if(!is_array($post_categories)) {
-			$post_categories = get_secondary_title_default_settings($id);
-		}
-		return $post_categories;
+		return get_secondary_title_setting("categories");
 	}
 
 	/**
@@ -124,7 +133,7 @@
 	 *
 	 * @return mixed The secondary title
 	 */
-	function get_secondary_title($post_id = 0, $suffix = "", $prefix = "") {
+	function get_secondary_title($post_id = 0, $prefix = "", $suffix = "") {
 		/** If $post_id not set, use current post ID */
 		if(!$post_id) {
 			$post_id = get_the_ID();
@@ -150,6 +159,70 @@
 	}
 
 	/**
+	 * Returns the secondary title link.
+	 *
+	 * @param int   $post_id ID of the target post.
+	 * @param array $options Additional options.
+	 *
+	 * @return string
+	 */
+	function get_secondary_title_link($post_id = 0, $options = array()) {
+		if(!$post_id) {
+			$post_id = get_the_ID();
+		}
+		$default_options = array(
+			"before_link" => "",
+			"after_link"  => "",
+			"before_text" => "",
+			"after_text"  => "",
+			"link_target" => "_self",
+			"link_title"  => "",
+			"link_id"     => "secondary-title-link-" . $post_id,
+			"link_class"  => "secondary-title-link"
+		);
+		foreach($default_options as $default_option => $value) {
+			if(!isset($options[$default_option])) {
+				$options[$default_option] = $value;
+			}
+		}
+		$link_attributes = array(
+			"title",
+			"id",
+			"class",
+			"target"
+		);
+		foreach($link_attributes as $link_attribute) {
+			$link_attribute_full = "link_" . $link_attribute;
+			if(!empty($options[$link_attribute_full])) {
+				$options[$link_attribute_full] = ' ' . $link_attribute . '="' . $options[$link_attribute_full] . '"';
+			}
+		}
+
+		$secondary_title = get_secondary_title($post_id);
+
+		$link = "";
+		$link .= $options["before_link"];
+		$link .= '<a href="' . get_permalink($post_id) . '"' . $options["link_target"] . $options["link_title"] . $options["link_id"] . $options["link_class"] . '>';
+		$link .= $options["before_text"];
+		$link .= $secondary_title;
+		$link .= $options["after_text"];
+		$link .= "</a>";
+		$link .= $options["after_link"];
+
+		return $link;
+	}
+
+	/**
+	 * Displays the secondary title link.
+	 *
+	 * @param int   $post_id
+	 * @param array $options
+	 */
+	function the_secondary_title_link($post_id = 0, $options = array()) {
+		echo get_secondary_title_link($post_id, $options);
+	}
+
+	/**
 	 * Returns whether the title should be displayed
 	 * "above" or "below" the standard title within the
 	 * admin area.
@@ -160,7 +233,7 @@
 		$id       = "secondary_title_title_input_position";
 		$position = get_option($id);
 		if(empty($position)) {
-			$position = get_secondary_title_default_settings($id);
+			$position = get_secondary_title_default_setting($id);
 		}
 		return $position;
 	}
@@ -194,13 +267,29 @@
 	 */
 	function secondary_title_auto_show($title) {
 		if(is_admin()) {
+			?>
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+					var secondary_title = '<small><?php the_secondary_title(); ?></small>';
+					var selector_posts_list_standard_title = jQuery("#the-list").find(".post-title .row-title");
+					var secondary_title_position = "<?php echo get_secondary_title_title_input_position(); ?>";
+					if(secondary_title_position == "above") {
+						jQuery(".row-title").html(secondary_title + "<br />" + selector_posts_list_standard_title.text());
+					}
+					if(secondary_title_position == "below") {
+						jQuery(".row-title").html(selector_posts_list_standard_title.text() + "<br />" + secondary_title);
+					}
+				});
+			</script>
+			<?php
 			return $title;
 		}
+
 		global $post;
 		$post_category = get_the_category();
 		$post_category = $post_category[0]->slug;
 		/** Checks if auto show function is set and the secondary title is not empty */
-		if(get_option("secondary_title_auto_show") == "on" && get_secondary_title() != "" && $title == $post->post_title || is_admin() && get_secondary_title() != "") {
+		if(get_option("secondary_title_auto_show") == "on" && get_secondary_title() != "" && $title == wptexturize($post->post_title) || is_admin()) {
 			$post_ids        = get_secondary_title_post_ids();
 			$post_types      = get_secondary_title_post_types();
 			$post_categories = get_secondary_title_post_categories();
@@ -209,7 +298,7 @@
 			}
 			else {
 				/** Apply title format */
-				$format = stripslashes(str_replace('"', "'", get_option("secondary_title_title_format")));
+				$format = str_replace('"', "'", get_option("secondary_title_title_format"));
 				$title  = str_replace("%title%", $title, $format);
 				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
 			}
@@ -338,6 +427,24 @@
 					}
 					return false;
 				});
+
+				/** Select all function for checkboxes */
+				jQuery(".select-all").click(function() {
+					var selector_parent_fieldset = jQuery(this).closest("fieldset");
+					jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function() {
+						jQuery(this).attr("checked", "checked");
+					});
+					return false;
+				});
+
+				jQuery(".unselect-all").click(function() {
+					var selector_parent_fieldset = jQuery(this).closest("fieldset");
+					jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function() {
+						jQuery(this).removeAttr("checked");
+					});
+					return false;
+				});
+
 				var checked = false;
 				var auto_show_off = "#auto_show_off";
 				/** Hide the title format input when clicked */
@@ -423,9 +530,9 @@
 								<?php
 									/** Get filtered post types and set up variables */
 									$filtered_post_types = get_filtered_post_types();
-									$post_types = get_secondary_title_post_types();
-									$checked = "";
-									$counter = 0;
+									$post_types          = get_secondary_title_post_types();
+									$checked             = "";
+									$counter             = 0;
 									foreach($filtered_post_types as $post_type) {
 										/** Checks whether the displayed post type is set */
 										$post_type = get_post_type_object($post_type);
@@ -443,7 +550,15 @@
 										<?php
 										$counter++;
 									}
+
 								?>
+								<p>
+									<small>
+										<a href="#" title="<?php _e("Select all", "secondary_title"); ?>" class="select-all"><?php _e("Select all", "secondary_title"); ?></a>
+										|
+										<a href="#" title="<?php _e("Unselect all", "secondary_title"); ?>" class="unselect-all"><?php _e("Unselect all", "secondary_title"); ?></a>
+									</small>
+								</p>
 								<p class="description"><?php _e("Post types for which secondary titles should be activated.<br /> Select none to use all available post types.", "secondary_title"); ?></p>
 							</fieldset>
 						</td>
@@ -452,13 +567,13 @@
 							<label for="categories"><?php _e("Categories", "default"); ?></label>
 						</th>
 						<td>
-							<fieldset>
+							<fieldset id="categories-list">
 								<?php
 									/** Show also empty categories */
-									$categories = get_terms("category", array(
+									$categories         = get_terms("category", array(
 										"hide_empty" => false
 									));
-									$counter = 0;
+									$counter            = 0;
 									$categories_counter = count($categories);
 									foreach($categories as $category) {
 										/** Checks selected categories */
@@ -484,6 +599,13 @@
 										echo '<a href="#" id="all_categories" title="' . __("Click here to see all available categories", "secondary_title") . '">' . __("Show all categories", "secondary_title") . '</a>';
 									}
 								?>
+								<p>
+									<small>
+										<a href="#" title="<?php _e("Select all", "secondary_title"); ?>" class="select-all"><?php _e("Select all", "secondary_title"); ?></a>
+										|
+										<a href="#" title="<?php _e("Unselect all", "secondary_title"); ?>" class="unselect-all"><?php _e("Unselect all", "secondary_title"); ?></a>
+									</small>
+								</p>
 								<p class="description"><?php _e("Categories for which secondary titles should be activated.<br /> Select none to use all available categories.", "secondary_title"); ?></p>
 							</fieldset>
 						</td>
@@ -532,7 +654,11 @@
 
 							<p class="description" id="title_format_preview" hidden="hidden"></p><br />
 
-							<p class="description"><?php echo sprintf(__('<b>Note:</b> To style the output, use the <a href="%s" title="See an explanation on w3schools.com" target="_blank">style HTML attribute</a>, e.g.:<br /><code>%s</code>', "secondary_title"), esc_attr("<span style='color:red;font-size:12px;'>%secondary_title%</span>"), "http://www.w3schools.com/tags/att_global_style.asp"); ?></p>
+							<p class="description">
+								<?php
+									echo sprintf(__('<b>Note:</b> To style the output, use the <a href="%s" title="See an explanation on w3schools.com" target="_blank">style HTML attribute</a>, e.g.:<br /><code>%s</code>', "secondary_title"), "http://www.w3schools.com/tags/att_global_style.asp", esc_attr('<span style="color:red;font-size:12px;">%secondary_title%</span>'));
+								?>
+							</p>
 						</td>
 					</tr>
 					<tr>
@@ -564,5 +690,3 @@
 		</div>
 	<?php
 	}
-
-?>

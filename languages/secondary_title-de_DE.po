@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plugin: Secondary Title\n"
-"POT-Creation-Date: 2014-04-19 23:31+0700\n"
-"PO-Revision-Date: 2014-04-19 23:31+0700\n"
+"POT-Creation-Date: 2014-04-25 01:38+0700\n"
+"PO-Revision-Date: 2014-04-25 01:38+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/plugin-secondary-"
 "title/language/de/)\n"
@@ -20,39 +20,47 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: secondary-title.php:285
+#: secondary-title.php:368
 msgid "Secondary Title settings"
 msgstr "Secondary Title Einstellungen"
 
-#: secondary-title.php:322
+#: secondary-title.php:405
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: secondary-title.php:329
+#: secondary-title.php:412
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: secondary-title.php:329
+#: secondary-title.php:412
 msgid "Secondary Title"
 msgstr "Secondary Title"
 
-#: secondary-title.php:369
+#: secondary-title.php:470
 msgid "I love this plugin"
 msgstr "Ich liebe dieses Plugin"
 
-#: secondary-title.php:370
+#: secondary-title.php:471
 msgid "Important news"
 msgstr "Wichtige Nachricht"
 
-#: secondary-title.php:391
+#: secondary-title.php:492
 msgid "Preview"
 msgstr "Vorschau"
 
-#: secondary-title.php:419
+#: secondary-title.php:520
 msgid "Post types"
 msgstr "Post Types"
 
-#: secondary-title.php:447
+#: secondary-title.php:551 secondary-title.php:598
+msgid "Select all"
+msgstr "Alle auswählen"
+
+#: secondary-title.php:553 secondary-title.php:600
+msgid "Unselect all"
+msgstr "Keine auswählen"
+
+#: secondary-title.php:556
 msgid ""
 "Post types for which secondary titles should be activated.<br /> Select none "
 "to use all available post types."
@@ -60,19 +68,19 @@ msgstr ""
 "Post Types, für die der alternative Titel aktiviert werden soll.<br />Leer "
 "lassen, um alle Post Types zu benutzen."
 
-#: secondary-title.php:452
+#: secondary-title.php:561
 msgid "Categories"
 msgstr "Kategorien"
 
-#: secondary-title.php:484
+#: secondary-title.php:593
 msgid "Click here to see all available categories"
 msgstr "Hier klicken, um alle verfügbaren Kategorien anzuzeigen"
 
-#: secondary-title.php:484
+#: secondary-title.php:593
 msgid "Show all categories"
 msgstr "Alle Kategorien anzeigen"
 
-#: secondary-title.php:487
+#: secondary-title.php:603
 msgid ""
 "Categories for which secondary titles should be activated.<br /> Select none "
 "to use all available categories."
@@ -80,32 +88,33 @@ msgstr ""
 "Kategorien, für die der alternative Titel aktiviert werden soll.<br />Leer "
 "lassen, um alle Kategorien zu benutzen."
 
-#: secondary-title.php:493
+#: secondary-title.php:609
 msgid "Post IDs"
 msgstr "Post IDs"
 
-#: secondary-title.php:496
+#: secondary-title.php:612
 msgid "E.g.: 4, 28, 104"
 msgstr "z.B.: 4, 28, 104"
 
-#: secondary-title.php:499
+#: secondary-title.php:615
 msgid "Only use secondary title for specific posts. Separate IDs with commas."
 msgstr ""
-"Den alternativen Titel nur für Beiträge mit bestimmter Post ID aktivieren."
+"Den alternativen Titel nur für Beiträge mit bestimmter Post ID aktivieren. "
+"Trenne mehrere IDs mit Kommata."
 
-#: secondary-title.php:504
+#: secondary-title.php:620
 msgid "Insert automatically"
 msgstr "Automatisch einfügen"
 
-#: secondary-title.php:511
+#: secondary-title.php:627
 msgid "Yes"
 msgstr "Ja"
 
-#: secondary-title.php:516
+#: secondary-title.php:632
 msgid "No"
 msgstr "Nein"
 
-#: secondary-title.php:520
+#: secondary-title.php:636
 #, php-format
 msgid ""
 "To manually insert the secondary title in your theme, use <code>&lt;?php "
@@ -121,15 +130,15 @@ msgstr ""
 "\"Offizielle Dokumentation ansehen\">offizielle Dokumentation</a> für "
 "weitere Parameter."
 
-#: secondary-title.php:526
+#: secondary-title.php:642
 msgid "Title format"
 msgstr "Titelformat"
 
-#: secondary-title.php:529
+#: secondary-title.php:645
 msgid "E.g.: %secondary_title%: %title%"
 msgstr "z.B.: %secondary_title%: %title%"
 
-#: secondary-title.php:531
+#: secondary-title.php:647
 msgid ""
 "Use <code>%title%</code> for the main title and <code>%secondary_title%</"
 "code> for the secondary title."
@@ -137,7 +146,7 @@ msgstr ""
 "Benutze <code>%title%</code> für den Haupttitel und <code>%secondary_title%</"
 "code> für den alternativen Titel."
 
-#: secondary-title.php:535
+#: secondary-title.php:653
 #, php-format
 msgid ""
 "<b>Note:</b> To style the output, use the <a href=\"%s\" title=\"See an "
@@ -148,19 +157,19 @@ msgstr ""
 "ansehen\" target=\"_blank\">HTML-Attribute</a> zum Gestalten benutzen, z.B.:"
 "<br /><code>%s</code>"
 
-#: secondary-title.php:540
+#: secondary-title.php:660
 msgid "Title input position"
 msgstr "Position des Eingabefelds"
 
-#: secondary-title.php:546
+#: secondary-title.php:666
 msgid "Above"
 msgstr "Darüber"
 
-#: secondary-title.php:550
+#: secondary-title.php:670
 msgid "Below"
 msgstr "Darunter"
 
-#: secondary-title.php:552
+#: secondary-title.php:672
 msgid ""
 "Defines whether input field for the secondary title should be displayed "
 "above or below<br />the standard title <strong>within the add/edit post/page "
@@ -170,7 +179,7 @@ msgstr ""
 "unterhalb des<br /> Standardtitels angezeigt werden soll (gilt nur im "
 "Adminbereich)."
 
-#: secondary-title.php:557
+#: secondary-title.php:677
 #, php-format
 msgid ""
 "Do you speak more than one language? Help making Secondary Title<br />easier "
@@ -182,6 +191,6 @@ msgstr ""
 "target=\"_blank\" title=\"Secondary Title auf Transifex übersetzen\">das "
 "Plugin auf Transifex übersetzt</a>."
 
-#: secondary-title.php:561
+#: secondary-title.php:681
 msgid "Save Changes"
 msgstr "Änderungen speichern"
