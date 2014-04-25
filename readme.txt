@@ -39,11 +39,11 @@ If you have any other ideas for features, please don't hesitate to submit them b
 
 **IMPORTANT:** If "Insert automatically" is set to "No", you have to use either
 
-`<?php echo get_secondary_title($post_id, $suffix); ?>`
+`<?php echo get_secondary_title($post_id, $prefix, $suffix); ?>`
 
 or
 
-`<?php the_secondary_title($post_id, $suffix); ?>`
+`<?php the_secondary_title($post_id, $prefix, $suffix); ?>`
 
 in your theme file(s) (e.g. single.php) to display the secondary title.
 
@@ -71,14 +71,14 @@ Default: get_the_ID()
 
 **$options** ([array](http://codex.wordpress.org/How_to_Pass_Tag_Parameters#Arrat)) (optional): An array containing additional options:
 
- * *before_link*: String displayed before the <a></a> elements. **Default**: Empty
- * *after_link*: String displayed after the <a></a> elements. **Default**: Empty
- * *before_text*: String displayed after the <a> element. **Default**: Empty
- * *before_text*: String displayed before the </a> element. **Default**: Empty
- * *link_target*: target="" attribute for the <a> element. **Default**: _self
- * *link_title*: title="" attribute for the <a> element (displayed on mouseover). **Default**: Empty
- * *link_id*: id="" attribute for the <a> element. **Default**: secondary-title-link-$post_id
- * *link_class*: class="" attribute for the <a> element. **Default**: secondary-title-link
+ * *before_link*: String displayed before the link elements. **Default**: Empty
+ * *after_link*: String displayed after the link elements. **Default**: Empty
+ * *before_text*: String displayed before the link text. **Default**: Empty
+ * *before_text*: String displayed after the link text. **Default**: Empty
+ * *link_target*: target="" attribute for the "a href" element. **Default**: _self
+ * *link_title*: title="" attribute for the "a href" element (displayed on mouseover). **Default**: Empty
+ * *link_id*: id="" attribute for the "a href" element. **Default**: secondary-title-link-$post_id
+ * *link_class*: class="" attribute for the "a href" element. **Default**: secondary-title-link
 
 = Examples =
 
