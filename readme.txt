@@ -1,7 +1,7 @@
 === Secondary Title ===
 Contributors: thaikolja
 Tags: title, alternative title, secondary title
-Tested up to: 3.8.1
+Tested up to: 3.9
 Stable tag: 0.1
 Requires at least: 3.0.1
 License: GPLv2 or later
@@ -141,6 +141,8 @@ You can add any HTML element you want in the title format found in *Settings > S
 
 This will display the secondary title in red with a font size of 12px, the standard post title won't be changed.
 
+If you want the styled secondary title only to be displayed in a certain place (e.g. inside of the home posts), you will have to define a class. For that, open your *style.css* of
+
 = I have found an error and/or would like to suggest a change. =
 
 Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to send me a quick e-mail to kolja.nolte@gmail.com so I can fix it and include it in the next version. Same goes for suggestions.
@@ -155,10 +157,15 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 
 == Changelog ==
 
+= 0.5.1 =
+* Fixed bug that falsely added slashes to HTML attributes in title format.
+* Fixed jQuery bug in the admin posts/
+* Added `<?php has_secondary_title(); ?>` function. See [the official documentary](http://www.koljanolte.com/koljanolte.com/wordpress/plugins/secondary-title/#Parameters) for more information.
+
 = 0.5 =
 * Fixed bug where the secondary title was not shown if the standard title contains "..." (thanks to Vangelis).
 * Added "select/unselect all" function for checkbox lists on settings page.
-* Added secondary title display in admin posts list.
+* Added secondary title display in admin posts/pages list.
 * Added `<?php get_secondary_title_link($post_id, $options); ?>` and `<?php the_secondary_title_link($post_id, $options); ?>` functions
   to quickly create the secondary title as a link to its post. See [the official documentary](http://www.koljanolte.com/koljanolte.com/wordpress/plugins/secondary-title/#Parameters) for more information.
 * Updated documentary/readme.txt.
@@ -185,6 +192,9 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.5.1 =
+Hotfix for 0.5.
 
 = 0.5 =
 Bug fixes and some more features.

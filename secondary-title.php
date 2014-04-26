@@ -4,7 +4,7 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      0.5
+	 * Version:      0.5.1
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
@@ -239,6 +239,20 @@
 	}
 
 	/**
+	 * @param $post_id
+	 *
+	 * @return bool
+	 */
+	function has_secondary_title($post_id = 0) {
+		$secondary_title = get_secondary_title($post_id);
+		$has             = false;
+		if(!empty($secondary_title)) {
+			$has = true;
+		}
+		return $has;
+	}
+
+	/**
 	 * Return all available post types except pages, attachments,
 	 * revision ans nav_menu_items.
 	 *
@@ -266,25 +280,35 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
+		/** Insert the secondary title in the admin interface */
 		if(is_admin()) {
-			?>
-			<script type="text/javascript">
-				jQuery(document).ready(function() {
-					var secondary_title = '<small><?php the_secondary_title(); ?></small>';
-					var selector_posts_list_standard_title = jQuery("#the-list").find(".post-title .row-title");
-					var secondary_title_position = "<?php echo get_secondary_title_title_input_position(); ?>";
-					if(secondary_title_position == "above") {
-						jQuery(".row-title").html(secondary_title + "<br />" + selector_posts_list_standard_title.text());
-					}
-					if(secondary_title_position == "below") {
-						jQuery(".row-title").html(selector_posts_list_standard_title.text() + "<br />" + secondary_title);
-					}
-				});
-			</script>
-			<?php
+			/** Check if we're on the posts/pages overview */
+			$admin_page = get_current_screen();
+			$admin_page = $admin_page->base;
+			if($admin_page == "edit") {
+				if(has_secondary_title()) {
+					/** Insert the secondary title with jQuery because the content filter doesn't allow HTML */
+					?>
+					<script type="text/javascript">
+						jQuery(document).ready(function() {
+							var standard_title = "<?php echo $title; ?>";
+							var standard_title_object = jQuery("a:contains('" + standard_title + "')");
+							var secondary_title = "<?php the_secondary_title(); ?>";
+							var position = "<?php echo get_secondary_title_title_input_position(); ?>";
+							if(position == "above") {
+								standard_title_object.html("<small>" + secondary_title + "</small><br />" + standard_title);
+							}
+							else {
+								standard_title_object.html(standard_title + "<br /><small>" + secondary_title + "</small>");
+							}
+							jQuery("h2").html(standard_title);
+						});
+					</script>
+				<?php
+				}
+			}
 			return $title;
 		}
-
 		global $post;
 		$post_category = get_the_category();
 		$post_category = $post_category[0]->slug;
@@ -301,6 +325,7 @@
 				$format = str_replace('"', "'", get_option("secondary_title_title_format"));
 				$title  = str_replace("%title%", $title, $format);
 				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
+				$title  = stripslashes($title);
 			}
 		}
 		return $title;
