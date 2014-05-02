@@ -139,6 +139,13 @@
 		}
 		/** Return the secondary title */
 		$secondary_title = $prefix . get_post_meta($post_id, "_secondary_title", true) . $suffix;
+
+		/** Apply filters to secondary title if used with Word Filter Plus plugin */
+		if(class_exists("WordFilter")) {
+			$word_filter     = new WordFilter;
+			$secondary_title = $word_filter->filter_title($secondary_title);
+		}
+
 		return $secondary_title;
 	}
 

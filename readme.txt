@@ -183,6 +183,7 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 == Changelog ==
 
 = 0.6 =
+* Added compatibility with Word Filter Plus plugin.
 * Added "Only show in main post" setting.
 * Fixed minor jQuery bug on admin interface.
 * Updated FAQ.
@@ -224,7 +225,7 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 == Upgrade Notice ==
 
 = 0.6 =
-Bug fixes, setting added.
+Bug fixes, setting added, compatibility with Word Filter Plus plugin.
 
 = 0.5.1 =
 Hotfix for 0.5.
