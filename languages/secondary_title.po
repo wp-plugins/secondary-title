@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Secondary Title\n"
-"POT-Creation-Date: 2014-05-02 22:02+0700\n"
-"PO-Revision-Date: 2014-05-02 22:02+0700\n"
+"POT-Creation-Date: 2014-05-02 23:28+0700\n"
+"PO-Revision-Date: 2014-05-02 23:28+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language: en\n"
@@ -16,91 +16,91 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: secondary-title.php:412
+#: secondary-title.php:419
 msgid "Secondary Title settings"
 msgstr ""
 
-#: secondary-title.php:449
+#: secondary-title.php:456
 msgid "Settings saved."
 msgstr ""
 
-#: secondary-title.php:456
+#: secondary-title.php:463
 msgid "Settings"
 msgstr ""
 
-#: secondary-title.php:520
+#: secondary-title.php:533
 msgid "Plane missing"
 msgstr ""
 
-#: secondary-title.php:521
+#: secondary-title.php:534
 msgid "Malaysian Airlines flight MH370 lost over Gulf of Thailand"
 msgstr ""
 
-#: secondary-title.php:542
+#: secondary-title.php:555
 msgid "Preview"
 msgstr ""
 
-#: secondary-title.php:570
+#: secondary-title.php:583
 msgid "Post types"
 msgstr ""
 
-#: secondary-title.php:601 secondary-title.php:648
+#: secondary-title.php:614 secondary-title.php:661
 msgid "Select all"
 msgstr ""
 
-#: secondary-title.php:603 secondary-title.php:650
+#: secondary-title.php:616 secondary-title.php:663
 msgid "Unselect all"
 msgstr ""
 
-#: secondary-title.php:606
+#: secondary-title.php:619
 msgid ""
 "Post types for which secondary titles should be activated.<br /> Select none "
 "to use all available post types."
 msgstr ""
 
-#: secondary-title.php:611
+#: secondary-title.php:624
 msgid "Categories"
 msgstr ""
 
-#: secondary-title.php:643
+#: secondary-title.php:656
 msgid "Click here to see all available categories"
 msgstr ""
 
-#: secondary-title.php:643
+#: secondary-title.php:656
 msgid "Show all categories"
 msgstr ""
 
-#: secondary-title.php:653
+#: secondary-title.php:666
 msgid ""
 "Categories for which secondary titles should be activated.<br /> Select none "
 "to use all available categories."
 msgstr ""
 
-#: secondary-title.php:659
+#: secondary-title.php:672
 msgid "Post IDs"
 msgstr ""
 
-#: secondary-title.php:662
+#: secondary-title.php:675
 msgid "E.g.: 4, 28, 104"
 msgstr ""
 
-#: secondary-title.php:665
+#: secondary-title.php:678
 msgid "Only use secondary title for specific posts. Separate IDs with commas."
 msgstr ""
 
-#: secondary-title.php:670
+#: secondary-title.php:683
 msgid "Insert automatically"
 msgstr ""
 
-#: secondary-title.php:677 secondary-title.php:736
+#: secondary-title.php:690 secondary-title.php:749
 msgid "Yes"
 msgstr ""
 
-#: secondary-title.php:682 secondary-title.php:740
+#: secondary-title.php:695 secondary-title.php:753
 msgid "No"
 msgstr ""
 
-#: secondary-title.php:686
+#: secondary-title.php:699
 #, php-format
 msgid ""
 "To manually insert the secondary title in your theme, use <code>&lt;?php "
@@ -111,21 +111,21 @@ msgid ""
 "parameters."
 msgstr ""
 
-#: secondary-title.php:692
+#: secondary-title.php:705
 msgid "Title format"
 msgstr ""
 
-#: secondary-title.php:695
+#: secondary-title.php:708
 msgid "E.g.: %secondary_title%: %title%"
 msgstr ""
 
-#: secondary-title.php:697
+#: secondary-title.php:710
 msgid ""
 "Use <code>%title%</code> for the main title and <code>%secondary_title%</"
 "code> for the secondary title."
 msgstr ""
 
-#: secondary-title.php:703
+#: secondary-title.php:716
 #, php-format
 msgid ""
 "<b>Note:</b> To style the output, use the <a href=\"%s\" title=\"See an "
@@ -133,19 +133,19 @@ msgid ""
 "g.:<br /><code>%s</code>"
 msgstr ""
 
-#: secondary-title.php:710
+#: secondary-title.php:723
 msgid "Title input position"
 msgstr ""
 
-#: secondary-title.php:716
+#: secondary-title.php:729
 msgid "Above"
 msgstr ""
 
-#: secondary-title.php:720
+#: secondary-title.php:733
 msgid "Below"
 msgstr ""
 
-#: secondary-title.php:722
+#: secondary-title.php:735
 #, php-format
 msgid ""
 "Defines whether input field for the secondary title should be displayed "
@@ -155,17 +155,18 @@ msgid ""
 "effect on your front end."
 msgstr ""
 
-#: secondary-title.php:727
+#: secondary-title.php:740
 msgid "Only show in main post"
 msgstr ""
 
-#: secondary-title.php:742
+#: secondary-title.php:755
 msgid ""
 "If activated, the secondary title will only be shown within the main post;"
-"<br /> sidebars, menu items etc. will be ignored."
+"<br /> sidebars, menu items etc. will be ignored. <strong>Only works when "
+"\"Insert automatically\" is enabled.</strong>"
 msgstr ""
 
-#: secondary-title.php:747
+#: secondary-title.php:760
 #, php-format
 msgid ""
 "Do you speak more than one language? Help making Secondary Title<br />easier "
@@ -173,6 +174,6 @@ msgid ""
 "Transifex.com\" target=\"_blank\">translating the plugin on Transifex.</a>"
 msgstr ""
 
-#: secondary-title.php:751
+#: secondary-title.php:764
 msgid "Save Changes"
 msgstr ""

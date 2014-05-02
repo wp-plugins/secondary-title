@@ -394,7 +394,7 @@
 		</script>
 		<div id="secondary-title-input" hidden="hidden">
 			<label for="secondary-title-text" hidden="hidden"></label>
-			<input type="text" size="30" tabindex="1" id="secondary-title-text" name="secondary_post_title" value="<?php the_secondary_title(); ?>" />
+			<input type="text" size="30" id="secondary-title-text" name="secondary_post_title" value="<?php the_secondary_title(); ?>" />
 		</div>
 		<?php
 		return true;
@@ -496,12 +496,16 @@
 				var auto_show_off = "#auto_show_off";
 				if(jQuery(auto_show_off).is(":checked")) {
 					jQuery("#title_format").attr("disabled", "disabled");
+					jQuery("#only_show_in_main_post_yes").attr("disabled", "disabled");
+					jQuery("#only_show_in_main_post_no").attr("disabled", "disabled");
 					jQuery("#auto_show_functions").removeAttr("hidden");
 					checked = true;
 				}
 				/** Activate the title format input when clicked */
 				jQuery("#auto_show_on").click(function() {
 					jQuery("#title_format").removeAttr("disabled");
+					jQuery("#only_show_in_main_post_yes").removeAttr("disabled");
+					jQuery("#only_show_in_main_post_no").removeAttr("disabled");
 					if(checked) {
 						jQuery("#auto_show_functions").hide();
 						checked = false;
@@ -510,6 +514,8 @@
 				/** Disable title format input field when auto title is active */
 				jQuery(auto_show_off).click(function() {
 					jQuery("#title_format").attr("disabled", "disabled");
+					jQuery("#only_show_in_main_post_yes").attr("disabled", "disabled");
+					jQuery("#only_show_in_main_post_no").attr("disabled", "disabled");
 					if(!checked) {
 						jQuery("#auto_show_functions").removeAttr("hidden").hide().fadeIn();
 						checked = true;
@@ -730,7 +736,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th scope="row">
+						<th scope="row" id="only_show_in_main_post">
 							<label for="only_show_in_main_post_yes"><?php _e("Only show in main post", "secondary_title"); ?></label>
 						</th>
 						<td>
@@ -746,7 +752,7 @@
 							} ?> />
 							<label for="only_show_in_main_post_no"><?php _e("No", "secondary_title"); ?></label>
 
-							<p class="description"><?php _e("If activated, the secondary title will only be shown within the main post;<br /> sidebars, menu items etc. will be ignored.", "secondary_title"); ?></p>
+							<p class="description"><?php _e("If activated, the secondary title will only be shown within the main post;<br /> sidebars, menu items etc. will be ignored. <strong>Only works when \"Insert automatically\" is enabled.</strong>", "secondary_title"); ?></p>
 						</td>
 					</tr>
 				</tbody>
