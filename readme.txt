@@ -82,22 +82,22 @@ Default: get_the_ID()
 
 = Examples =
 
-1. Only display the secondary title:
+**Only display the secondary title:**
 
 `<?php the_secondary_title(); ?>`
 
-2. Using the standard and secondary title in the post's head:
+**Using the standard and secondary title in the post's head:**
 
 `<div class="titles">
 	<h2 class="secondary-title">+++ <?php the_secondary_title(); ?> +++</h2>
 	<h1 class="title"><?php the_title(); ?></h1>
 </div>`
 
-**Displays:**
+*Displays:*
 +++ Plane missing +++
 Malaysian Airlines flight MH370 lost over Gulf of Thailand
 
-3. Display the secondary title of the last 5 posts:
+**Display the secondary title of the last 5 posts:**
 
 `<?php
 	$query = new WP_Query(
@@ -118,7 +118,7 @@ Malaysian Airlines flight MH370 lost over Gulf of Thailand
 	}
 ?>`
 
-4. Display the secondary title of a specific post:
+**Display the secondary title of a specific post:**
 
 `<?php
 	$secondary_title = get_secondary_title(28);
@@ -127,7 +127,7 @@ Malaysian Airlines flight MH370 lost over Gulf of Thailand
 
 This will display the post with the post ID 28.
 
-5. Display the secondary title in red and the standard title in the default color:
+**Display the secondary title in red and the standard title in the default color:**
 
 `<span style="color:red;"><?php the_secondary_title(); ?></span> <?php the_title(); ?>`
 
