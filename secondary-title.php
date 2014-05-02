@@ -4,7 +4,7 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      0.5.1
+	 * Version:      0.6
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
@@ -28,13 +28,13 @@
 	function get_secondary_title_default_setting($setting = "") {
 		/** Setting up default settings and values */
 		$default_settings = array(
-			"secondary_title_post_types"           => array(),
-			"secondary_title_categories"           => array(),
-			"secondary_title_post_ids"             => array(),
-			"secondary_title_auto_show"            => "on",
-			"secondary_title_title_format"         => "%secondary_title%: %title%",
-			"secondary_title_title_input_position" => "above",
-			"secondary_title_allow_tracking"       => true
+			"secondary_title_post_types"             => array(),
+			"secondary_title_categories"             => array(),
+			"secondary_title_post_ids"               => array(),
+			"secondary_title_auto_show"              => "on",
+			"secondary_title_only_show_in_main_post" => "on",
+			"secondary_title_title_format"           => "%secondary_title%: %title%",
+			"secondary_title_title_input_position"   => "above"
 		);
 		/** Check if parameter is set; else use default setting value */
 		if(!empty($setting)) {
@@ -80,11 +80,6 @@
 			$setting = $option_setting;
 		}
 		return $setting;
-	}
-
-	if(get_secondary_title_setting("allow_tracking") && !function_exists("curl_init")) {
-		$tracker_url = "http://kolja-laptop/curl.php";
-		echo "asdad";
 	}
 
 	/**
@@ -260,12 +255,16 @@
 	 */
 	function get_filtered_post_types() {
 		/** Gets all registered post types */
-		$post_types = get_post_types();
-		$output     = array();
+		$post_types = get_post_types(array(
+				"public" => true
+				/** Only show post types that are publicly accessible in the front end */
+			)
+		);
+
+		$output = array();
+		/** Filter out the attachment post type */
 		foreach($post_types as $post_type) {
-			/** Filters out "useless" post types  */
-			if($post_type != "attachment" && $post_type != "revision" && $post_type != "nav_menu_item") {
-				/** Saves the remaining post types in $output */
+			if($post_type != "attachment") {
 				array_push($output, $post_type);
 			}
 		}
@@ -280,6 +279,8 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
+		/** Keep the standard title */
+		$standard_title = $title;
 		/** Insert the secondary title in the admin interface */
 		if(is_admin()) {
 			/** Check if we're on the posts/pages overview */
@@ -301,7 +302,6 @@
 							else {
 								standard_title_object.html(standard_title + "<br /><small>" + secondary_title + "</small>");
 							}
-							jQuery("h2").html(standard_title);
 						});
 					</script>
 				<?php
@@ -309,9 +309,15 @@
 			}
 			return $title;
 		}
+		/** Get post information */
 		global $post;
 		$post_category = get_the_category();
-		$post_category = $post_category[0]->slug;
+		if(isset($post_category[0]->slug)) {
+			$post_category = $post_category[0]->slug;
+		}
+		else {
+			$post_category = array();
+		}
 		/** Checks if auto show function is set and the secondary title is not empty */
 		if(get_option("secondary_title_auto_show") == "on" && get_secondary_title() != "" && $title == wptexturize($post->post_title) || is_admin()) {
 			$post_ids        = get_secondary_title_post_ids();
@@ -326,6 +332,13 @@
 				$title  = str_replace("%title%", $title, $format);
 				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
 				$title  = stripslashes($title);
+			}
+		}
+		/** Only display if title is within the main lop */
+		if(get_secondary_title_setting("only_show_in_main_post") == "on") {
+			global $wp_query;
+			if(!$wp_query->in_the_loop) {
+				return $standard_title;
 			}
 		}
 		return $title;
@@ -374,7 +387,7 @@
 		</script>
 		<div id="secondary-title-input" hidden="hidden">
 			<label for="secondary-title-text" hidden="hidden"></label>
-			<input type="text" size="30" id="secondary-title-text" name="secondary_post_title" value="<?php the_secondary_title(); ?>" />
+			<input type="text" size="30" tabindex="1" id="secondary-title-text" name="secondary_post_title" value="<?php the_secondary_title(); ?>" />
 		</div>
 		<?php
 		return true;
@@ -433,16 +446,17 @@
 				}
 			}
 			/** Displays message when settings are saved */
-			echo '<div id="message" class="updated"><p><strong>' . __("Settings saved.", "default") . '</strong></p></div>';
+			echo '<div id="message" class="updated"><p><strong>' . __("Settings saved.", "secondary_title") . '</strong></p></div>';
 		}
 		/**
 		 * Build the jQuery scripts and the actual settings page.
 		 */
 		?>
 		<div class="wrap">
-		<h2><?php echo __("Settings", "default") . " › " . __("Secondary Title", "secondary_title"); ?></h2>
+		<h2><?php echo __("Settings", "secondary_title") . " › Secondary Title"; ?></h2>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
+				/** Create slide down function for long category list */
 				var slided = false;
 				jQuery("#all_categories").click(function() {
 					if(!slided) {
@@ -470,9 +484,9 @@
 					return false;
 				});
 
+				/** Hide the title format input when clicked */
 				var checked = false;
 				var auto_show_off = "#auto_show_off";
-				/** Hide the title format input when clicked */
 				if(jQuery(auto_show_off).is(":checked")) {
 					jQuery("#title_format").attr("disabled", "disabled");
 					jQuery("#auto_show_functions").removeAttr("hidden");
@@ -486,6 +500,7 @@
 						checked = false;
 					}
 				});
+				/** Disable title format input field when auto title is active */
 				jQuery(auto_show_off).click(function() {
 					jQuery("#title_format").attr("disabled", "disabled");
 					if(!checked) {
@@ -495,11 +510,15 @@
 				});
 				<?php
 					/** Get a random post with a secondary title */
-					$posts = new WP_Query(array("showposts" => 1, "meta_key" => "_secondary_title"));
+					$posts = new WP_Query(array(
+							"showposts" => 1,
+							"meta_key"  => "_secondary_title"
+						)
+					);
 					/** If there are no posts with a secondary title, use static text */
 					if(!$posts->have_posts()) {
-						$random_title           = __("I love this plugin", "secondary_title");
-						$random_secondary_title = __("Important news", "secondary_title");
+						$random_title           = __("Plane missing", "secondary_title");
+						$random_secondary_title = __("Malaysian Airlines flight MH370 lost over Gulf of Thailand", "secondary_title");
 					}
 					else {
 						$random_number          = rand(0, count($posts->posts)-1);
@@ -520,7 +539,7 @@
 					var preview_title = jQuery(title_format_selector).val();
 					preview_title = preview_title.replace("%title%", "<?php echo $random_title; ?>");
 					preview_title = preview_title.replace("%secondary_title%", "<?php echo $random_secondary_title; ?>");
-					jQuery(preview_selector).html("<b><?php _e("Preview", "default"); ?>:</b> " + preview_title);
+					jQuery(preview_selector).html("<b><?php _e("Preview", "secondary_title"); ?>:</b> " + preview_title);
 					if(jQuery(preview_selector).attr("hidden") == "hidden") {
 						jQuery(preview_selector).removeAttr("hidden").hide().fadeIn();
 					}
@@ -589,7 +608,7 @@
 						</td>
 					<tr>
 						<th scope="row">
-							<label for="categories"><?php _e("Categories", "default"); ?></label>
+							<label for="categories"><?php _e("Categories", "secondary_title"); ?></label>
 						</th>
 						<td>
 							<fieldset id="categories-list">
@@ -655,16 +674,16 @@
 								<input type="radio" name="auto_show" id="auto_show_on" value="on"<?php if(get_option("secondary_title_auto_show") == "on" || get_option("secondary_title_auto_show") == "") {
 									echo " checked";
 								} ?> />
-								<label for="auto_show_on"><?php _e("Yes", "default"); ?></label>
+								<label for="auto_show_on"><?php _e("Yes", "secondary_title"); ?></label>
 
 								<input type="radio" name="auto_show" id="auto_show_off" value="off"<?php if(get_option("secondary_title_auto_show") == "off") {
 									echo " checked";
 								} ?> />
-								<label id="label_auto_show_off" for="auto_show_off"><?php _e("No", "default"); ?></label>
+								<label id="label_auto_show_off" for="auto_show_off"><?php _e("No", "secondary_title"); ?></label>
 								<?php
 									$readme_url = plugin_dir_url(__FILE__) . "readme.txt";
 								?>
-								<p id="auto_show_functions" class="description" hidden="hidden"><?php echo sprintf(__('To manually insert the secondary title in your theme, use <code>&lt;?php get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php the_secondary_title(); ?&gt;</code>. See <a href="%s" title="Open readme.txt">readme.txt</a> or the <a href="%s" target="_blank" title="See official documentary">official documentary</a> for additional parameters.', "secondary_title"), $readme_url, "http://www.koljanolte.com/wordpress/plugins/secondary-title/"); ?></p>
+								<p id="auto_show_functions" class="description" hidden="hidden"><?php echo sprintf(__('To manually insert the secondary title in your theme, use <code>&lt;?php get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php the_secondary_title(); ?&gt;</code>. See <a href="%s" title="Open readme.txt">readme.txt</a> or the <a href="%s" target="_blank" title="See official documentation">official documentation</a> for additional parameters.', "secondary_title"), $readme_url, "http://www.koljanolte.com/wordpress/plugins/secondary-title/"); ?></p>
 							</fieldset>
 						</td>
 					</tr>
@@ -700,16 +719,36 @@
 							} ?> />
 							<label for="title_input_position_below"><?php _e("Below", "secondary_title"); ?></label>
 
-							<p class="description"><?php _e("Defines whether input field for the secondary title should be displayed above or below<br />the standard title <strong>within the add/edit post/page area</strong> on the admin interface.", "secondary_title"); ?></p>
+							<p class="description"><?php echo sprintf(__('Defines whether input field for the secondary title should be displayed above or below<br />the standard title <strong>within the add/edit post/page area</strong> on the admin interface.<br />See the <a href="%s" title="See the FAQ" target="_blank">FAQ</a> if you want to apply the same effect on your front end.', "secondary_title"), "http://www.koljanolte.com/wordpress/plugins/secondary-title/#FAQ"); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label for="only_show_in_main_post_yes"><?php _e("Only show in main post", "secondary_title"); ?></label>
+						</th>
+						<td>
+							<?php
+								$checked = get_secondary_title_setting("only_show_in_main_post");
+							?>
+							<input type="radio" name="only_show_in_main_post" value="on" id="only_show_in_main_post_yes"<?php if($checked == "on") {
+								echo ' checked="checked"';
+							} ?> />
+							<label for="only_show_in_main_post_yes"><?php _e("Yes", "secondary_title"); ?> </label>
+							<input type="radio" name="only_show_in_main_post" value="off" id="only_show_in_main_post_no"<?php if($checked != "on") {
+								echo ' checked="checked"';
+							} ?> />
+							<label for="only_show_in_main_post_no"><?php _e("No", "secondary_title"); ?></label>
+
+							<p class="description"><?php _e("If activated, the secondary title will only be shown within the main post;<br /> sidebars, menu items etc. will be ignored.", "secondary_title"); ?></p>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<p><?php echo sprintf(__('Do you speak more than one language? Help making Secondary Title<br />easier to use for foreign users by <a href="%s" target="_blank">translating the plugin on Transifex.</a>', "secondary_title"), "https://www.transifex.com/projects/p/plugin-secondary-title/"); ?></p>
+			<p><?php echo sprintf(__('Do you speak more than one language? Help making Secondary Title<br />easier to use for foreign users by <a href="%s" title="Go to project page on Transifex.com" target="_blank">translating the plugin on Transifex.</a>', "secondary_title"), "https://www.transifex.com/projects/p/plugin-secondary-title/"); ?></p>
 
 			<p class="submit">
 				<input type="hidden" name="submitted" value="1" />
-				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e("Save Changes", "default"); ?>" />
+				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e("Save Changes", "secondary_title"); ?>" />
 			</p>
 		</form>
 		</div>
