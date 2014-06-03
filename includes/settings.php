@@ -17,7 +17,7 @@
 
 		$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["description"] . '</body></html>';
 		/** Send the actual e-mail */
-		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $_GET["description"], $headers);
+		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $message, $headers);
 		return false;
 	}
 

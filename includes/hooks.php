@@ -79,7 +79,6 @@
 		$scripts_folder = $plugin_folder . "scripts/";
 		$styles_folder  = $plugin_folder . "styles/";
 
-		wp_enqueue_script("scripts-main", $scripts_folder . "main.js", array(), "1.0", true);
 		if(is_admin()) {
 			wp_enqueue_script("scripts-admin", $scripts_folder . "admin.js", array(), "1.0", true);
 			wp_enqueue_style("styles-admin", $styles_folder . "admin.css");
