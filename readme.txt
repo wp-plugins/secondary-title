@@ -17,17 +17,16 @@ The plugin comes with an extra settings page which allows you to customize the p
 
 *	[post types](http://codex.wordpress.org/Post_Types) and categories the secondary title will be shown on,
 *	specific post IDs for which the secondary title should be activated,
-*	whether the secondary title should be automatically inserted with the standard title and
-*	the format both titles are being shown (only works when "auto show" is activated).
-*	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface.
+*	whether the secondary title should be automatically inserted with the standard title,
+*	the format both titles are being shown (only works when "auto show" is activated),
+*	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface,
+*  whether the secondary title should only be displayed in the main post and not within widgets etc.
 
 **Please see www.koljanolte.com/wordpress/plugins/secondary-title/ for additional information.**
 
-If you have any other ideas for features, please don't hesitate to submit them by [sending me an e-mail](mailto:kolja.nolte@gmail.com) and I'll try my best to implement it in the next version. Your WP.org username will be added to the plugin's contributor list, of course.
+If you have any other ideas for features, please don't hesitate to submit them by [sending me an e-mail](mailto:kolja.nolte@gmail.com) and I'll try my best to implement it in the next version. Your WP.org username will be added to the plugin's contributor list, of course (if you provide one).
 
 *Feel free to make Secondary Title easier to use for foreign users by [help translating the plugin on Transifex](https://www.transifex.com/projects/p/plugin-secondary-title/)*.
-
-**Please note that this is an early version, there still may be bugs. If you encounter any problems or misbehaviors while using Secondary Title, please take a minute to report it via mail to kolja.nolte@gmail.com so that the fix can be implemented in the next version.**
 
 == Installation ==
 
@@ -182,6 +181,15 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 
 == Changelog ==
 
+= 0.7 =
+* Restructured and split up plugin code into different files for better handling.
+* Added "Secondary title" column to posts/pages overview.
+* Added secondary title input field to quick edit box on posts/pages overview.
+* Removed secondary title from above/below the standard title on posts/page overview.
+* Renamed functions to minimize conflicts with other plugins.
+* Updated screenshot.
+* Bug fixes.
+
 = 0.6 =
 * Added compatibility with Word Filter Plus plugin.
 * Added "Only show in main post" setting.
@@ -216,13 +224,16 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 = 0.2 =
 * Installs default values on plugin activation.
 * Added screenshots.
-* Added $suffix and $prefix parameter for get_secondary_title() and the_secondary_title().
+* Added $prefix and $suffix parameter for get_secondary_title() and the_secondary_title().
 * Updated FAQ.
 
 = 0.1 =
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.7 =
+Major changes; restructured plugin files, added "Secondary title" column to posts/page overview and more.
 
 = 0.6 =
 Bug fixes, setting added, compatibility with Word Filter Plus plugin.

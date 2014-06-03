@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plugin: Secondary Title\n"
-"POT-Creation-Date: 2014-05-02 23:28+0700\n"
-"PO-Revision-Date: 2014-05-02 23:28+0700\n"
+"POT-Creation-Date: 2014-06-03 21:42+0700\n"
+"PO-Revision-Date: 2014-06-03 21:42+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/plugin-secondary-"
 "title/language/de/)\n"
@@ -14,49 +14,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-Basepath: ../\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ./includes\n"
 
-#: secondary-title.php:419
+#: includes/admin.php:39
+msgid "Enter secondary title here"
+msgstr ""
+
+#: includes/hooks.php:109
+msgid "Secondary title"
+msgstr "Alternativer Titel"
+
+#: includes/hooks.php:128
+#, php-format
+msgid "Edit &quot;%s&quot;"
+msgstr "&quot;%s&quot; bearbeiten"
+
+#: includes/hooks.php:154
+msgid "Sec. title"
+msgstr "Alt. Titel"
+
+#: includes/settings.php:31
 msgid "Secondary Title settings"
 msgstr "Secondary Title Einstellungen"
 
-#: secondary-title.php:456
+#: includes/settings.php:70
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: secondary-title.php:463
+#: includes/settings.php:77
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: secondary-title.php:533
+#: includes/settings.php:86
 msgid "Plane missing"
 msgstr "Flugzeug vermisst"
 
-#: secondary-title.php:534
+#: includes/settings.php:87
 msgid "Malaysian Airlines flight MH370 lost over Gulf of Thailand"
 msgstr "Malaysian Airlines Flug MH370 über Golf von Thailand verschwunden"
 
-#: secondary-title.php:555
+#: includes/settings.php:98
 msgid "Preview"
 msgstr "Vorschau"
 
-#: secondary-title.php:583
+#: includes/settings.php:107
 msgid "Post types"
 msgstr "Post Types"
 
-#: secondary-title.php:614 secondary-title.php:661
+#: includes/settings.php:138 includes/settings.php:185
 msgid "Select all"
 msgstr "Alle auswählen"
 
-#: secondary-title.php:616 secondary-title.php:663
+#: includes/settings.php:140 includes/settings.php:187
 msgid "Unselect all"
 msgstr "Keine auswählen"
 
-#: secondary-title.php:619
+#: includes/settings.php:143
 msgid ""
 "Post types for which secondary titles should be activated.<br /> Select none "
 "to use all available post types."
@@ -64,19 +82,19 @@ msgstr ""
 "Post Types, für die der alternative Titel aktiviert werden soll.<br />Leer "
 "lassen, um alle Post Types zu benutzen."
 
-#: secondary-title.php:624
+#: includes/settings.php:148
 msgid "Categories"
 msgstr "Kategorien"
 
-#: secondary-title.php:656
+#: includes/settings.php:180
 msgid "Click here to see all available categories"
 msgstr "Hier klicken, um alle verfügbaren Kategorien anzuzeigen"
 
-#: secondary-title.php:656
+#: includes/settings.php:180
 msgid "Show all categories"
 msgstr "Alle Kategorien anzeigen"
 
-#: secondary-title.php:666
+#: includes/settings.php:190
 msgid ""
 "Categories for which secondary titles should be activated.<br /> Select none "
 "to use all available categories."
@@ -84,41 +102,40 @@ msgstr ""
 "Kategorien, für die der alternative Titel aktiviert werden soll.<br />Leer "
 "lassen, um alle Kategorien zu benutzen."
 
-#: secondary-title.php:672
+#: includes/settings.php:196
 msgid "Post IDs"
 msgstr "Post IDs"
 
-#: secondary-title.php:675
+#: includes/settings.php:199
 msgid "E.g.: 4, 28, 104"
 msgstr "z.B.: 4, 28, 104"
 
-#: secondary-title.php:678
+#: includes/settings.php:202
 msgid "Only use secondary title for specific posts. Separate IDs with commas."
 msgstr ""
 "Den alternativen Titel nur für Beiträge mit bestimmter Post ID aktivieren. "
 "Trenne mehrere IDs mit Kommata."
 
-#: secondary-title.php:683
+#: includes/settings.php:207
 msgid "Insert automatically"
 msgstr "Automatisch einfügen"
 
-#: secondary-title.php:690 secondary-title.php:749
+#: includes/settings.php:214 includes/settings.php:277
 msgid "Yes"
 msgstr "Ja"
 
-#: secondary-title.php:695 secondary-title.php:753
+#: includes/settings.php:219 includes/settings.php:281
 msgid "No"
 msgstr "Nein"
 
-#: secondary-title.php:699
-#, php-format
+#: includes/settings.php:222
+#, fuzzy, php-format
 msgid ""
 "To manually insert the secondary title in your theme, use <code>&lt;?php "
 "get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php "
 "the_secondary_title(); ?&gt;</code>. See <a href=\"%s\" title=\"Open readme."
-"txt\">readme.txt</a> or the <a href=\"%s\" target=\"_blank\" title=\"See "
-"official documentation\">official documentation</a> for additional "
-"parameters."
+"txt\">readme.txt</a> or the <a href=\"%s\" title=\"See official documentation"
+"\" target=\"_blank\" >official documentation</a> for additional parameters."
 msgstr ""
 "Um den alternativen Titel manuell einzubinden, benutze <code>&lt;?php "
 "get_secondary_title(); ?&gt;</code><br />oder <code>&lt;?php "
@@ -127,15 +144,15 @@ msgstr ""
 "\"Offizielle Dokumentation ansehen\">offizielle Dokumentation</a> für "
 "weitere Parameter."
 
-#: secondary-title.php:705
+#: includes/settings.php:230
 msgid "Title format"
 msgstr "Titelformat"
 
-#: secondary-title.php:708
+#: includes/settings.php:233
 msgid "E.g.: %secondary_title%: %title%"
 msgstr "z.B.: %secondary_title%: %title%"
 
-#: secondary-title.php:710
+#: includes/settings.php:235
 msgid ""
 "Use <code>%title%</code> for the main title and <code>%secondary_title%</"
 "code> for the secondary title."
@@ -143,7 +160,7 @@ msgstr ""
 "Benutze <code>%title%</code> für den Haupttitel und <code>%secondary_title%</"
 "code> für den alternativen Titel."
 
-#: secondary-title.php:716
+#: includes/settings.php:241
 #, php-format
 msgid ""
 "<b>Note:</b> To style the output, use the <a href=\"%s\" title=\"See an "
@@ -154,19 +171,19 @@ msgstr ""
 "ansehen\" target=\"_blank\">HTML-Attribute</a> zum Gestalten benutzen, z.B.:"
 "<br /><code>%s</code>"
 
-#: secondary-title.php:723
+#: includes/settings.php:248
 msgid "Title input position"
 msgstr "Position des Eingabefelds"
 
-#: secondary-title.php:729
+#: includes/settings.php:256
 msgid "Above"
 msgstr "Darüber"
 
-#: secondary-title.php:733
+#: includes/settings.php:261
 msgid "Below"
 msgstr "Darunter"
 
-#: secondary-title.php:735
+#: includes/settings.php:263
 #, php-format
 msgid ""
 "Defines whether input field for the secondary title should be displayed "
@@ -180,11 +197,11 @@ msgstr ""
 "Adminbereich).<br />Um die Position dauerhaft zu ändern, bitte siehe <a href="
 "\"%s\" title=\"FAQ ansehen\" target=\"_blank\">FAQ</a>."
 
-#: secondary-title.php:740
+#: includes/settings.php:268
 msgid "Only show in main post"
 msgstr "Nur in Hauptbeitrag anzeigen"
 
-#: secondary-title.php:755
+#: includes/settings.php:283
 msgid ""
 "If activated, the secondary title will only be shown within the main post;"
 "<br /> sidebars, menu items etc. will be ignored. <strong>Only works when "
@@ -193,7 +210,7 @@ msgstr ""
 "Zeigt den alternativen Titel ausschließlich im Hauptbeitirag der Seite an,"
 "<br />nicht in Seitenleisten, Menüpunkten usw."
 
-#: secondary-title.php:760
+#: includes/settings.php:288
 #, php-format
 msgid ""
 "Do you speak more than one language? Help making Secondary Title<br />easier "
@@ -205,12 +222,48 @@ msgstr ""
 "target=\"_blank\" title=\"Secondary Title auf Transifex &uuml;bersetzen"
 "\">das Plugin auf Transifex &uuml;bersetzt</a>."
 
-#: secondary-title.php:764
+#: includes/settings.php:291
+msgid ""
+"Found an error? Help making Secondary Title better by <a href=\"#\" title="
+"\"Click here to report a bug\">quickly reporting the bug</a>."
+msgstr ""
+"Hast du einen Fehler entdeckt? Hilf mit, Secondary Title zu verbessern, "
+"indem du einen kurzen <a href=\"#\" title=\"Bug-Report verfassen\">Bug-"
+"Report verfasst</a>."
+
+#: includes/settings.php:295
+msgid "Loading"
+msgstr ""
+
+#: includes/settings.php:299
+msgid "In a few words, please explain the bug and when exactly it occurs..."
+msgstr "Beschreibe den Bug in ein paar Wörtern..."
+
+#: includes/settings.php:301
+msgid "Your e-mail address in case there're questions..."
+msgstr "Deine E-Mail-Adresse, falls es Rückfragen gibt..."
+
+#: includes/settings.php:303
+msgid "Report bug"
+msgstr "Programmfehler melden"
+
+#: includes/settings.php:306
+msgid ""
+"Please fill out both, the bug description and the e-mail field<br /> so I "
+"can get back to you if I have any questions regarding that bug."
+msgstr ""
+
+#: includes/settings.php:309
+msgid ""
+"Thanks for reporting the bug. I'll try my best to fix it<br />and include "
+"the fix in the new version."
+msgstr ""
+"Vielen Dank, dass du dir die Zeit genommen hast, um den Fehler zu melden."
+"<br />Mit der nächsten Plugin-Version wird er - hoffentlich - behoben sein."
+
+#: includes/settings.php:314
 msgid "Save Changes"
 msgstr "Änderungen speichern"
-
-#~ msgid "Secondary Title"
-#~ msgstr "Secondary Title"
 
 #~ msgid "I love this plugin"
 #~ msgstr "Ich liebe dieses Plugin"

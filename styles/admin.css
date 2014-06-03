@@ -1,0 +1,34 @@
+/**
+ * Edit/add post/page page.
+ */
+#secondary-title-text {
+	width:  100%;
+	height: 30px;
+}
+
+/**
+ * Settings page
+ */
+#secondary-title-settings #report-bug strong {
+	font-weight: bold !important;
+}
+
+#secondary-title-settings #report-bug textarea {
+	resize: vertical;
+}
+
+#secondary-title-settings #report-bug input[type="email"] {
+	width:    360px;
+	height:   29px;
+	position: relative;
+	top:      -1px;
+}
+
+#secondary-title-settings #report-bug #bug-form-response {
+	font-weight: bold !important;
+}
+
+#secondary-title-settings #report-bug #bug-form-error {
+	font-weight: bold;
+	color:#ff4444;
+}

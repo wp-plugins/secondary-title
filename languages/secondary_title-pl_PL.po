@@ -1,19 +1,24 @@
+#
+# Translators:
+# pawel10 <pawelklimek102@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Secondary Title\n"
-"POT-Creation-Date: 2014-06-03 21:41+0700\n"
-"PO-Revision-Date: 2014-06-03 21:42+0700\n"
+"Project-Id-Version: Plugin: Secondary Title\n"
+"POT-Creation-Date: 2014-06-03 21:44+0700\n"
+"PO-Revision-Date: 2014-06-03 21:44+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
-"Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
-"Language: en\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/plugin-secondary-"
+"title/language/pl/)\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.6.5\n"
 "X-Poedit-Basepath: ../\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/admin.php:39
@@ -22,7 +27,7 @@ msgstr ""
 
 #: includes/hooks.php:109
 msgid "Secondary title"
-msgstr ""
+msgstr "Alternatywnego Tytułu"
 
 #: includes/hooks.php:128
 #, php-format
@@ -35,15 +40,15 @@ msgstr ""
 
 #: includes/settings.php:31
 msgid "Secondary Title settings"
-msgstr ""
+msgstr "Ustawienia Alternatywnego Tytułu"
 
 #: includes/settings.php:70
 msgid "Settings saved."
-msgstr ""
+msgstr "Ustawienia zapisane."
 
 #: includes/settings.php:77
 msgid "Settings"
-msgstr ""
+msgstr "Ustawienia"
 
 #: includes/settings.php:86
 msgid "Plane missing"
@@ -55,11 +60,11 @@ msgstr ""
 
 #: includes/settings.php:98
 msgid "Preview"
-msgstr ""
+msgstr "Podgląd"
 
 #: includes/settings.php:107
 msgid "Post types"
-msgstr ""
+msgstr "Typy postów"
 
 #: includes/settings.php:138 includes/settings.php:185
 msgid "Select all"
@@ -74,10 +79,12 @@ msgid ""
 "Post types for which secondary titles should be activated.<br /> Select none "
 "to use all available post types."
 msgstr ""
+"Typy postów do zastosowania alternatywnych tytułów.<br /> Nie wybierz "
+"żadnego, żeby użyć wszystkich dostępnych typów postów."
 
 #: includes/settings.php:148
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #: includes/settings.php:180
 msgid "Click here to see all available categories"
@@ -85,37 +92,41 @@ msgstr ""
 
 #: includes/settings.php:180
 msgid "Show all categories"
-msgstr ""
+msgstr "Pokaż wszystkie kategorie"
 
 #: includes/settings.php:190
 msgid ""
 "Categories for which secondary titles should be activated.<br /> Select none "
 "to use all available categories."
 msgstr ""
+"Kategorie do zastosowania alternatywnych tytułów.<br /> Nie wybierz żadnej, "
+"żeby użyć wszystkich dostępnych kategorii."
 
 #: includes/settings.php:196
 msgid "Post IDs"
-msgstr ""
+msgstr "ID postów"
 
 #: includes/settings.php:199
 msgid "E.g.: 4, 28, 104"
-msgstr ""
+msgstr "Np,: 4, 28, 104"
 
 #: includes/settings.php:202
 msgid "Only use secondary title for specific posts. Separate IDs with commas."
 msgstr ""
+"Używaj alternatywnego tytułu tylko dla poszczególnych postów. Oddziel ID "
+"przecinkami."
 
 #: includes/settings.php:207
 msgid "Insert automatically"
-msgstr ""
+msgstr "Wstawiaj automatycznie"
 
 #: includes/settings.php:214 includes/settings.php:277
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: includes/settings.php:219 includes/settings.php:281
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: includes/settings.php:222
 #, php-format
@@ -129,17 +140,19 @@ msgstr ""
 
 #: includes/settings.php:230
 msgid "Title format"
-msgstr ""
+msgstr "Format tytułu"
 
 #: includes/settings.php:233
 msgid "E.g.: %secondary_title%: %title%"
-msgstr ""
+msgstr "Np.: "
 
 #: includes/settings.php:235
 msgid ""
 "Use <code>%title%</code> for the main title and <code>%secondary_title%</"
 "code> for the secondary title."
 msgstr ""
+"Używaj <code>%title%</code> dla głównego tytułu i <code>%secondary_title%</"
+"code> dla podtytułu."
 
 #: includes/settings.php:241
 #, php-format
@@ -155,11 +168,11 @@ msgstr ""
 
 #: includes/settings.php:256
 msgid "Above"
-msgstr ""
+msgstr "Powyżej"
 
 #: includes/settings.php:261
 msgid "Below"
-msgstr ""
+msgstr "Poniżej"
 
 #: includes/settings.php:263
 #, php-format
@@ -226,4 +239,4 @@ msgstr ""
 
 #: includes/settings.php:314
 msgid "Save Changes"
-msgstr ""
+msgstr "Zapisz Zmiany"
