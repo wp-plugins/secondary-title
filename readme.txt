@@ -188,6 +188,7 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 * Removed secondary title from above/below the standard title on posts/page overview.
 * Renamed functions to minimize conflicts with other plugins.
 * Updated screenshot.
+* Updated translations.
 * Bug fixes.
 
 = 0.6 =
