@@ -15,9 +15,9 @@
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-		$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["bug_description"] . '</body></html>';
+		$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["description"] . '</body></html>';
 		/** Send the actual e-mail */
-		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $_GET["bug_description"], $headers);
+		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $_GET["description"], $headers);
 		return false;
 	}
 

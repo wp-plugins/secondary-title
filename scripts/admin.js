@@ -193,7 +193,7 @@ jQuery(document).ready(function() {
 			}
 			
 			var bug_description = jQuery("#bug-form textarea").val();
-			var user_email = jQuery("#bug-form input[type='email']").val();
+			var user_email = jQuery("#bug-form input[type=email]").val();
 
 			jQuery("#bug-form-response").fadeIn();
 			selector_bug_form.html(jQuery("#report-bug-loading-icon").show());
