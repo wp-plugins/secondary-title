@@ -10,14 +10,14 @@
 	/** Send me an e-mail when a bug report is filed and sent. */
 	if(isset($_GET["report_bug"]) && $_GET["report_bug"] == "true") {
 		/** Define headers */
-		$headers = "From: " . strip_tags($_POST["email"]) . "\r\n";
-		$headers .= "Reply-To: " . strip_tags($_POST["email"]) . "\r\n";
+		$headers = "From: " . strip_tags($_GET["email"]) . "\r\n";
+		$headers .= "Reply-To: " . strip_tags($_GET["email"]) . "\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-		$message = '<html><body><strong>Von:</strong> ' . $_POST["full-name"] . '<br /><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["message"] . '</body></html>';
+		$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["bug_description"] . '</body></html>';
 		/** Send the actual e-mail */
-		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $message, $headers);
+		mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $_GET["bug_description"], $headers);
 		return false;
 	}
 

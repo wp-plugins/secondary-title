@@ -191,10 +191,13 @@ jQuery(document).ready(function() {
 			else {
 				jQuery("#bug-form-error").hide();
 			}
+			
+			var bug_description = jQuery("#bug-form textarea").val();
+			var user_email = jQuery("#bug-form input[type='email']").val();
 
 			jQuery("#bug-form-response").fadeIn();
 			selector_bug_form.html(jQuery("#report-bug-loading-icon").show());
-			selector_bug_form.load(settings_file_path + "?report_bug=true", function() {
+			selector_bug_form.load(settings_file_path + "?report_bug=true&description=" + bug_description + "&email=" + user_email, function() {
 				jQuery("#report-bug-loading-icon").hide();
 			});
 			return false;
