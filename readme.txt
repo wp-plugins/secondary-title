@@ -192,11 +192,11 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 * Some new minor functions and changes on the settings page.
 * Allowed to use %title% and %secondary_title% variable on settings page > title format more than once.
 * Added option to use secondary title in permalinks.
-* Added filter hooks to get_secondary_title(), the_secondary_title() and get_secondary_title_link().
+* Added filter hooks to `get_secondary_title()`, `the_secondary_title()` and `get_secondary_title_link()`.
 * Added French translation (thanks to [fxbenard](https://www.transifex.com/accounts/profile/fxbenard/)).
 * Updated existing translations.
 * Fixed bug that prevented the secondary title to be updated when empty.
-* Renamed get_filtered_post_types() to get_secondary_title_filtered_post_types() to avoid possible conflicts.
+* Renamed `get_filtered_post_types()` to `get_secondary_title_filtered_post_types()` to avoid possible conflicts.
 
 = 0.7 =
 * Restructured and split up plugin code into different files for better handling.
@@ -250,6 +250,9 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.8 =
+Permalinks support, bug fixes, translation updates.
 
 = 0.7 =
 Major changes; restructured plugin files, added "Secondary title" column to posts/page overview and more.
