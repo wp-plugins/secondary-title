@@ -20,6 +20,35 @@
 	add_action("init", "init_secondary_title_languages");
 
 	/**
+	 * Saves the actual secondary title when add/update post.
+	 *
+	 * @since 0.1
+	 *
+	 * @param $post_id
+	 *
+	 * @return mixed
+	 */
+	function secondary_title_save_post($post_id) {
+		if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
+			return;
+		}
+		if(!current_user_can("edit_post", $post_id)) {
+			return;
+		}
+		if(false !== wp_is_post_revision($post_id)) {
+			return;
+		}
+		if($_POST["secondary_title"] == "") {
+			delete_post_meta($post_id, "_secondary_title");
+		}
+		else {
+			update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
+		}
+	}
+
+	add_action("edit_post", "secondary_title_save_post");
+
+	/**
 	 * If auto show function is set, replace the post titles with custom title format.
 	 *
 	 * @since 0.1
@@ -29,11 +58,11 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
+		global $post;
 		/** Keep the standard title */
 		$standard_title = $title;
 		/** Insert the secondary title in the admin interface */
 		/** Get post information */
-		global $post;
 		$post_category = get_the_category();
 		if(isset($post_category[0]->slug)) {
 			$post_category = $post_category[0]->slug;
@@ -67,7 +96,7 @@
 		return $title;
 	}
 
-	add_filter("the_title", "secondary_title_auto_show", 10, 2);
+	add_filter("the_title", "secondary_title_auto_show", 999, 2);
 
 	/**
 	 * Loads scripts and styles.
@@ -130,7 +159,7 @@
 
 	/** Only display secondary title for selected post types. If empty, use all */
 	$selected_post_types = get_secondary_title_setting("post_types");
-	$post_types          = get_filtered_post_types();
+	$post_types = get_secondary_title_filtered_post_types();
 	if(count($selected_post_types) > 0) {
 		$post_types = $selected_post_types;
 	}
@@ -160,21 +189,41 @@
 	add_action("quick_edit_custom_box", "secondary_title_overview_quick_edit");
 
 	/**
-	 * @since 0.7
-	 *
-	 * @param $post_id
+	 * Registers the %secondary_title% tag as a
+	 * permalink tag.
+	 */
+	function secondary_title_permalinks_init() {
+		add_rewrite_tag("%secondary_title%", "([^&]+)");
+	}
+
+	add_action("init", "secondary_title_permalinks_init");
+
+	/**
+	 * @param $permalink
+	 * @param $post
 	 *
 	 * @return mixed
 	 */
-	function secondary_title_overview_quick_edit_save($post_id) {
-		if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
-			return $post_id;
+	function secondary_title_permalinks($permalink, $post) {
+		$setting                   = get_secondary_title_setting("use_in_permalinks");
+		$secondary_title           = get_secondary_title($post->ID);
+		$secondary_title_sanitized = sanitize_title($secondary_title);
+		if($setting == "auto" && !empty($secondary_title)) {
+			$permalink = str_replace($post->post_name, $secondary_title_sanitized . "-" . $post->post_name, $permalink);
 		}
-		//$post = get_post($post_id);
-		if(!empty($_POST["secondary_title"])) {
-			update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
+		elseif($setting == "custom" && !empty($secondary_title)) {
+			$permalink = str_replace("%secondary_title%", $secondary_title_sanitized, $permalink);
 		}
-		return $post_id;
+		else {
+			$permalink = str_replace("%secondary_title%", "", $permalink);
+		}
+
+		/** Remove possible double slash */
+		$permalink_ending = substr($permalink, strlen($permalink) - 2, strlen($permalink));
+		if($permalink_ending == "//") {
+			$permalink = substr($permalink, 0, strlen($permalink) - 1);
+		}
+		return $permalink;
 	}
 
-	add_action("save_post", "secondary_title_overview_quick_edit_save");
+	add_filter("post_link", "secondary_title_permalinks", 10, 2);

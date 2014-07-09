@@ -8,11 +8,7 @@
 	 */
 
 	/**
-	 * Returns the plugin's default settings and their values.
-	 *
-	 * @since 0.1
-	 *
-	 * @return array
+	 * @return array|mixed|void
 	 */
 	function get_secondary_title_default_settings() {
 		/** Define the default settings and their values */
@@ -21,10 +17,12 @@
 			"secondary_title_categories"             => array(),
 			"secondary_title_post_ids"               => array(),
 			"secondary_title_auto_show"              => "on",
-			"secondary_title_only_show_in_main_post" => "on",
 			"secondary_title_title_format"           => "%secondary_title%: %title%",
-			"secondary_title_title_input_position"   => "above"
+			"secondary_title_title_input_position"   => "above",
+			"secondary_title_use_in_permalinks"      => "off",
+			"secondary_title_only_show_in_main_post" => "on"
 		);
+		$default_settings = apply_filters("secondary_title_default_settings", $default_settings);
 		return $default_settings;
 	}
 
@@ -53,6 +51,24 @@
 	}
 
 	/**
+	 * @return array
+	 */
+	function get_secondary_title_settings() {
+		$settings = array();
+		foreach(get_secondary_title_default_settings() as $setting => $default_value) {
+			$option = get_option($setting);
+			if(empty($option)) {
+				$value = $default_value;
+			}
+			else {
+				$value = $option;
+			}
+			$settings[$setting] = $value;
+		}
+		return $settings;
+	}
+
+	/**
 	 * Returns a specific setting for the plugin. If the selected
 	 * option is unset, the default value will be returned.
 	 *
@@ -63,18 +79,16 @@
 	 * @return array|mixed|void
 	 */
 	function get_secondary_title_setting($setting) {
-		$setting_name    = "secondary_title_" . $setting;
-		$option_setting  = get_option($setting_name);
-		$default_setting = get_secondary_title_default_setting($setting_name);
-
-		/** Use default value if setting is not set */
-		if(empty($setting)) {
-			$setting = $default_setting;
-		}
-		else {
-			$setting = $option_setting;
-		}
+		$settings = get_secondary_title_settings();
+		$setting  = $settings["secondary_title_" . $setting];
 		return $setting;
+	}
+
+	function reset_secondary_title_settings() {
+		$settings = get_secondary_title_settings();
+		foreach($settings as $setting => $value) {
+			delete_option($setting);
+		}
 	}
 
 	/**
@@ -127,19 +141,29 @@
 		if(!$post_id) {
 			$post_id = get_the_ID();
 		}
-		$post_ids = get_secondary_title_post_ids();
-		if(count($post_ids) != 0 && !in_array($post_id, $post_ids)) {
+		$post_ids   = get_secondary_title_post_ids();
+		$post_types = get_secondary_title_post_types();
+
+		/** Stop if post is not among the allowed post types/IDs */
+		if(count($post_ids) != 0 && !in_array($post_id, $post_ids) || count($post_types) != 0 && !in_array(get_post_type($post_id), $post_types)) {
 			return false;
 		}
-		/** Return the secondary title */
-		$secondary_title = $prefix . get_post_meta($post_id, "_secondary_title", true) . $suffix;
+
+		$secondary_title = get_post_meta($post_id, "_secondary_title", true);
+		/** Return the secondary title if exists */
+		if(!empty($secondary_title)) {
+			$secondary_title = $prefix . $secondary_title . $suffix;
+		}
+		else {
+			return false;
+		}
 
 		/** Apply filters to secondary title if used with Word Filter Plus plugin */
 		if(class_exists("WordFilter")) {
 			$word_filter     = new WordFilter;
 			$secondary_title = $word_filter->filter_title($secondary_title);
 		}
-
+		$secondary_title = apply_filters("get_secondary_title", $secondary_title, $post_id, $prefix, $suffix);
 		return $secondary_title;
 	}
 
@@ -153,7 +177,9 @@
 	 * @param string $prefix  To be added in front of the secondary title
 	 */
 	function the_secondary_title($post_id = 0, $prefix = "", $suffix = "") {
-		echo get_secondary_title($post_id, $prefix, $suffix);
+		$secondary_title = get_secondary_title($post_id, $prefix, $suffix);
+		$secondary_title = apply_filters("the_secondary_title", $secondary_title, $post_id, $prefix, $suffix);
+		echo $secondary_title;
 	}
 
 	/**
@@ -161,22 +187,25 @@
 	 *
 	 * @since 0.5
 	 *
-	 * @param int   $post_id ID of the target post.
-	 * @param array $options Additional options.
+	 * @param int    $post_id ID of the target post.
+	 * @param string $wrapper HTML element around link.
+	 * @param array  $options Additional options.
 	 *
 	 * @return string
 	 */
-	function get_secondary_title_link($post_id = 0, $options = array()) {
+	function get_secondary_title_link($post_id = 0, $wrapper = "", $options = array()) {
 		if(!$post_id) {
 			$post_id = get_the_ID();
 		}
+		/** Define default options used if not set */
 		$default_options = array(
 			"before_link" => "",
 			"after_link"  => "",
 			"before_text" => "",
 			"after_text"  => "",
+			"link_text"   => get_secondary_title($post_id),
 			"link_target" => "_self",
-			"link_title"  => "",
+			"link_title"  => sprintf(__("Go to &quot;%s&quot;"), get_the_title($post_id)),
 			"link_id"     => "secondary-title-link-" . $post_id,
 			"link_class"  => "secondary-title-link"
 		);
@@ -185,6 +214,9 @@
 				$options[$default_option] = $value;
 			}
 		}
+
+		$link = apply_filters("get_secondary_title_link", $post_id, $wrapper, $options);
+
 		$link_attributes = array(
 			"title",
 			"id",
@@ -199,17 +231,24 @@
 			}
 		}
 
-		$secondary_title = get_secondary_title($post_id);
+		$wrapper_start = "";
+		$wrapper_end   = "";
+		/** Build the wrapper if set */
+		if(!empty($wrapper)) {
+			$wrapper_start = "<" . $wrapper . ">";
+			$wrapper_end   = "</" . $wrapper . ">";
+		}
 
 		/** Glue together and build the actual link */
-		$link = $options["before_link"];
+		$link .= $wrapper_start;
+		$link .= $options["before_link"];
 		$link .= '<a href="' . get_permalink($post_id) . '"' . $options["link_target"] . $options["link_title"] . $options["link_id"] . $options["link_class"] . '>';
 		$link .= $options["before_text"];
-		$link .= $secondary_title;
+		$link .= $options["link_text"];
 		$link .= $options["after_text"];
 		$link .= "</a>";
 		$link .= $options["after_link"];
-
+		$link .= $wrapper_end;
 		return $link;
 	}
 
@@ -222,7 +261,8 @@
 	 * @param array $options
 	 */
 	function the_secondary_title_link($post_id = 0, $options = array()) {
-		echo get_secondary_title_link($post_id, $options);
+		$link = get_secondary_title_link($post_id, $options);
+		echo $link;
 	}
 
 	/**
@@ -252,20 +292,13 @@
 	 *
 	 * @return array
 	 */
-	function get_filtered_post_types() {
+	function get_secondary_title_filtered_post_types() {
 		/** Returns all registered post types */
 		$post_types = get_post_types(array(
 			"public" => true, // Only show post types that are publicly accessible in the front end
 		));
 
-		$output = array();
-		/** Filter out the attachment post type */
-		foreach($post_types as $post_type) {
-			if($post_type != "attachment") {
-				array_push($output, $post_type);
-			}
-		}
-		return $output;
+		return $post_types;
 	}
 
 	/**
@@ -278,5 +311,16 @@
 	 * @return bool
 	 */
 	function secondary_title_send_bug_report() {
+		echo "xx";
+		if(isset($_GET["report_bug"]) && $_GET["report_bug"] == "true") {
+			/** Define headers */
+			$headers = "From: " . strip_tags($_GET["email"]) . "\r\n";
+			$headers .= "Reply-To: " . strip_tags($_GET["email"]) . "\r\n";
+			$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
+			$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["description"] . '</body></html>';
+			/** Send the actual e-mail */
+			mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $message, $headers);
+		}
 	}

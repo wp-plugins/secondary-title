@@ -9,6 +9,14 @@
 /**
  * Settings page
  */
+#secondary-title-settings strong {
+	font-weight: bold;
+}
+
+#secondary-title-settings #title-format .description code {
+	cursor: pointer;
+}
+
 #secondary-title-settings #report-bug strong {
 	font-weight: bold !important;
 }
@@ -24,11 +32,12 @@
 	top:      -1px;
 }
 
-#secondary-title-settings #report-bug #bug-form-response {
+#secondary-title-settings #report-bug .bug-form-response {
 	font-weight: bold !important;
 }
 
-#secondary-title-settings #report-bug #bug-form-error {
+#secondary-title-settings #report-bug #bug-form-response-empty-fields,
+#secondary-title-settings #report-bug #bug-form-response-error {
 	font-weight: bold;
-	color:#ff4444;
+	color:       #FF4444;
 }

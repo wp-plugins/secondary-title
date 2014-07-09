@@ -20,13 +20,15 @@ The plugin comes with an extra settings page which allows you to customize the p
 *	whether the secondary title should be automatically inserted with the standard title,
 *	the format both titles are being shown (only works when "auto show" is activated),
 *	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface,
-*  whether the secondary title should only be displayed in the main post and not within widgets etc.
+* whether the secondary title should only be displayed in the main post and not within widgets etc.,
+* if the secondary title should be added to the permalinks.
 
-**Please see www.koljanolte.com/wordpress/plugins/secondary-title/ for additional information.**
+
+**Please see www.koljanolte.com/wordpress/plugins/secondary-title/ for a full documentation.**
 
 If you have any other ideas for features, please don't hesitate to submit them by [sending me an e-mail](mailto:kolja.nolte@gmail.com) and I'll try my best to implement it in the next version. Your WP.org username will be added to the plugin's contributor list, of course (if you provide one).
 
-*Feel free to make Secondary Title easier to use for foreign users by [help translating the plugin on Transifex](https://www.transifex.com/projects/p/plugin-secondary-title/)*.
+*Feel free to make Secondary Title easier to use for foreign users by [help translating the plugin on Transifex](https://www.transifex.com/projects/p/secondary-title/)*.
 
 == Installation ==
 
@@ -163,13 +165,18 @@ To style the output of `<?php the_secondary_title(); ?>` or `<?php get_secondary
 
 Same as above, this will display the secondary title in red and with a font size of 12px.
 
-= I want the secondary title only to be displayed in posts, not in the sidebar etc. =
+= I'd like the secondary title only to be displayed in posts, not in the sidebar etc. =
 
 Since version 0.6 you can set whether the the secondary title should be should be shown everywhere or exclusively on the main post. If activated, it won't be shown in sidebars, menu items etc.
 
+= How to display the secondary title above/below the main title with turned on auto show? =
+You can insert line breaks with the `<br />` HTML tag. Example:
+`%secondary_title%<br />%title%`
+
 = I have found an error and/or would like to suggest a change. =
 
-Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to send me a quick e-mail to kolja.nolte@gmail.com so I can fix it and include it in the next version. Same goes for suggestions.
+Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to
+either fill out the form when clicked on "quickly reporting a bug" within the plugin's settings page or send me an e-mail to kolja.nolte@gmail.com so I can fix it and include it in the next version. Same goes for suggestions.
 
 == Screenshots ==
 
@@ -181,10 +188,21 @@ Since Secondary Title is my first WordPress plugin, I may have missed a bug when
 
 == Changelog ==
 
+= 0.8 =
+* Some new minor functions and changes on the settings page.
+* Allowed to use %title% and %secondary_title% variable on settings page > title format more than once.
+* Added option to use secondary title in permalinks.
+* Added filter hooks to get_secondary_title(), the_secondary_title() and get_secondary_title_link().
+* Added French translation (thanks to [fxbenard](https://www.transifex.com/accounts/profile/fxbenard/)).
+* Updated existing translations.
+* Fixed bug that prevented the secondary title to be updated when empty.
+* Renamed get_filtered_post_types() to get_secondary_title_filtered_post_types() to avoid possible conflicts.
+
 = 0.7 =
 * Restructured and split up plugin code into different files for better handling.
 * Added "Secondary title" column to posts/pages overview.
 * Added secondary title input field to quick edit box on posts/pages overview.
+* Added bug report form to settings page.
 * Removed secondary title from above/below the standard title on posts/page overview.
 * Renamed functions to minimize conflicts with other plugins.
 * Updated screenshot.
