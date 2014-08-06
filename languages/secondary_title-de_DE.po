@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Secondary Title\n"
+"POT-Creation-Date: 2014-01-29 01:15+0700\n"
+"PO-Revision-Date: 2014-01-29 01:55+0700\n"
+"Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
+"Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
+"Language: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .C:\\Users\\Kolja\\Websites\\www\\sueddeutsche\\wp-content"
+"\\plugins\\secondary-title\n"
+"X-Poedit-SearchPath-0: C:\\Users\\Kolja\\Websites\\www\\sueddeutsche\\wp-"
+"content\\plugins\\secondary-title\n"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:210
+msgid "Secondary Title settings"
+msgstr "Secondary Title Einstellungen"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:248
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:255
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:255
+msgid "Secondary Title"
+msgstr "Secondary Title"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:295
+msgid "I love this plugin"
+msgstr "Ich liebe dieses Plugin"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:296
+msgid "Important news"
+msgstr "Wichtige Nachricht"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:317
+msgid "Preview"
+msgstr "Vorschau"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:345
+msgid "Post types"
+msgstr "Post Types"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:370
+msgid ""
+"Post types for which secondary titles should be activated.<br /> Select none "
+"to use all available post types."
+msgstr ""
+"Post Types, für die der alternative Titel aktiviert werden soll.<br />Leer "
+"lassen, um alle Post Types zu benutzen."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:375
+msgid "Categories"
+msgstr "Kategorien"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:406
+msgid "Show all categories"
+msgstr "Alle Kategorien anzeigen"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:409
+msgid ""
+"Categories for which secondary titles should be activated.<br /> Select none "
+"to use all available categories."
+msgstr ""
+"Kategorien, für die der alternative Titel aktiviert werden soll.<br />Leer "
+"lassen, um alle Kategorien zu benutzen."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:415
+msgid "Post IDs"
+msgstr "Post IDs"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:418
+msgid "E.g.: 4, 28, 104"
+msgstr "z.B.: 4, 28, 104"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:421
+msgid "Only use secondary title for specific posts. Separate IDs with commas."
+msgstr ""
+"Den alternativen Titel nur für Beiträge mit bestimmter Post ID aktivieren."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:426
+msgid "Insert automatically"
+msgstr "Automatisch einfügen"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:433
+msgid "Yes"
+msgstr "Ja"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:438
+msgid "No"
+msgstr "Nein"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:440
+msgid ""
+"To manually insert the secondary title in your theme, use <code>&lt;?php "
+"get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php "
+"the_secondary_title(); ?&gt;</code>. See readme.txt for additional "
+"parameters."
+msgstr ""
+"Um den alternativen Titel manuell ins Theme einzufügen, benutze  <code>&lt;?"
+"php get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php "
+"the_secondary_title(); ?&gt;</code>. Siehe readme.txt für verfügbare "
+"Parameter."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:446
+msgid "Title format"
+msgstr "Titelformat"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:449
+msgid "E.g.: %secondary_title%: %title%"
+msgstr "z.B.: %secondary_title%: %title%"
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:451
+msgid ""
+"Use <code>%title%</code> for the main title and <code>%secondary_title%</"
+"code> for the secondary title."
+msgstr ""
+"Benutze <code>%title%</code> für den Haupttitel und <code>%secondary_title%</"
+"code> für den alternativen Titel."
+
+#: C:\Users\Kolja\Websites\www\sueddeutsche\wp-content\plugins\secondary-title/secondary-title.php:460
+msgid "Save Changes"
+msgstr "Änderungen speichern"
