@@ -74,7 +74,7 @@ This will display the secondary title in red with a font size of 12px; the stand
 If you want the secondary title only to be displayed in a certain place (e.g. inside of the home posts),
 you will have to wrap it in a class within the title format (e.g. `<span
 class="secondary-title">%secondary_title%</span> %title%`)and use `display:none;` in your *style.css* to hide
-it and `display:none;` to show it only in the selected area(s).
+it and `display:block;` to show it only in the selected area(s).
 
 For example, to hide the secondary title on the front page (home), the CSS passage my look like this:
 
