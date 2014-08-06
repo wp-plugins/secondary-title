@@ -1,61 +1,37 @@
 /**
- * Checks whether the current viewed page is the
- * plugin's settings page.
- *
  * @return {boolean}
  */
-function IsOnSettingsPage() {
+function IsCurrentPage(page) {
+	//noinspection JSUnresolvedVariable
 	var is = false;
-	if(jQuery("#secondary-title-settings").length) {
+	if(adminpage == page || pagenow == page) {
 		is = true;
 	}
 	return is;
-}
-
-/**
- * Checks whether the current viewed page is the
- * post/page/custom post type edit page.
- *
- * @returns {boolean}
- * @constructor
- */
-function IsOnEditPage() {
-	var is = false;
-	if(jQuery("#post-body").length) {
-		is = true;
-	}
-	return is;
-}
-
-/**
- * @constructor
- */
-function MoveQuickEdit() {
-	var container = jQuery(event.currentTarget).parents("tr");
-	var post_id = jQuery(container).attr("id").replace("post-", "");
-	setTimeout(function() {
-		var edit = jQuery("#edit-" + post_id);
-		var secondary_title = jQuery("#post-" + post_id).find(".column-secondary_title .row-title").text();
-		var secondary_title_container = edit.find(".quick_edit_secondary_title_input").parents("label");
-		secondary_title_container.insertAfter("#edit-" + post_id + " .inline-edit-col label:first");
-
-		edit.find(".quick_edit_secondary_title_input").attr("value", secondary_title);
-	}, 100);
 }
 
 jQuery(document).ready(function() {
 	/**
-	 * Inserts value and changes position of the secondary title input field
-	 * in the quick edit section on posts/pages overview.
+	 * Scrupts being executed on post/page overview (edit.php).
 	 */
-	jQuery(".editinline").click(function() {
-		new MoveQuickEdit();
-	});
+	if(IsCurrentPage("edit-php")) {
+		/**
+		 * Add the "Sec. title" input field to the quick edit.
+		 */
+		jQuery("a.editinline").click(function() {
+			var post_id = jQuery(this).parents("tr").attr("id").replace("post-", "");
+			var secondary_title = jQuery("#post-" + post_id).find(".secondary-title-quick-edit-label").clone();
+			setTimeout(function() {
+				jQuery("#edit-" + post_id).find(".inline-edit-col label:first").after(secondary_title).show();
+			}, 50);
+		});
+	}
 
 	/**
-	 * The functions for the settings page.
+	 * Scripts being executed when creating/editing a post,
+	 * page or custom post type post.
 	 */
-	if(IsOnEditPage()) {
+	if(IsCurrentPage("post-php")) {
 		/**
 		 * Inserts the secondary title input field on edit pages.
 		 */
@@ -70,8 +46,12 @@ jQuery(document).ready(function() {
 			selector_title_input.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
 		}
 	}
-	if(IsOnSettingsPage()) {
-		/** Define variables we're going to need */
+	/**
+	 * Scripts being executed on Secondary Title
+	 * settings page.
+	 */
+	if(IsCurrentPage("settings_page_secondary_title")) {
+		/** Define variables we're going to need later on */
 		var preview_selector = jQuery("#title_format_preview");
 		var title_format_input_selector = jQuery("#title-format-input");
 		var selector_preview_title = jQuery("#preview-title").attr("value");
@@ -225,59 +205,6 @@ jQuery(document).ready(function() {
 			else {
 				selector_permalinks_custom_description.hide();
 			}
-		});
-
-		/**
-		 * "Report bug" function.
-		 */
-		var settings_file_path = jQuery("#report-bug-file-path").attr("value");
-		var selector_report_bug = jQuery("#report-bug");
-		selector_report_bug.find("a").click(function() {
-			jQuery("#bug-form").slideToggle();
-			return false;
-		});
-		selector_report_bug.find("#submit-bug-report").click(function() {
-			var selector_bug_form = jQuery("#bug-form");
-			/** Check if all fields have been filled out, otherwise display the error message */
-			var required_fields = [
-				"textarea", "input[type='email']"
-			];
-			var has_empty_fields = false;
-			jQuery(selector_bug_form).find("" + required_fields + "").each(function() {
-				var this_field = jQuery(this);
-				if(this_field.val() == "") {
-					this_field.css("background-color", "#FFFFC4");
-					has_empty_fields = true;
-				}
-				else {
-					this_field.css("background-color", "#FFFFFF");
-				}
-			});
-			if(has_empty_fields) {
-				jQuery("#bug-form-response-empty-fields").fadeIn();
-				return false;
-			}
-			else {
-				jQuery("#bug-form-response-empty-fields").hide();
-			}
-			var selector_loading_icon = jQuery("#report-bug-loading-icon");
-			var bug_description = selector_bug_form.find("textarea").val();
-			var user_email = selector_bug_form.find("input[type=email]").val();
-			selector_bug_form.html(selector_loading_icon.show());
-			/** Send form data to settings.php for processing in PHP */
-			jQuery.ajax({
-				type:    "get",
-				url: settings_file_path + "?action=rate&report_bug=true&description=" + bug_description + "&email=" + user_email,
-				success: function() {
-					selector_loading_icon.hide();
-					jQuery("#bug-form-response-success").fadeIn();
-				},
-				error:   function() {
-					selector_loading_icon.hide();
-					jQuery("#bug-form-response-error").fadeIn();
-				}
-			});
-			return false;
 		});
 	}
 });

@@ -8,7 +8,18 @@
 	 */
 
 	/**
+	 * Stop script when the file is called directly.
+	 *
+	 * @since 0.1
+	 */
+	if(!function_exists("add_action")) {
+		return false;
+	}
+
+	/**
 	 * @return array|mixed|void
+	 *
+	 * @since 0.1
 	 */
 	function get_secondary_title_default_settings() {
 		/** Define the default settings and their values */
@@ -22,7 +33,7 @@
 			"secondary_title_use_in_permalinks"      => "off",
 			"secondary_title_only_show_in_main_post" => "on"
 		);
-		$default_settings = apply_filters("secondary_title_default_settings", $default_settings);
+		$default_settings = apply_filters("get_get_secondary_title_default_settings", $default_settings);
 		return $default_settings;
 	}
 
@@ -299,28 +310,4 @@
 		));
 
 		return $post_types;
-	}
-
-	/**
-	 * Sends me an e-mail when a bug report is filed and sent.
-	 * To be called as jQuery include which is why the script is
-	 * being cancelled after execution ("return false;").
-	 *
-	 * @since 0.7
-	 *
-	 * @return bool
-	 */
-	function secondary_title_send_bug_report() {
-		echo "xx";
-		if(isset($_GET["report_bug"]) && $_GET["report_bug"] == "true") {
-			/** Define headers */
-			$headers = "From: " . strip_tags($_GET["email"]) . "\r\n";
-			$headers .= "Reply-To: " . strip_tags($_GET["email"]) . "\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
-			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-			$message = '<html><body><strong>E-Mail:</strong> ' . $_GET["email"] . '<br /><br />' . $_GET["description"] . '</body></html>';
-			/** Send the actual e-mail */
-			mail("kolja.nolte@gmail.com", "Bug Report: Secondary Title", $message, $headers);
-		}
 	}

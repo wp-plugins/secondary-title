@@ -8,6 +8,13 @@
 	 */
 
 	/**
+	 * Stop script when the file is called directly.
+	 */
+	if(!function_exists("add_action")) {
+		return false;
+	}
+
+	/**
 	 * Build the - invisible - secondary title input on edit pages
 	 * to let jQuery displaying it (see admin.js).
 	 *

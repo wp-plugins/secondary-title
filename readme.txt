@@ -1,7 +1,7 @@
 === Secondary Title ===
 Contributors: thaikolja
 Tags: title, alternative title, secondary title
-Tested up to: 3.9
+Tested up to: 3.9.2
 Stable tag: 0.1
 Requires at least: 3.0.1
 License: GPLv2 or later
@@ -15,16 +15,15 @@ Adds a secondary title to posts, pages and custom post types.
 
 The plugin comes with an extra settings page which allows you to customize the plugin according to your needs. You can change:
 
-*	[post types](http://codex.wordpress.org/Post_Types) and categories the secondary title will be shown on,
-*	specific post IDs for which the secondary title should be activated,
-*	whether the secondary title should be automatically inserted with the standard title,
-*	the format both titles are being shown (only works when "auto show" is activated),
+*	[post types](http://codex.wordpress.org/Post_Types), categories and specific post IDs the secondary title will be
+shown on,
+*	whether the secondary title should be automatically inserted with the standard title (*Auto show*),
+*	the format both titles are being shown (only works when *Auto show* is activated),
 *	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface,
 * whether the secondary title should only be displayed in the main post and not within widgets etc.,
-* if the secondary title should be added to the permalinks.
+* if the secondary title should be added to the [permalinks](http://codex.wordpress.org/Using_Permalinks).
 
-
-**Please see www.koljanolte.com/wordpress/plugins/secondary-title/ for a full documentation.**
+**Please the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/) for a full documentation.**
 
 If you have any other ideas for features, please don't hesitate to submit them by [sending me an e-mail](mailto:kolja.nolte@gmail.com) and I'll try my best to implement it in the next version. Your WP.org username will be added to the plugin's contributor list, of course (if you provide one).
 
@@ -48,114 +47,45 @@ or
 
 in your theme file(s) (e.g. single.php) to display the secondary title.
 
-= Parameters =
-
-`<?php get_secondary_title($post_id, $prefix, $suffix); ?>`
-
-**$post_id** ([integer](http://codex.wordpress.org/How_to_Pass_Tag_Parameters#Integer)) (optional): The ID of the post whose secondary title should be displayed. If within a [loop](http://codex.wordpress.org/The_Loop), leave empty or use 0 to get the current post ID.
-Default: get_the_ID()
-
-**$prefix** ([string](http://codex.wordpress.org/How_to_Pass_Tag_Parameters#String)) (optional): A prefix that will be displayed before the secondary title.
-Default: Empty
-
-**$suffix** (string) (optional): A suffix that will be displayed at the end of the secondary title.
-Default: Empty
-
-`<?php the_secondary_title($post_id, $prefix, $suffix); ?>`
-
-The same as `<?php get_secondary_title(); ?>`.
-
-`<?php get_secondary_title_link($post_id, $options); ?>`
-
-**$post_id** (integer) (optional): The ID of the post whose secondary title should be displayed. If within a loop, leave empty or use 0 to get the current post ID.
-Default: get_the_ID()
-
-**$options** ([array](http://codex.wordpress.org/How_to_Pass_Tag_Parameters#Arrat)) (optional): An array containing additional options:
-
- * *before_link*: String displayed before the link elements. **Default**: Empty
- * *after_link*: String displayed after the link elements. **Default**: Empty
- * *before_text*: String displayed before the link text. **Default**: Empty
- * *before_text*: String displayed after the link text. **Default**: Empty
- * *link_target*: target="" attribute for the "a href" element. **Default**: _self
- * *link_title*: title="" attribute for the "a href" element (displayed on mouseover). **Default**: Empty
- * *link_id*: id="" attribute for the "a href" element. **Default**: secondary-title-link-$post_id
- * *link_class*: class="" attribute for the "a href" element. **Default**: secondary-title-link
-
-= Examples =
-
-**Only display the secondary title:**
-
-`<?php the_secondary_title(); ?>`
-
-**Using the standard and secondary title in the post's head:**
-
-`<div class="titles">
-	<h2 class="secondary-title">+++ <?php the_secondary_title(); ?> +++</h2>
-	<h1 class="title"><?php the_title(); ?></h1>
-</div>`
-
-*Displays:*
-+++ Plane missing +++
-Malaysian Airlines flight MH370 lost over Gulf of Thailand
-
-**Display the secondary title of the last 5 posts:**
-
-`<?php
-	$query = new WP_Query(
-		"post_type" => "post",
-		"showposts" => 5
-	);
-	if($query->have_posts()) {
-		echo "<ul class=\"secondary-titles\">";
-		while($query->have_posts()) {
-			$query->the_post();
-			$secondary_title = get_secondary_title();
-			echo "<li>" . get_secondary_title() . "<li />";
-		}
-		echo "</ul>";
-	}
-	else {
-		echo "No posts found.";
-	}
-?>`
-
-**Display the secondary title of a specific post:**
-
-`<?php
-	$secondary_title = get_secondary_title(28);
-?>
-<h1><?php echo $secondary_title; ?></h1>`
-
-This will display the post with the post ID 28.
-
-**Display the secondary title in red and the standard title in the default color:**
-
-`<span style="color:red;"><?php the_secondary_title(); ?></span> <?php the_title(); ?>`
-
-**In case you encounter any errors or unintended behaviours, please let me know by sending a quick e-mail to kolja.nolte@gmail.com so I can update the plugin with the fixed version.**
+**For a more detailed documentation with parameters, functions and examples, please see the [official documentation](http://www.koljanolte.com/wordpress/plugins/secondary-title/)**.
 
 == Frequently Asked Questions ==
 
 = How do I use this plugin? =
 
-For installation and usage instructions, please see [Installation](http://wordpress.org/plugins/secondary-title/installation/) either check the [official documentation](http://www.koljanolte.com/wordpress/plugins/secondary-title/). There, you'll also find several examples.
+For installation instructions, please see [Installation](http://wordpress.org/plugins/secondary-title/installation/).
+ A more detailed documentation with parameters, functions and usage examples can be found on the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/).
 
 = The secondary title is not being added to the standard title. =
 
-Please verify whether the option "Insert automatically" is set to "Yes". Don't forget to enter a valid title format, use the placeholders %title% for the standard title and %secondary_title% for the secondary title. Leaving the title format blank won't show anything at all.
+Please verify whether the option *Insert automatically* is set to *Yes*, otherwise it will only be displayed when you call `<?php echo get_secondary_title(); ?>` or `<?php the_secondary_title(); ?>`. If you're using the auto show function. don't forget to enter a valid title format; use the placeholders `%title%` for the standard title and `%secondary_title%` for the secondary title. Leaving the title format blank won't show anything at all.
 
 = The secondary title still doesn't show up. =
 
-Make sure the post is among the allowed post types and/or categories set under *Settings > Secondary Title*. Also, if you have specified any post IDs, **the secondary title will only be shown on these posts**. Leave post types, categories and post IDs blank to deactivate this function.
+Make sure the post is among the allowed post types and/or categories set under *Settings > Secondary Title*. Also, if you have specified any post IDs, **the secondary title will only be shown with these posts**. Leave post types, categories and post IDs blank to deactivate this function.
 
 = How can I add styles (colors, fonts etc.) to the auto title? =
 You can add any HTML element you want in the title format found in *Settings > Secondary Title*, e.g.:
 
 `<span style='color:red;font-size:12px;'>%secondary_title%</span> %title%`
 
-This will display the secondary title in red with a font size of 12px, the standard post title won't be changed.
+This will display the secondary title in red with a font size of 12px; the standard post title won't be changed.
 
-If you want the styled secondary title only to be displayed in a certain place (e.g. inside of the home posts), you will have to define a class. For that, open your *style.css* of
+If you want the secondary title only to be displayed in a certain place (e.g. inside of the home posts),
+you will have to wrap it in a class within the title format (e.g. `<span
+class="secondary-title">%secondary_title%</span> %title%`)and use `display:none;` in your *style.css* to hide
+it and `display:none;` to show it only in the selected area(s).
+
+For example, to hide the secondary title on the front page (home), the CSS passage my look like this:
+
+`/** This will hide the secondary title everywhere */
+.secondary-title {
+	display:none;
+}
+/** This makes it visible only on the front page */
+.home .secondary-title {
+	display:block;
+}`
 
 = How can I add styles with the manual secondary title? =
 To style the output of `<?php the_secondary_title(); ?>` or `<?php get_secondary_title(); ?>`, you can use HTML in PHP:
@@ -167,16 +97,19 @@ Same as above, this will display the secondary title in red and with a font size
 
 = I'd like the secondary title only to be displayed in posts, not in the sidebar etc. =
 
-Since version 0.6 you can set whether the the secondary title should be should be shown everywhere or exclusively on the main post. If activated, it won't be shown in sidebars, menu items etc.
+Since version 0.6 you can set whether the the secondary title should be should be shown everywhere or exclusively in the main post. If activated, it won't be shown in sidebars, menu items etc.
 
 = How to display the secondary title above/below the main title with turned on auto show? =
 You can insert line breaks with the `<br />` HTML tag. Example:
 `%secondary_title%<br />%title%`
 
+= I'm using "WordPress SEO Plugin by Yoast". How can I add the secondary title to the templates? =
+
+Yoast's SEO plugin comes with the handy feature that allows you to use any post meta data as a tag within your templates. Since the secondary title is saved within the post meta called _secondary_title, the template tag that has to be used in order to display the secondary title is `%%cf__secondary_title%%` (note the double underscore after cf).
+
 = I have found an error and/or would like to suggest a change. =
 
-Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to
-either fill out the form when clicked on "quickly reporting a bug" within the plugin's settings page or send me an e-mail to kolja.nolte@gmail.com so I can fix it and include it in the next version. Same goes for suggestions.
+Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to [send me an e-mail](mailto:kolja.nolte@gmail.com) so I can fix it and include it in the next version. Same goes for suggestions.
 
 == Screenshots ==
 
@@ -188,30 +121,40 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 
 == Changelog ==
 
+= 0.9 =
+* Removed "report bug" e-mail form due to compatibility issues.
+* Fixed bug that deleted the secondary title on selected posts when using "bulk edit" (thanks to [JacobSchween](http://wordpress.org/support/topic/bulk-edit-deletes-secondary-titles)).
+* Fixed bug that occurred when saving a custom menu (only visible with WP_DEBUG).
+* Updated translations.
+* Several small changes that aren't important enough to be mentioned here.
+
 = 0.8 =
 * Some new minor functions and changes on the settings page.
-* Allowed to use %title% and %secondary_title% variable on settings page > title format more than once.
-* Added option to use secondary title in permalinks.
-* Added filter hooks to `get_secondary_title()`, `the_secondary_title()` and `get_secondary_title_link()`.
+* Allowed to use `%title%` and `%secondary_title%` variable on settings page in *Title format* more than once.
+* Added option to [use secondary title in permalinks](http://wordpress.org/support/topic/feature-request-add-secondary-title-to-permalinks?replies=3).
+* Added filter hooks to `<?php get_secondary_title(); ?>`, `<?php the_secondary_title(); ?>` and
+`<?php get_secondary_title_link(); ?>`.
 * Added French translation (thanks to [fxbenard](https://www.transifex.com/accounts/profile/fxbenard/)).
 * Updated existing translations.
 * Fixed bug that prevented the secondary title to be updated when empty.
-* Renamed `get_filtered_post_types()` to `get_secondary_title_filtered_post_types()` to avoid possible conflicts.
+* Renamed `<?php get_filtered_post_types(); ?>` to `<?php get_secondary_title_filtered_post_types(); ?>` to avoid
+possible
+conflicts.
 
 = 0.7 =
 * Restructured and split up plugin code into different files for better handling.
-* Added "Secondary title" column to posts/pages overview.
+* Added *Secondary title* column to posts/pages overview.
 * Added secondary title input field to quick edit box on posts/pages overview.
 * Added bug report form to settings page.
 * Removed secondary title from above/below the standard title on posts/page overview.
 * Renamed functions to minimize conflicts with other plugins.
-* Updated screenshot.
+* Updated screenshots.
 * Updated translations.
 * Bug fixes.
 
 = 0.6 =
 * Added compatibility with Word Filter Plus plugin.
-* Added "Only show in main post" setting.
+* Added *Only show in main post* setting.
 * Fixed minor jQuery bug on admin interface.
 * Updated FAQ.
 
@@ -222,7 +165,7 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 
 = 0.5 =
 * Fixed bug where the secondary title was not shown if the standard title contains "..." (thanks to Vangelis).
-* Added "select/unselect all" function for checkbox lists on settings page.
+* Added *Select all* and *Unselect all* script for checkbox lists on settings page.
 * Added secondary title display in admin posts/pages list.
 * Added `<?php get_secondary_title_link($post_id, $options); ?>` and `<?php the_secondary_title_link($post_id, $options); ?>` functions
   to quickly create the secondary title as a link to its post. See [the official documentation](http://www.koljanolte.com/koljanolte.com/wordpress/plugins/secondary-title/#Parameters) for more information.
@@ -231,7 +174,7 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 = 0.4 =
 * Fixed bug that showed secondary title input within the post/page overview.
 * Added Italian translation (thanks to [giuseppep](https://www.transifex.com/accounts/profile/giuseppep/)).
-* Added Polish transation (thanks to [pawel10](https://www.transifex.com/accounts/profile/pawel10/)).
+* Added Polish translation (thanks to [pawel10](https://www.transifex.com/accounts/profile/pawel10/)).
 * Updated existing translations.
 
 = 0.3 =
@@ -243,13 +186,16 @@ either fill out the form when clicked on "quickly reporting a bug" within the pl
 = 0.2 =
 * Installs default values on plugin activation.
 * Added screenshots.
-* Added $prefix and $suffix parameter for get_secondary_title() and the_secondary_title().
+* Added $prefix and $suffix parameter for `<?php get_secondary_title(); ?>` and `<?php the_secondary_title(); ?>`.
 * Updated FAQ.
 
 = 0.1 =
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.9 =
+Bug fixes.
 
 = 0.8 =
 Permalinks support, bug fixes, translation updates.

@@ -9,18 +9,28 @@
 	 */
 
 	/**
+	 * Stop script when the file is called directly.
+	 *
+	 * @since 0.1
+	 */
+	if(!function_exists("add_action")) {
+		return false;
+	}
+
+	/**
 	 * Loads the text domain for localization.
 	 *
 	 * @since 0.1
 	 */
-	function init_secondary_title_languages() {
-		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/languages/");
+	function secondary_title_init_languages() {
+		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/../languages/");
 	}
 
-	add_action("init", "init_secondary_title_languages");
+	add_action("init", "secondary_title_init_languages");
 
 	/**
-	 * Saves the actual secondary title when add/update post.
+	 * Updates the secondary title when "Edit post" screen
+	 * is being saved.
 	 *
 	 * @since 0.1
 	 *
@@ -28,25 +38,99 @@
 	 *
 	 * @return mixed
 	 */
-	function secondary_title_save_post($post_id) {
-		if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
-			return;
-		}
-		if(!current_user_can("edit_post", $post_id)) {
-			return;
-		}
-		if(false !== wp_is_post_revision($post_id)) {
-			return;
-		}
-		if($_POST["secondary_title"] == "") {
-			delete_post_meta($post_id, "_secondary_title");
-		}
-		else {
+	function secondary_title_edit_post($post_id) {
+		$screen = get_current_screen();
+		/** Only update if we're on the edit screen */
+		if(isset($screen->base) && $screen->base == "post") {
 			update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
 		}
 	}
 
-	add_action("edit_post", "secondary_title_save_post");
+	add_action("edit_post", "secondary_title_edit_post");
+
+	/**
+	 * Updates the secondary title in quick edit and
+	 * in bulk actions.
+	 *
+	 * @since 0.9
+	 *
+	 * @param $post_id
+	 */
+	function secondary_title_edit_post_quick_edit($post_id) {
+		/** Stop script if it is called through bulk action or when the secondary title isn't set */
+		if(isset($_GET["_status"]) || !isset($_POST["secondary_title"])) {
+			return $post_id;
+		}
+		update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
+		return $post_id;
+	}
+
+	add_action("edit_post", "secondary_title_edit_post_quick_edit");
+
+	/**
+	 * Adds a "Secondary title" column to the posts/pages
+	 * overview (edit.php).
+	 *
+	 * @since 0.7
+	 *
+	 * @param $columns
+	 *
+	 * @return array
+	 */
+	function secondary_title_overview_columns($columns) {
+		$new_columns = array();
+		foreach($columns as $column_slug => $column_title) {
+			/** Insert the secondary title before the "author" column */
+			if($column_slug == "author") {
+				$new_columns["secondary_title"] = __("Secondary title", "secondary_title");
+			}
+			else {
+				$new_columns[$column_slug] = $column_title;
+			}
+		}
+
+		return $new_columns;
+	}
+
+	/**
+	 * Only add secondary title column to allowed post types.
+	 *
+	 * @since 0.7
+	 */
+	function secondary_title_init_columns() {
+		$allowed_post_types = get_secondary_title_setting("post_types");
+		/** Display for all post types if setting is empty or invalid */
+		if(!is_array($allowed_post_types) || !count($allowed_post_types)) {
+			add_filter("manage_posts_columns", "secondary_title_overview_columns");
+			add_filter("manage_page_posts_columns", "secondary_title_overview_columns");
+		}
+		else {
+			/** Display only for set post types */
+			foreach($allowed_post_types as $post_type) {
+				add_filter("manage_" . $post_type . "_posts_columns", "secondary_title_overview_columns");
+			}
+		}
+	}
+
+	add_action("admin_init", "secondary_title_init_columns");
+
+	/**
+	 * @param $column
+	 * @param $post_id
+	 *
+	 * @since 0.7
+	 */
+	function secondary_title_overview_column_content($column, $post_id) {
+		if($column == "secondary_title") {
+			the_secondary_title($post_id);
+			echo '<label class="secondary-title-quick-edit-label" hidden="hidden">';
+			echo '<span class="title">' . __("Sec. title", "secondary_title") . '</span>';
+			echo '<span class="input-text-wrap"><input type="text" name="secondary_title" value="' . get_secondary_title($post_id) . '" /></span>';
+			echo "</label>";
+		}
+	}
+
+	add_filter("manage_posts_custom_column", "secondary_title_overview_column_content", 10, 2);
 
 	/**
 	 * If auto show function is set, replace the post titles with custom title format.
@@ -58,6 +142,10 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
+		/** Don't do "auto show" when on admin area */
+		if(is_admin()) {
+			return $title;
+		}
 		global $post;
 		/** Keep the standard title */
 		$standard_title = $title;
@@ -80,10 +168,9 @@
 			}
 			else {
 				/** Apply title format */
-				$format = str_replace('"', "'", get_option("secondary_title_title_format"));
+				$format = str_replace('"', "'", stripslashes(get_option("secondary_title_title_format")));
 				$title  = str_replace("%title%", $title, $format);
 				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
-				$title  = stripslashes($title);
 			}
 		}
 		/** Only display if title is within the main lop */
@@ -107,90 +194,19 @@
 		$plugin_folder  = str_replace("\\", "/", plugin_dir_url(dirname(__FILE__)));
 		$scripts_folder = $plugin_folder . "scripts/";
 		$styles_folder  = $plugin_folder . "styles/";
-
 		if(is_admin()) {
-			wp_enqueue_script("scripts-admin", $scripts_folder . "admin.js", array(), "1.0", true);
-			wp_enqueue_style("styles-admin", $styles_folder . "admin.css");
+			wp_enqueue_script("secondary-title-script-admin", $scripts_folder . "admin.js", array(), "1.0", true);
+			wp_enqueue_style("secondary-title-style-admin", $styles_folder . "admin.css");
 		}
 	}
 
 	add_action("admin_enqueue_scripts", "secondary_title_scripts_and_styles");
 
 	/**
-	 * Adds a column for the secondary title to the posts/page overview list.
-	 *
-	 * @since    0.7
-	 *
-	 * @param $columns
-	 *
-	 * @internal param $column_name
-	 *
-	 * @internal param $columns
-	 *
-	 * @return mixed
-	 */
-	function secondary_title_overview_column($columns) {
-		$new_columns = array();
-		/** Re-build the columns and insert the secondary title columns after the title column */
-		foreach($columns as $column_name => $column_title) {
-			if($column_name == "author") {
-				$new_columns["secondary_title"] = __("Secondary title", "secondary_title");
-			}
-			else {
-				$new_columns[$column_name] = $column_title;
-			}
-		}
-
-		return $new_columns;
-	}
-
-	/**
-	 * Fills the secondary title column with content.
-	 *
-	 * @since 0.7
-	 *
-	 * @param $column_name
-	 */
-	function secondary_title_overview_column_content($column_name) {
-		if($column_name == "secondary_title") {
-			echo '<strong><a href="' . get_edit_post_link() . '" title="' . sprintf(__("Edit &quot;%s&quot;", "secondary_title"), get_the_title()) . '" class="row-title">' . get_secondary_title() . "</a></strong>";
-		}
-	}
-
-	/** Only display secondary title for selected post types. If empty, use all */
-	$selected_post_types = get_secondary_title_setting("post_types");
-	$post_types = get_secondary_title_filtered_post_types();
-	if(count($selected_post_types) > 0) {
-		$post_types = $selected_post_types;
-	}
-	foreach($post_types as $post_type) {
-		$post_type_labels = get_post_type_labels(get_post_type_object($post_type));
-		$post_type_plural = sanitize_title_for_query($post_type_labels->name);
-		add_action("manage_" . $post_type . "_posts_columns", "secondary_title_overview_column", 10, 2);
-		add_action("manage_" . $post_type_plural . "_custom_column", "secondary_title_overview_column_content");
-	}
-
-	/**
-	 * @since 0.7
-	 *
-	 * @param $column_name
-	 */
-	function secondary_title_overview_quick_edit($column_name) {
-		if($column_name == "secondary_title") {
-			?>
-			<label>
-				<span class="title"><?php _e("Sec. title", "secondary_title"); ?></span>
-				<span class="input-text-wrap"><input type="text" name="secondary_title" class="ptitle quick_edit_secondary_title_input" value=""></span>
-			</label>
-		<?php
-		}
-	}
-
-	add_action("quick_edit_custom_box", "secondary_title_overview_quick_edit");
-
-	/**
 	 * Registers the %secondary_title% tag as a
 	 * permalink tag.
+	 *
+	 * @since 0.8
 	 */
 	function secondary_title_permalinks_init() {
 		add_rewrite_tag("%secondary_title%", "([^&]+)");
@@ -201,6 +217,8 @@
 	/**
 	 * @param $permalink
 	 * @param $post
+	 *
+	 * @since 0.8
 	 *
 	 * @return mixed
 	 */

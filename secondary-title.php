@@ -3,7 +3,7 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      0.8
+	 * Version:      0.9
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
@@ -22,6 +22,7 @@
 	 */
 	$include_files = glob(dirname(__FILE__) . "/includes/*.php");
 	foreach($include_files as $include_file) {
+		/** @noinspection PhpIncludeInspection */
 		include($include_file);
 	}
 
