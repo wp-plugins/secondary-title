@@ -51,65 +51,7 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Frequently Asked Questions ==
 
-= How do I use this plugin? =
-
-For installation instructions, please see [Installation](http://wordpress.org/plugins/secondary-title/installation/).
- A more detailed documentation with parameters, functions and usage examples can be found on the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/).
-
-= The secondary title is not being added to the standard title. =
-
-Please verify whether the option *Insert automatically* is set to *Yes*, otherwise it will only be displayed when you call `<?php echo get_secondary_title(); ?>` or `<?php the_secondary_title(); ?>`. If you're using the auto show function. don't forget to enter a valid title format; use the placeholders `%title%` for the standard title and `%secondary_title%` for the secondary title. Leaving the title format blank won't show anything at all.
-
-= The secondary title still doesn't show up. =
-
-Make sure the post is among the allowed post types and/or categories set under *Settings > Secondary Title*. Also, if you have specified any post IDs, **the secondary title will only be shown with these posts**. Leave post types, categories and post IDs blank to deactivate this function.
-
-= How can I add styles (colors, fonts etc.) to the auto title? =
-You can add any HTML element you want in the title format found in *Settings > Secondary Title*, e.g.:
-
-`<span style='color:red;font-size:12px;'>%secondary_title%</span> %title%`
-
-This will display the secondary title in red with a font size of 12px; the standard post title won't be changed.
-
-If you want the secondary title only to be displayed in a certain place (e.g. inside of the home posts),
-you will have to wrap it in a class within the title format (e.g. `<span
-class="secondary-title">%secondary_title%</span> %title%`)and use `display:none;` in your *style.css* to hide
-it and `display:block;` to show it only in the selected area(s).
-
-For example, to hide the secondary title on the front page (home), the CSS passage my look like this:
-
-`/** This will hide the secondary title everywhere */
-.secondary-title {
-	display:none;
-}
-/** This makes it visible only on the front page */
-.home .secondary-title {
-	display:block;
-}`
-
-= How can I add styles with the manual secondary title? =
-To style the output of `<?php the_secondary_title(); ?>` or `<?php get_secondary_title(); ?>`, you can use HTML in PHP:
-`<?php
-	echo '<span style="color:red;font-size:12px;">' . get_secondary_title() . '</span>';
-?>`
-
-Same as above, this will display the secondary title in red and with a font size of 12px.
-
-= I'd like the secondary title only to be displayed in posts, not in the sidebar etc. =
-
-Since version 0.6 you can set whether the the secondary title should be should be shown everywhere or exclusively in the main post. If activated, it won't be shown in sidebars, menu items etc.
-
-= How to display the secondary title above/below the main title with turned on auto show? =
-You can insert line breaks with the `<br />` HTML tag. Example:
-`%secondary_title%<br />%title%`
-
-= I'm using "WordPress SEO Plugin by Yoast". How can I add the secondary title to the templates? =
-
-Yoast's SEO plugin comes with the handy feature that allows you to use any post meta data as a tag within your templates. Since the secondary title is saved within the post meta called _secondary_title, the template tag that has to be used in order to display the secondary title is `%%cf__secondary_title%%` (note the double underscore after cf).
-
-= I have found an error and/or would like to suggest a change. =
-
-Since Secondary Title is my first WordPress plugin, I may have missed a bug when testing it. Please be so kind to [send me an e-mail](mailto:kolja.nolte@gmail.com) so I can fix it and include it in the next version. Same goes for suggestions.
+The full FAQ can be found on the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/#FAQ).
 
 == Screenshots ==
 
