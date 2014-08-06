@@ -1,0 +1,179 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Secondary Title\n"
+"POT-Creation-Date: 2014-05-02 23:28+0700\n"
+"PO-Revision-Date: 2014-05-02 23:28+0700\n"
+"Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
+"Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: secondary-title.php:419
+msgid "Secondary Title settings"
+msgstr ""
+
+#: secondary-title.php:456
+msgid "Settings saved."
+msgstr ""
+
+#: secondary-title.php:463
+msgid "Settings"
+msgstr ""
+
+#: secondary-title.php:533
+msgid "Plane missing"
+msgstr ""
+
+#: secondary-title.php:534
+msgid "Malaysian Airlines flight MH370 lost over Gulf of Thailand"
+msgstr ""
+
+#: secondary-title.php:555
+msgid "Preview"
+msgstr ""
+
+#: secondary-title.php:583
+msgid "Post types"
+msgstr ""
+
+#: secondary-title.php:614 secondary-title.php:661
+msgid "Select all"
+msgstr ""
+
+#: secondary-title.php:616 secondary-title.php:663
+msgid "Unselect all"
+msgstr ""
+
+#: secondary-title.php:619
+msgid ""
+"Post types for which secondary titles should be activated.<br /> Select none "
+"to use all available post types."
+msgstr ""
+
+#: secondary-title.php:624
+msgid "Categories"
+msgstr ""
+
+#: secondary-title.php:656
+msgid "Click here to see all available categories"
+msgstr ""
+
+#: secondary-title.php:656
+msgid "Show all categories"
+msgstr ""
+
+#: secondary-title.php:666
+msgid ""
+"Categories for which secondary titles should be activated.<br /> Select none "
+"to use all available categories."
+msgstr ""
+
+#: secondary-title.php:672
+msgid "Post IDs"
+msgstr ""
+
+#: secondary-title.php:675
+msgid "E.g.: 4, 28, 104"
+msgstr ""
+
+#: secondary-title.php:678
+msgid "Only use secondary title for specific posts. Separate IDs with commas."
+msgstr ""
+
+#: secondary-title.php:683
+msgid "Insert automatically"
+msgstr ""
+
+#: secondary-title.php:690 secondary-title.php:749
+msgid "Yes"
+msgstr ""
+
+#: secondary-title.php:695 secondary-title.php:753
+msgid "No"
+msgstr ""
+
+#: secondary-title.php:699
+#, php-format
+msgid ""
+"To manually insert the secondary title in your theme, use <code>&lt;?php "
+"get_secondary_title(); ?&gt;</code><br />or <code>&lt;?php "
+"the_secondary_title(); ?&gt;</code>. See <a href=\"%s\" title=\"Open readme."
+"txt\">readme.txt</a> or the <a href=\"%s\" target=\"_blank\" title=\"See "
+"official documentation\">official documentation</a> for additional "
+"parameters."
+msgstr ""
+
+#: secondary-title.php:705
+msgid "Title format"
+msgstr ""
+
+#: secondary-title.php:708
+msgid "E.g.: %secondary_title%: %title%"
+msgstr ""
+
+#: secondary-title.php:710
+msgid ""
+"Use <code>%title%</code> for the main title and <code>%secondary_title%</"
+"code> for the secondary title."
+msgstr ""
+
+#: secondary-title.php:716
+#, php-format
+msgid ""
+"<b>Note:</b> To style the output, use the <a href=\"%s\" title=\"See an "
+"explanation on w3schools.com\" target=\"_blank\">style HTML attribute</a>, e."
+"g.:<br /><code>%s</code>"
+msgstr ""
+
+#: secondary-title.php:723
+msgid "Title input position"
+msgstr ""
+
+#: secondary-title.php:729
+msgid "Above"
+msgstr ""
+
+#: secondary-title.php:733
+msgid "Below"
+msgstr ""
+
+#: secondary-title.php:735
+#, php-format
+msgid ""
+"Defines whether input field for the secondary title should be displayed "
+"above or below<br />the standard title <strong>within the add/edit post/page "
+"area</strong> on the admin interface.<br />See the <a href=\"%s\" title="
+"\"See the FAQ\" target=\"_blank\">FAQ</a> if you want to apply the same "
+"effect on your front end."
+msgstr ""
+
+#: secondary-title.php:740
+msgid "Only show in main post"
+msgstr ""
+
+#: secondary-title.php:755
+msgid ""
+"If activated, the secondary title will only be shown within the main post;"
+"<br /> sidebars, menu items etc. will be ignored. <strong>Only works when "
+"\"Insert automatically\" is enabled.</strong>"
+msgstr ""
+
+#: secondary-title.php:760
+#, php-format
+msgid ""
+"Do you speak more than one language? Help making Secondary Title<br />easier "
+"to use for foreign users by <a href=\"%s\" title=\"Go to project page on "
+"Transifex.com\" target=\"_blank\">translating the plugin on Transifex.</a>"
+msgstr ""
+
+#: secondary-title.php:764
+msgid "Save Changes"
+msgstr ""
