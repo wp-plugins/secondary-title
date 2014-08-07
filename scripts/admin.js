@@ -1,18 +1,31 @@
 /**
+ * Checks if we're on a specific page
+ * to avoid possible JS conflicts with other
+ * plugins or themes.
+ *
  * @return {boolean}
  */
 function IsCurrentPage(page) {
-	//noinspection JSUnresolvedVariable
 	var is = false;
-	if(adminpage == page || pagenow == page) {
-		is = true;
+	if(pagenow != "" && adminpage != "") {
+		if(pagenow == page || adminpage == page) {
+			is = true;
+		}
+	}
+	if(!is) {
+		var current_pages = jQuery("body").attr("class").split(" ");
+		jQuery(current_pages).each(function(index, body_page) {
+			if(page == body_page) {
+				is = true;
+			}
+		});
 	}
 	return is;
 }
 
 jQuery(document).ready(function() {
 	/**
-	 * Scrupts being executed on post/page overview (edit.php).
+	 * Scripts being executed on post/page overview (edit.php).
 	 */
 	if(IsCurrentPage("edit-php")) {
 		/**
@@ -27,10 +40,6 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	/**
-	 * Scripts being executed when creating/editing a post,
-	 * page or custom post type post.
-	 */
 	if(IsCurrentPage("post-php")) {
 		/**
 		 * Inserts the secondary title input field on edit pages.

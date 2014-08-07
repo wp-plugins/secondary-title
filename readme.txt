@@ -51,7 +51,7 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Frequently Asked Questions ==
 
-The full FAQ can be found on the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/#FAQ).
+**The full FAQ can be found on the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/#FAQ).**
 
 == Screenshots ==
 
@@ -63,9 +63,13 @@ The full FAQ can be found on the [official website](http://www.koljanolte.com/wo
 
 == Changelog ==
 
+= 0.9.1 =
+* Bug fixes for 0.9.
+
 = 0.9 =
-* Removed "report bug" e-mail form due to compatibility issues.
-* Fixed bug that deleted the secondary title on selected posts when using "bulk edit" (thanks to [JacobSchween](http://wordpress.org/support/topic/bulk-edit-deletes-secondary-titles)).
+* Removed *Report bug* e-mail form due to compatibility issues.
+* Fixed [bug](http://wordpress.org/support/topic/bulk-edit-deletes-secondary-titles) that deleted the secondary
+title on selected posts when using *Bulk edit* (thanks to [JacobSchween](http://wordpress.org/support/profile/jacobschween)).
 * Fixed bug that occurred when saving a custom menu (only visible with WP_DEBUG).
 * Updated translations.
 * Several small changes that aren't important enough to be mentioned here.
@@ -135,6 +139,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 0.9.1 =
+Hotfix for 0.9.
 
 = 0.9 =
 Bug fixes.

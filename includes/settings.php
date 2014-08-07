@@ -341,16 +341,3 @@
 	</div>
 	<?php
 	}
-
-	/**
-	 * When post is being saved, update post's post meta with the new secondary title.
-	 *
-	 * @since 0.1
-	 */
-	function secondary_title_init_admin_save() {
-		if(!empty($_POST["secondary_post_title"])) {
-			update_post_meta(get_the_ID(), "_secondary_title", $_POST["secondary_post_title"]);
-		}
-	}
-
-	add_action("edit_post", "secondary_title_init_admin_save");

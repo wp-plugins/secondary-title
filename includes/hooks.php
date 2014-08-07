@@ -42,7 +42,7 @@
 		$screen = get_current_screen();
 		/** Only update if we're on the edit screen */
 		if(isset($screen->base) && $screen->base == "post") {
-			update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
+			update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
 		}
 	}
 
@@ -61,7 +61,7 @@
 		if(isset($_GET["_status"]) || !isset($_POST["secondary_title"])) {
 			return $post_id;
 		}
-		update_post_meta($post_id, "_secondary_title", $_POST["secondary_title"]);
+		update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_title"])));
 		return $post_id;
 	}
 

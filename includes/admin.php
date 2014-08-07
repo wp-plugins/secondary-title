@@ -43,7 +43,7 @@
 		</style>
 		<div id="secondary-title-input" hidden="hidden">
 			<label for="secondary-title-text" id="secondary-title-text-label" hidden="hidden"></label>
-			<input type="text" size="30" id="secondary-title-text" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php the_secondary_title(); ?>"/>
+			<input type="text" size="30" id="secondary-title-text" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php echo get_post_meta(get_the_ID(), "_secondary_title", true); ?>"/>
 		</div>
 		<?php
 		return true;
