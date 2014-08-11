@@ -9,7 +9,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Adds a secondary title to posts, pages and custom post types.
 
-== Description ==
+== Description == 
 
 **Secondary Title** is a simple, light-weight plugin for WordPress that adds an alternative title to posts, pages and/or [custom post types](http://codex.wordpress.org/Post_Types).
 
