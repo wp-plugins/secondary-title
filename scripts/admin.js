@@ -1,5 +1,19 @@
 jQuery(document).ready(function() {
 	/**
+	 * Inserts the secondary title input field on edit pages.
+	 */
+	var selector_title_input = jQuery("#secondary-title-input");
+	var title_input_position = jQuery("#secondary-title-input-position").attr("value");
+	if(title_input_position == "above") {
+		/** Move down the "Enter title here" text displayed when the standard title field is empty to match with the input field */
+		jQuery("#title-prompt-text").css("padding-top", "45px");
+		selector_title_input.insertBefore("#post-body #title").css("margin-bottom", "5px").removeAttr("hidden");
+	}
+	if(title_input_position == "below") {
+		selector_title_input.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
+	}
+
+	/**
 	 * Checks whether we're on a specific page to avoid
 	 * collisions with other scripts.
 	 *
@@ -25,25 +39,6 @@ jQuery(document).ready(function() {
 			}
 		});
 		return is;
-	}
-
-	/**
-	 * Scripts executed on "Edit post" page.
-	 */
-	if(IsPage("edit_post")) {
-		/**
-		 * Inserts the secondary title input field on edit pages.
-		 */
-		var selector_title_input = jQuery("#secondary-title-input");
-		var title_input_position = jQuery("#secondary-title-input-position").attr("value");
-		if(title_input_position == "above") {
-			/** Move down the "Enter title here" text displayed when the standard title field is empty to match with the input field */
-			jQuery("#title-prompt-text").css("padding-top", "45px");
-			selector_title_input.insertBefore("#post-body #title").css("margin-bottom", "5px").removeAttr("hidden");
-		}
-		if(title_input_position == "below") {
-			selector_title_input.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
-		}
 	}
 
 	/**
