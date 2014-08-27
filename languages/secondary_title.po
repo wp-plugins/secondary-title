@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Secondary Title\n"
-"POT-Creation-Date: 2014-08-11 03:07+0700\n"
-"PO-Revision-Date: 2014-08-11 03:07+0700\n"
+"POT-Creation-Date: 2014-08-27 20:12+0700\n"
+"PO-Revision-Date: 2014-08-27 20:12+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language: en\n"
@@ -25,19 +25,19 @@ msgstr ""
 msgid "Go to &quot;%s&quot;"
 msgstr ""
 
-#: includes/hooks.php:85
+#: includes/hooks.php:89
 msgid "Secondary title"
 msgstr ""
 
-#: includes/hooks.php:128
+#: includes/hooks.php:132
 msgid "Sec. title"
 msgstr ""
 
-#: includes/hooks.php:140
+#: includes/hooks.php:147
 msgid "Configure Secondary Title settings"
 msgstr ""
 
-#: includes/hooks.php:140 includes/settings.php:71
+#: includes/hooks.php:147 includes/settings.php:71
 msgid "Settings"
 msgstr ""
 
