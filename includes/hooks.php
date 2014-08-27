@@ -40,13 +40,14 @@
 	 */
 	function secondary_title_edit_post($post_id) {
 		if(!function_exists("get_current_screen")) {
-      return false;
+			return false;
 		}
-    $screen = get_current_screen();
-    /** Only update if we're on the edit screen */
-    if(isset($screen->base) && $screen->base == "post") {
-    update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
-    }
+		$screen = get_current_screen();
+		/** Only update if we're on the edit screen */
+		if(isset($screen->base) && $screen->base == "post") {
+			update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
+		}
+		return true;
 	}
 
 	add_action("edit_post", "secondary_title_edit_post");
@@ -140,7 +141,11 @@
 	 * next to the "Version" info of the plugin (see scripts/admin.js line 225).
 	 */
 	function secondary_title_plugins_settings_link() {
+		if(headers_sent()) {
+			return false;
+		}
 		echo '<div class="secondary-title-settings-link" hidden="hidden"><a href="options-general.php?page=secondary_title" title="' . __("Configure Secondary Title settings", "secondary_title") . '">' . __("Settings", "secondary_title") . '</a> | </div>';
+		return true;
 	}
 
 	add_action("load-plugins.php", "secondary_title_plugins_settings_link");
@@ -162,7 +167,8 @@
 		}
 		global $post;
 		/** Keep the standard title */
-		$standard_title = $title;
+		$standard_title  = $title;
+		$secondary_title = get_secondary_title($post->ID);
 		/** Insert the secondary title in the admin interface */
 		/** Get post information */
 		$post_category = get_the_category();
@@ -173,7 +179,7 @@
 			$post_category = array();
 		}
 		/** Checks if auto show function is set and the secondary title is not empty */
-		if(get_option("secondary_title_auto_show") == "on" && get_secondary_title() != "" && $title == wptexturize($post->post_title) || is_admin()) {
+		if(get_option("secondary_title_auto_show") == "on" && $secondary_title != "" && $title == wptexturize($post->post_title) || is_admin()) {
 			$post_ids        = get_secondary_title_post_ids();
 			$post_types      = get_secondary_title_post_types();
 			$post_categories = get_secondary_title_post_categories();
@@ -184,7 +190,7 @@
 				/** Apply title format */
 				$format = str_replace('"', "'", stripslashes(get_option("secondary_title_title_format")));
 				$title  = str_replace("%title%", $title, $format);
-				$title  = str_replace("%secondary_title%", get_secondary_title(), $title);
+				$title  = str_replace("%secondary_title%", html_entity_decode($secondary_title), $title);
 			}
 		}
 		/** Only display if title is within the main lop */

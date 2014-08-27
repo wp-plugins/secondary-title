@@ -64,6 +64,10 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.0 =
+* Allows HTML tags within individual secondary titles (thanks to (brit77)[http://wordpress.org/support/topic/adding-html-tags-to-secondary-title]).
+* Updated documentation.
+
 = 0.9.2 =
 * Fixed [bug](http://wordpress.org/support/topic/secondary-title-field-missing-in-latest-update) that occasionally prevented the secondary title input box from being displayed when creating a new post (thanks to (howorks)[http://profiles.wordpress.org/howorks] and (pesunites)[http://profiles.wordpress.org/pesunites]).
 * Changed the categories view on the settings page.
@@ -145,6 +149,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.0 =
+HTML allowed in secondary title and small fixes.
 
 = 0.9.2 =
 Additional hotfix for 0.9.
