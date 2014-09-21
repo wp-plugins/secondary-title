@@ -65,19 +65,19 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 == Changelog ==
 
 = 1.1 =
-* Removed secondary_title_plugins_settings_link() due to compatibility problems.
-* Added filter hook secondary_title_show_overview_column to disable the secondary title column on post overviews without using the screen options (thanks to (Alkorr)[https://wordpress.org/support/topic/hide-secondary-title-description-column]).
-* Added Dutch (thanks to (SilverXp)[https://www.transifex.com/accounts/profile/SilverXp/]), Turkish (thanks to (mapazarbasi)[https://www.transifex.com/accounts/profile/mapazarbasi/]) and other translation.
+* Removed `<?php secondary_title_plugins_settings_link(); ?>` due to compatibility problems.
+* Added filter hook `secondary_title_show_overview_column` to disable the secondary title column on post overviews without using the screen options (thanks to [Alkorr](https://wordpress.org/support/topic/hide-secondary-title-description-column)).
+* Added Dutch (thanks to [SilverXp](https://www.transifex.com/accounts/profile/SilverXp/)), Turkish (thanks to [mapazarbasi](https://www.transifex.com/accounts/profile/mapazarbasi/)) and other translation.
 * Updated existing translations.
 * Fixed bug that prevented the "Author" column on post overview page to be shown.
 * Further bug fixes.
 
 = 1.0 =
-* Allows HTML tags within individual secondary titles (thanks to (brit77)[http://wordpress.org/support/topic/adding-html-tags-to-secondary-title]).
+* Allows HTML tags within individual secondary titles (thanks to [brit77](http://wordpress.org/support/topic/adding-html-tags-to-secondary-title)).
 * Updated documentation.
 
 = 0.9.2 =
-* Fixed [bug](http://wordpress.org/support/topic/secondary-title-field-missing-in-latest-update) that occasionally prevented the secondary title input box from being displayed when creating a new post (thanks to (howorks)[http://profiles.wordpress.org/howorks] and (pesunites)[http://profiles.wordpress.org/pesunites]).
+* Fixed [bug](http://wordpress.org/support/topic/secondary-title-field-missing-in-latest-update) that occasionally prevented the secondary title input box from being displayed when creating a new post (thanks to [howorks](http://profiles.wordpress.org/howorks) and [pesunites](http://profiles.wordpress.org/pesunites)).
 * Changed the categories view on the settings page.
 * jQuery changes.
 
