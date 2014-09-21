@@ -22,7 +22,10 @@ jQuery(document).ready(function() {
 	function IsPage(page) {
 		var is = false;
 		var pages = [
-			"secondary_title_settings", "posts_overview", "edit_post", "plugins"
+			"secondary_title_settings",
+			"posts_overview",
+			"edit_post",
+			"plugins"
 		];
 		jQuery(pages).each(function() {
 			if(page == "secondary_title_settings" && jQuery("#secondary-title-settings").length) {

@@ -88,11 +88,8 @@
 			if($column_slug == "author") {
 				$new_columns["secondary_title"] = __("Secondary title", "secondary_title");
 			}
-			else {
-				$new_columns[$column_slug] = $column_title;
-			}
+			$new_columns[$column_slug] = $column_title;
 		}
-
 		return $new_columns;
 	}
 
@@ -106,6 +103,7 @@
 		$allowed_post_types = get_secondary_title_setting("post_types");
 		$post_types         = get_post_types();
 		foreach($post_types as $post_type) {
+			/** Add "Secondary title" column to activated post types */
 			if(in_array($post_type, $allowed_post_types) || !isset($allowed_post_types[0])) {
 				add_filter("manage_" . $post_type . "_posts_columns", "secondary_title_overview_columns");
 				add_filter("manage_" . $post_type . "_custom_columns", "secondary_title_overview_columns");
@@ -114,7 +112,10 @@
 		}
 	}
 
-	add_action("admin_init", "secondary_title_init_columns");
+	/** Display the column unless deactivated by filter */
+	if(apply_filters("secondary_title_show_overview_column", true)) {
+		add_action("admin_init", "secondary_title_init_columns");
+	}
 
 	/**
 	 * Displays the secondary title and lets
@@ -136,21 +137,6 @@
 	}
 
 	/**
-	 * Displays a hidden link to the plugin's settings page
-	 * when wp-admin/plugins.php is loaded. jQuery will move that link
-	 * next to the "Version" info of the plugin (see scripts/admin.js line 225).
-	 */
-	function secondary_title_plugins_settings_link() {
-		if(headers_sent()) {
-			return false;
-		}
-		echo '<div class="secondary-title-settings-link" hidden="hidden"><a href="options-general.php?page=secondary_title" title="' . __("Configure Secondary Title settings", "secondary_title") . '">' . __("Settings", "secondary_title") . '</a> | </div>';
-		return true;
-	}
-
-	add_action("load-plugins.php", "secondary_title_plugins_settings_link");
-
-	/**
 	 * If auto show function is set, replace the post titles
 	 * with custom title format.
 	 *
@@ -161,11 +147,11 @@
 	 * @return mixed
 	 */
 	function secondary_title_auto_show($title) {
-		/** Don't do "auto show" when on admin area */
-		if(is_admin()) {
+		global $post;
+		/** Don't do "auto show" when on admin area or if the post is not a valid post */
+		if(is_admin() || !isset($post->ID)) {
 			return $title;
 		}
-		global $post;
 		/** Keep the standard title */
 		$standard_title  = $title;
 		$secondary_title = get_secondary_title($post->ID);
@@ -203,7 +189,7 @@
 		return $title;
 	}
 
-	add_filter("the_title", "secondary_title_auto_show", 999, 2);
+	add_filter("the_title", "secondary_title_auto_show");
 
 	/**
 	 * Loads scripts and styles.

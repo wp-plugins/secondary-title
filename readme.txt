@@ -1,7 +1,7 @@
 === Secondary Title ===
 Contributors: thaikolja
 Tags: title, alternative title, secondary title, second title, additional title, post title
-Tested up to: 3.9.2
+Tested up to: 4.0
 Stable tag: 0.1
 Requires at least: 3.0.1
 License: GPLv2 or later
@@ -11,7 +11,7 @@ Adds a secondary title to posts, pages and custom post types.
 
 == Description ==
 
-**Secondary Title** is a simple, light-weight plugin for WordPress that adds an alternative title to posts, pages and/or [custom post types](http://codex.wordpress.org/Post_Types).
+**Secondary Title** is a simple, light-weight plugin that adds an alternative title to posts, pages and/or [custom post types](http://codex.wordpress.org/Post_Types).
 
 The plugin comes with an extra settings page which allows you to customize the plugin according to your needs. You can change:
 
@@ -63,6 +63,14 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 3. A section of the plugin's settings page on the admin interface.
 
 == Changelog ==
+
+= 1.1 =
+* Removed secondary_title_plugins_settings_link() due to compatibility problems.
+* Added filter hook secondary_title_show_overview_column to disable the secondary title column on post overviews without using the screen options (thanks to (Alkorr)[https://wordpress.org/support/topic/hide-secondary-title-description-column]).
+* Added Dutch (thanks to (SilverXp)[https://www.transifex.com/accounts/profile/SilverXp/]), Turkish (thanks to (mapazarbasi)[https://www.transifex.com/accounts/profile/mapazarbasi/]) and other translation.
+* Updated existing translations.
+* Fixed bug that prevented the "Author" column on post overview page to be shown.
+* Further bug fixes.
 
 = 1.0 =
 * Allows HTML tags within individual secondary titles (thanks to (brit77)[http://wordpress.org/support/topic/adding-html-tags-to-secondary-title]).
@@ -149,6 +157,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.1 =
+Fixed bug on posts overview page, new/updated translations.
 
 = 1.0 =
 HTML allowed in secondary title and small fixes.
