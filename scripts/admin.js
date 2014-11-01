@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
 	/**
 	 * Inserts the secondary title input field on edit pages.
 	 */
@@ -14,47 +14,16 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * Checks whether we're on a specific page to avoid
-	 * collisions with other scripts.
-	 *
-	 * @return {boolean}
-	 */
-	function IsPage(page) {
-		var is = false;
-		var pages = [
-			"secondary_title_settings",
-			"posts_overview",
-			"edit_post",
-			"plugins"
-		];
-		jQuery(pages).each(function() {
-			if(page == "secondary_title_settings" && jQuery("#secondary-title-settings").length) {
-				is = true;
-			}
-			if(page == "posts_overview" && jQuery("#posts-filter").length) {
-				is = true;
-			}
-			if(page == "edit_post" && jQuery("#post-body-content").length) {
-				is = true;
-			}
-			if(page == "plugins" && jQuery(".plugin-description").length) {
-				is = true;
-			}
-		});
-		return is;
-	}
-
-	/**
 	 * Scripts executed on post overview page.
 	 */
-	if(IsPage("posts_overview")) {
+	if(jQuery(".edit-php").length > 0) {
 		/**
 		 * Add the "Sec. title" input field to the quick edit.
 		 */
-		jQuery("a.editinline").click(function() {
+		jQuery("a.editinline").click(function () {
 			var post_id = jQuery(this).parents("tr").attr("id").replace("post-", "");
 			var secondary_title = jQuery("#post-" + post_id).find(".secondary-title-quick-edit-label").clone();
-			setTimeout(function() {
+			setTimeout(function () {
 				jQuery("#edit-" + post_id).find(".inline-edit-col label:first").after(secondary_title).show();
 			}, 50);
 		});
@@ -63,7 +32,13 @@ jQuery(document).ready(function() {
 	/**
 	 * Scripts executed on plugin's settings page.
 	 */
-	if(IsPage("secondary_title_settings")) {
+	if(jQuery("#secondary-title-settings").length > 0) {
+		/** Fade out "Settings saved" message after 5 seconds */
+		if(jQuery(".settings-updated").length > 0) {
+			setTimeout(function () {
+				jQuery(".settings-updated").fadeOut();
+			}, 5000);
+		}
 		/** Define variables we're going to need later on */
 		var preview_selector = jQuery("#title_format_preview");
 		var title_format_input_selector = jQuery("#title-format-input");
@@ -75,7 +50,7 @@ jQuery(document).ready(function() {
 		 * Create slide down function for long category list
 		 */
 		var slided = false;
-		jQuery("#all_categories").click(function() {
+		jQuery("#all_categories").click(function () {
 			if(!slided) {
 				jQuery("#hidden_categories").removeAttr("hidden").hide().slideDown(1000);
 				jQuery("#all_categories").hide();
@@ -87,30 +62,30 @@ jQuery(document).ready(function() {
 		/**
 		 * "Select all" function for checkboxes
 		 */
-		jQuery(".select-all").click(function() {
+		jQuery(".select-all").click(function () {
 			var selector_parent_fieldset = jQuery(this).closest("fieldset");
-			jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function() {
+			jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function () {
 				jQuery(this).attr("checked", "checked");
 			});
-			jQuery(this).hide().parent().find(".unselect-all").show();
+			jQuery(this).hide().parents("tr").find(".unselect-all").show();
 			return false;
 		});
 
 		/**
 		 * "Unselect all" function for checkboxes
 		 */
-		jQuery(".unselect-all").click(function() {
+		jQuery(".unselect-all").click(function () {
 			var selector_parent_fieldset = jQuery(this).closest("fieldset");
-			jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function() {
+			jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(function () {
 				jQuery(this).removeAttr("checked");
 			});
-			jQuery(this).hide().parent().find(".select-all").show();
+			jQuery(this).hide().parents("tr").find(".select-all").show();
 			return false;
 		});
 
-		jQuery(".select-non-empty").click(function() {
+		jQuery(".select-non-empty").click(function () {
 			var checkboxes = jQuery(this).parents("fieldset").find("input[type='checkbox']");
-			jQuery(checkboxes).each(function() {
+			jQuery(checkboxes).each(function () {
 				jQuery(this).removeAttr("checked");
 				if(jQuery(this).parents("li").find(".count").text() >= 1) {
 					jQuery(this).attr("checked", "checked");
@@ -146,7 +121,7 @@ jQuery(document).ready(function() {
 		}
 
 		/** Change when clicked */
-		jQuery("#auto-show-fieldset").find("input[type='radio']").click(function() {
+		jQuery("#auto-show-fieldset").find("input[type='radio']").click(function () {
 			ChangeAutoShow();
 		});
 
@@ -164,7 +139,7 @@ jQuery(document).ready(function() {
 		function InsertTitlePreview() {
 			var title_format_input_selector = jQuery("#title-format-input");
 			/** Wait 50ms to let the entered value get ready for jQuery to get */
-			setTimeout(function() {
+			setTimeout(function () {
 				var preview_title = title_format_input_selector.val();
 				preview_title = preview_title.replace(/%title%/g, selector_preview_title);
 				preview_title = preview_title.replace(/%secondary_title%/g, selector_preview_secondary_title);
@@ -188,7 +163,7 @@ jQuery(document).ready(function() {
 		/**
 		 * Update preview title when a new character is entered into the text input.
 		 */
-		title_format_input_selector.keypress(function() {
+		title_format_input_selector.keypress(function () {
 			/** Insert the formatted preview title */
 			new InsertTitlePreview();
 		});
@@ -197,7 +172,7 @@ jQuery(document).ready(function() {
 		 * Resets the title format input.
 		 */
 		var saved_title_format = title_format_input_selector.attr("value");
-		jQuery("#button-reset").click(function() {
+		jQuery("#button-reset").click(function () {
 			/** Don't do anything if title format input is disabled */
 			if(title_format_input_selector.attr("disabled") == "disabled") {
 				return false;
@@ -210,7 +185,7 @@ jQuery(document).ready(function() {
 		/**
 		 * Adds the clicked variable to the title format input.
 		 */
-		jQuery("#title-format").find(".description code").click(function() {
+		jQuery("#title-format").find(".description code").click(function () {
 			/** Don't insert variable if title format input is disabled */
 			if(title_format_input_selector.attr("disabled") == "disabled") {
 				return false;
@@ -222,19 +197,15 @@ jQuery(document).ready(function() {
 			return true;
 		});
 
-		jQuery("#use-in-permalinks-row").find("input").click(function() {
+		jQuery("#use-in-permalinks-row").find("input").click(function () {
 			var selector_permalinks_custom_description = jQuery("#use-in-permalinks-custom-description");
 			var value = jQuery(this).attr("value");
 			if(value == "custom") {
 				selector_permalinks_custom_description.fadeIn();
 			}
 			else {
-				selector_permalinks_custom_description.hide();
+				selector_permalinks_custom_description.fadeOut();
 			}
 		});
-	}
-	if(IsPage("plugins")) {
-		var link = jQuery(".secondary-title-settings-link").html();
-		jQuery("#secondary-title").find(".plugin-version-author-uri").prepend(link);
 	}
 });

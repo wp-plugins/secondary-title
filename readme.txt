@@ -64,6 +64,10 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.2 =
+* Small bug fixes and corrections.
+* Updated translations.
+
 = 1.1 =
 * Removed `<?php secondary_title_plugins_settings_link(); ?>` due to compatibility problems.
 * Added filter hook `secondary_title_show_overview_column` to disable the secondary title column on post overviews without using the screen options (thanks to [Alkorr](https://wordpress.org/support/topic/hide-secondary-title-description-column)).
@@ -157,6 +161,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.2 =
+Bug fixes, translation updates.
 
 = 1.1 =
 Fixed bug on posts overview page, new/updated translations.

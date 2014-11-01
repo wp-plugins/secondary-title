@@ -37,13 +37,13 @@
 			}
 		}
 		?>
-		<input type="hidden" id="secondary-title-input-position" value="<?php echo get_secondary_title_setting("title_input_position"); ?>"/>
+		<input type="hidden" id="secondary-title-input-position" value="<?php echo secondary_title_get_setting("title_input_position"); ?>" />
 		<style type="text/css">
 
 		</style>
 		<div id="secondary-title-input" hidden="hidden">
 			<label for="secondary-title-text" id="secondary-title-text-label" hidden="hidden"></label>
-			<input type="text" size="30" id="secondary-title-text" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php echo get_post_meta(get_the_ID(), "_secondary_title", true); ?>"/>
+			<input type="text" size="30" id="secondary-title-text" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php echo get_post_meta(get_the_ID(), "_secondary_title", true); ?>" />
 		</div>
 		<?php
 		return true;

@@ -9,6 +9,16 @@
 /**
  * Settings page
  */
+#secondary-title-settings input[type="text"] {
+	height:   28px;
+	position: relative;
+	bottom:   1px;
+}
+
+#secondary-title-settings .clear {
+	clear: both;
+}
+
 #secondary-title-settings strong {
 	font-weight: bold;
 }
@@ -30,6 +40,6 @@
 	margin-right: 10px;
 }
 
-.clear {
-	clear: both;
+#secondary-title-settings #report-bug {
+	margin-top: 20px;
 }

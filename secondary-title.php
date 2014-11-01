@@ -3,7 +3,7 @@
 	 * Plugin Name:  Secondary Title
 	 * Plugin URI:   http://www.koljanolte.com/wordpress/plugins/secondary-title/
 	 * Description:  Adds a secondary title to posts, pages and custom post types.
-	 * Version:      1.1
+	 * Version:      1.2
 	 * Author:       Kolja Nolte
 	 * Author URI:   http://www.koljanolte.com
 	 * License:      GPLv2 or later
@@ -22,28 +22,10 @@
 	 */
 	$include_files = glob(dirname(__FILE__) . "/includes/*.php");
 	foreach($include_files as $include_file) {
-		/** @noinspection PhpIncludeInspection */
 		include($include_file);
 	}
 
-	/**
-	 * Sets the default settings when plugin is activated.
-	 */
-	function init_secondary_title_default_settings() {
-		/** Use update_option() to create the default options  */
-		foreach(get_secondary_title_default_settings() as $setting => $value) {
-			if(!get_option($setting) == "") {
-				continue;
-			}
-			update_option($setting, $value);
-		}
-		return true;
-	}
+	register_activation_hook(__FILE__, "secondary_title_install");
 
-	register_activation_hook(__FILE__, "init_secondary_title_default_settings");
-
-	/*
-	 * As of version 0.7, Secondary Title has been completely restructured
-	 * to make it easier to understand the way the plugin works. Please see
-	 * the directory "includes" for the rest of the plugin files.
-	 */
+	/** Loads the text domain for localization. */
+	load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/../languages/");

@@ -18,17 +18,6 @@
 	}
 
 	/**
-	 * Loads the text domain for localization.
-	 *
-	 * @since 0.1
-	 */
-	function secondary_title_init_languages() {
-		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/../languages/");
-	}
-
-	add_action("init", "secondary_title_init_languages");
-
-	/**
 	 * Updates the secondary title when "Edit post" screen
 	 * is being saved.
 	 *
@@ -100,7 +89,7 @@
 	 * @since 0.7
 	 */
 	function secondary_title_init_columns() {
-		$allowed_post_types = get_secondary_title_setting("post_types");
+		$allowed_post_types = secondary_title_get_setting("post_types");
 		$post_types         = get_post_types();
 		foreach($post_types as $post_type) {
 			/** Add "Secondary title" column to activated post types */
@@ -180,7 +169,7 @@
 			}
 		}
 		/** Only display if title is within the main lop */
-		if(get_secondary_title_setting("only_show_in_main_post") == "on") {
+		if(secondary_title_get_setting("only_show_in_main_post") == "on") {
 			global $wp_query;
 			if(!$wp_query->in_the_loop) {
 				return $standard_title;
@@ -197,13 +186,9 @@
 	 * @since 0.1
 	 */
 	function secondary_title_scripts_and_styles() {
-		$plugin_folder  = str_replace("\\", "/", plugin_dir_url(dirname(__FILE__)));
-		$scripts_folder = $plugin_folder . "scripts/";
-		$styles_folder  = $plugin_folder . "styles/";
-		if(is_admin()) {
-			wp_enqueue_script("secondary-title-script-admin", $scripts_folder . "admin.js", array(), "1.0", true);
-			wp_enqueue_style("secondary-title-style-admin", $styles_folder . "admin.css");
-		}
+		$plugin_folder = plugin_dir_url(dirname(__FILE__));
+		wp_enqueue_script("secondary-title-script-admin", $plugin_folder . "/scripts/admin.js");
+		wp_enqueue_style("secondary-title-style-admin", $plugin_folder . "/styles/admin.css");
 	}
 
 	add_action("admin_enqueue_scripts", "secondary_title_scripts_and_styles");
@@ -229,7 +214,7 @@
 	 * @return mixed
 	 */
 	function secondary_title_permalinks($permalink, $post) {
-		$setting                   = get_secondary_title_setting("use_in_permalinks");
+		$setting                   = secondary_title_get_setting("use_in_permalinks");
 		$secondary_title           = get_secondary_title($post->ID);
 		$secondary_title_sanitized = sanitize_title($secondary_title);
 		if($setting == "auto" && !empty($secondary_title)) {
@@ -251,3 +236,15 @@
 	}
 
 	add_filter("post_link", "secondary_title_permalinks", 10, 2);
+
+	/**
+	 * Initialize setting on admin interface.
+	 *
+	 * @since 0.1
+	 */
+	function init_admin_settings() {
+		/** Creates a new page on the admin interface */
+		add_options_page(__("Settings", "secondary_title"), "Secondary Title", "manage_options", "secondary-title", "secondary_title_settings_page");
+	}
+
+	add_action("admin_menu", "init_admin_settings");
