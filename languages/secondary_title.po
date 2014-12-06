@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Secondary Title\n"
-"POT-Creation-Date: 2014-11-01 22:15+0700\n"
-"PO-Revision-Date: 2014-11-01 22:15+0700\n"
+"POT-Creation-Date: 2014-12-06 22:55+0700\n"
+"PO-Revision-Date: 2014-12-06 22:55+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.7\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "Enter secondary title here"
 msgstr ""
 
-#: includes/hooks.php:78
+#: includes/hooks.php:80
 msgid "Secondary title"
 msgstr ""
 
-#: includes/hooks.php:122
+#: includes/hooks.php:129
 msgid "Sec. title"
 msgstr ""
 
-#: includes/hooks.php:247
+#: includes/hooks.php:256
 msgid "Settings"
 msgstr ""
 

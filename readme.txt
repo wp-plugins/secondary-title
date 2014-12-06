@@ -64,6 +64,10 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.3 =
+* Fixed [bug](https://wordpress.org/support/topic/missing-secondary-title-column-in-custom-post-type) causing secondary title not to be displayed on certain custom post types overviews (thanks to [saschapi](https://wordpress.org/support/profile/saschapi)).
+* Updated translations.
+
 = 1.2 =
 * Small bug fixes and corrections.
 * Updated translations.
@@ -161,6 +165,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.3 =
+Fixed posts overview bug, added/updated translations.
 
 = 1.2 =
 Bug fixes, translation updates.

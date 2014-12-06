@@ -36,6 +36,7 @@
 		if(isset($screen->base) && $screen->base == "post") {
 			update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
 		}
+
 		return true;
 	}
 
@@ -55,6 +56,7 @@
 			return $post_id;
 		}
 		update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_title"])));
+
 		return $post_id;
 	}
 
@@ -79,6 +81,7 @@
 			}
 			$new_columns[$column_slug] = $column_title;
 		}
+
 		return $new_columns;
 	}
 
@@ -90,13 +93,17 @@
 	 */
 	function secondary_title_init_columns() {
 		$allowed_post_types = secondary_title_get_setting("post_types");
-		$post_types         = get_post_types();
+		$post_types         = get_post_types(array(
+				"public" => true
+			)
+		);
 		foreach($post_types as $post_type) {
 			/** Add "Secondary title" column to activated post types */
 			if(in_array($post_type, $allowed_post_types) || !isset($allowed_post_types[0])) {
-				add_filter("manage_" . $post_type . "_posts_columns", "secondary_title_overview_columns");
-				add_filter("manage_" . $post_type . "_custom_columns", "secondary_title_overview_columns");
-				add_filter("manage_" . $post_type . "s_custom_column", "secondary_title_overview_column_content", 10, 2);
+				/** Adding columns */
+				add_filter("manage_{$post_type}_posts_columns", "secondary_title_overview_columns");
+				/** Adding columns content */
+				add_filter("manage_{$post_type}_posts_custom_column", "secondary_title_overview_column_content", 10, 2);
 			}
 		}
 	}
@@ -175,6 +182,7 @@
 				return $standard_title;
 			}
 		}
+
 		return $title;
 	}
 
@@ -232,6 +240,7 @@
 		if($permalink_ending == "//") {
 			$permalink = substr($permalink, 0, strlen($permalink) - 1);
 		}
+
 		return $permalink;
 	}
 
@@ -244,7 +253,13 @@
 	 */
 	function init_admin_settings() {
 		/** Creates a new page on the admin interface */
-		add_options_page(__("Settings", "secondary_title"), "Secondary Title", "manage_options", "secondary-title", "secondary_title_settings_page");
+		add_options_page(
+			__("Settings", "secondary_title"),
+			"Secondary Title",
+			"manage_options",
+			"secondary-title",
+			"secondary_title_settings_page"
+		);
 	}
 
 	add_action("admin_menu", "init_admin_settings");
