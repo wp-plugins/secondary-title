@@ -163,18 +163,8 @@
 	}
 
 	/**
-	 * Get the secondary title from post ID $post_id
-	 *
-	 * @since 0.1
-	 *
-	 * @param int    $post_id ID of target post
-	 *
-	 * @param string $suffix  To be added after the secondary title
-	 * @param string $prefix  To be added in front of the secondary title
-	 *
-	 * @return mixed The secondary title
 	 */
-	function get_secondary_title($post_id = 0, $prefix = "", $suffix = "") {
+	function get_secondary_title($post_id = 0, $prefix = "", $suffix = "", $use_rules = false) {
 		/** If $post_id not set, use current post ID */
 		if(!$post_id) {
 			$post_id = get_the_ID();
@@ -185,12 +175,23 @@
 			return false;
 		}
 
-		$post_ids   = get_secondary_title_post_ids();
-		$post_types = get_secondary_title_post_types();
+		if($use_rules) {
+			$post_ids        = get_secondary_title_post_ids();
+			$post_types      = get_secondary_title_post_types();
+			$categories      = get_secondary_title_post_categories();
+			$post_categories = wp_get_post_categories($post_id);
 
-		/** Stop if post is not among the allowed post types/IDs */
-		if(count($post_ids) != 0 && !in_array($post_id, $post_ids) || count($post_types) != 0 && !in_array(get_post_type($post_id), $post_types)) {
-			return false;
+			$in_category = false;
+			foreach($categories as $index => $category_id) {
+				if(in_array($category_id, $post_categories)) {
+					$in_category = true;
+				}
+			}
+
+			/** Stop if post is not among the allowed post types/IDs */
+			if(count($post_ids) && !in_array($post_id, $post_ids) || count($post_types) && !in_array(get_post_type($post_id), $post_types) || count($categories) && !$in_category) {
+				return false;
+			}
 		}
 
 		$secondary_title = get_post_meta($post_id, "_secondary_title", true);
@@ -199,7 +200,6 @@
 			return false;
 		}
 		$secondary_title = $prefix . $secondary_title . $suffix;
-
 		/** Apply filters to secondary title if used with Word Filter Plus plugin */
 		if(class_exists("WordFilter")) {
 			/** @noinspection PhpUndefinedClassInspection */

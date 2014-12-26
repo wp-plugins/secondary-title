@@ -150,31 +150,19 @@
 		}
 		/** Keep the standard title */
 		$standard_title  = $title;
-		$secondary_title = get_secondary_title($post->ID);
-		/** Insert the secondary title in the admin interface */
-		/** Get post information */
-		$post_category = get_the_category();
-		if(isset($post_category[0]->slug)) {
-			$post_category = $post_category[0]->slug;
+		$secondary_title = get_secondary_title($post->ID, "", "", true);
+		if(!$secondary_title) {
+			return $standard_title;
 		}
-		else {
-			$post_category = array();
-		}
+
 		/** Checks if auto show function is set and the secondary title is not empty */
-		if(get_option("secondary_title_auto_show") == "on" && $secondary_title != "" && $title == wptexturize($post->post_title) || is_admin()) {
-			$post_ids        = get_secondary_title_post_ids();
-			$post_types      = get_secondary_title_post_types();
-			$post_categories = get_secondary_title_post_categories();
-			/** Stop script if it does not match the set options */
-			if(count($post_ids) != 0 && !in_array(get_the_ID(), $post_ids) || count($post_types) != 0 && !in_array(get_post_type(), $post_types) || count($post_categories) != 0 && !in_array($post_category, $post_categories)) {
-			}
-			else {
-				/** Apply title format */
-				$format = str_replace('"', "'", stripslashes(get_option("secondary_title_title_format")));
-				$title  = str_replace("%title%", $title, $format);
-				$title  = str_replace("%secondary_title%", html_entity_decode($secondary_title), $title);
-			}
+		if(get_option("secondary_title_auto_show") != "on" && $secondary_title == "" && $title != wptexturize($post->post_title) || is_admin()) {
+			return false;
 		}
+		/** Apply title format */
+		$format = str_replace('"', "'", stripslashes(get_option("secondary_title_title_format")));
+		$title  = str_replace("%title%", $title, $format);
+		$title  = str_replace("%secondary_title%", html_entity_decode($secondary_title), $title);
 		/** Only display if title is within the main lop */
 		if(secondary_title_get_setting("only_show_in_main_post") == "on") {
 			global $wp_query;
@@ -212,7 +200,6 @@
 	}
 
 	add_action("init", "secondary_title_permalinks_init");
-
 	/**
 	 * @param $permalink
 	 * @param $post
@@ -222,25 +209,7 @@
 	 * @return mixed
 	 */
 	function secondary_title_permalinks($permalink, $post) {
-		$setting                   = secondary_title_get_setting("use_in_permalinks");
-		$secondary_title           = get_secondary_title($post->ID);
-		$secondary_title_sanitized = sanitize_title($secondary_title);
-		if($setting == "auto" && !empty($secondary_title)) {
-			$permalink = str_replace($post->post_name, $secondary_title_sanitized . "-" . $post->post_name, $permalink);
-		}
-		elseif($setting == "custom" && !empty($secondary_title)) {
-			$permalink = str_replace("%secondary_title%", $secondary_title_sanitized, $permalink);
-		}
-		else {
-			$permalink = str_replace("%secondary_title%", "", $permalink);
-		}
-
-		/** Remove possible double slash */
-		$permalink_ending = substr($permalink, strlen($permalink) - 2, strlen($permalink));
-		if($permalink_ending == "//") {
-			$permalink = substr($permalink, 0, strlen($permalink) - 1);
-		}
-
+		$permalink = add_query_arg("secondary_title", "secondary_title");
 		return $permalink;
 	}
 
