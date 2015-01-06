@@ -171,6 +171,9 @@ conflicts.
 
 == Upgrade Notice ==
 
+= 1.4 =
+Code rearrangements and added `$use_settings` parameter to `get_secondary_title()` and related functions that defines whether or not the plugin settings should be validated.
+
 = 1.3 =
 Fixed posts overview bug, added/updated translations.
 
