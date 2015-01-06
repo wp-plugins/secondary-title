@@ -1,0 +1,45 @@
+/**
+ * Edit/add post/page page.
+ */
+#secondary-title-text {
+	width:  100%;
+	height: 30px;
+}
+
+/**
+ * Settings page
+ */
+#secondary-title-settings input[type="text"] {
+	height:   28px;
+	position: relative;
+	bottom:   1px;
+}
+
+#secondary-title-settings .clear {
+	clear: both;
+}
+
+#secondary-title-settings strong {
+	font-weight: bold;
+}
+
+#secondary-title-settings #title-format .description code {
+	cursor: pointer;
+}
+
+#secondary-title-settings #categories-list .category-batch {
+	width: 20%;
+	float: left;
+}
+
+#secondary-title-settings #categories-list .category-batch li {
+	margin-bottom: 0;
+}
+
+#secondary-title-settings #categories-list .category-batch li input {
+	margin-right: 10px;
+}
+
+#secondary-title-settings #report-bug {
+	margin-top: 20px;
+}
