@@ -39,19 +39,29 @@
 	 * @return mixed
 	 */
 	function secondary_title_edit_post($post_id) {
-		if(!function_exists("get_current_screen")) {
+		if(!isset($_POST["secondary_post_title"])) {
 			return false;
 		}
-		$screen = get_current_screen();
-		/** Only update if we're on the edit screen */
-		if(isset($screen->base) && $screen->base == "post") {
-			update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
+
+		if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
+			return false;
 		}
 
-		return true;
+		if(isset($_POST["post_type"]) && "page" == $_POST["post_type"]) {
+			if(!current_user_can("edit_page", $post_id)) {
+				return false;
+			}
+		}
+		else {
+			if(!current_user_can("edit_post", $post_id)) {
+				return false;
+			}
+		}
+
+		return update_post_meta($post_id, "_secondary_title", stripslashes(esc_attr($_POST["secondary_post_title"])));
 	}
 
-	add_action("edit_post", "secondary_title_edit_post");
+	add_action("save_post", "secondary_title_edit_post");
 
 	/**
 	 * Updates the secondary title in quick edit and
@@ -111,7 +121,7 @@
 		);
 		foreach($post_types as $post_type) {
 			/** Add "Secondary title" column to activated post types */
-			if(in_array($post_type, $allowed_post_types) || !isset($allowed_post_types[0])) {
+			if(!isset($allowed_post_types[0]) || in_array($post_type, $allowed_post_types, false)) {
 				/** Adding columns */
 				add_filter("manage_{$post_type}_posts_columns", "secondary_title_overview_columns");
 				/** Adding columns content */
@@ -137,12 +147,17 @@
 	function secondary_title_overview_column_content($column, $post_id) {
 		if($column == "secondary_title") {
 			the_secondary_title($post_id);
-			echo '<label class="secondary-title-quick-edit-label" hidden="hidden">';
-			echo '<span class="title">' . __("Sec. title", "secondary_title") . '</span>';
-			echo '<span class="input-text-wrap"><input type="text" name="secondary_title" value="' . get_secondary_title($post_id) . '" /></span>';
-			echo "</label>";
 		}
 	}
+
+	function secondary_title_overview_quick_edit() {
+		echo '<label class="secondary-title-quick-edit-label" hidden="hidden">';
+		echo '<span class="title">' . __("Sec. title", "secondary_title") . '</span>';
+		echo '<span class="input-text-wrap"><input type="text" name="secondary_title" value="' . get_secondary_title() . '" /></span>';
+		echo "</label>";
+	}
+
+	add_action("admin_notices", "secondary_title_overview_quick_edit");
 
 	/**
 	 * If auto show function is set, replace the post titles
@@ -161,14 +176,14 @@
 		$standard_title = $title;
 
 		/** Don't do "auto show" when on admin area or if the post is not a valid post */
-		if(is_admin() || !isset($post->ID)) {
+		if(!isset($post->ID) || is_admin()) {
 			return $standard_title;
 		}
 
 		$secondary_title = get_secondary_title($post->ID, "", "", true);
 
 		/** Validate secondary title */
-		if(get_option("secondary_title_auto_show") == "off" || !$secondary_title || $title != wptexturize($post->post_title) || is_admin()) {
+		if(!$secondary_title || get_option("secondary_title_auto_show") == "off" || $title != wptexturize($post->post_title) || is_admin()) {
 			return $standard_title;
 		}
 
@@ -227,10 +242,10 @@
 		$setting                   = secondary_title_get_setting("use_in_permalinks");
 		$secondary_title           = get_secondary_title($post->ID);
 		$secondary_title_sanitized = sanitize_title($secondary_title);
-		if($setting == "auto" && !empty($secondary_title)) {
+		if($setting == "auto" && $secondary_title) {
 			$permalink = str_replace($post->post_name, $secondary_title_sanitized . "-" . $post->post_name, $permalink);
 		}
-		elseif($setting == "custom" && !empty($secondary_title)) {
+		elseif($setting == "custom" && $secondary_title) {
 			$permalink = str_replace("%secondary_title%", $secondary_title_sanitized, $permalink);
 		}
 		else {
@@ -255,13 +270,7 @@
 	 */
 	function init_admin_settings() {
 		/** Creates a new page on the admin interface */
-		add_options_page(
-			__("Settings", "secondary_title"),
-			"Secondary Title",
-			"manage_options",
-			"secondary-title",
-			"secondary_title_settings_page"
-		);
+		add_options_page(__("Settings", "secondary_title"), "Secondary Title", "manage_options", "secondary-title", "secondary_title_settings_page");
 	}
 
 	add_action("admin_menu", "init_admin_settings");

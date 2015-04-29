@@ -1,7 +1,7 @@
 === Secondary Title ===
 Contributors: thaikolja
 Tags: title, alternative title, secondary title, second title, additional title, post title
-Tested up to: 4.1
+Tested up to: 4.2.1
 Stable tag: 0.1
 Requires at least: 3.0.1
 License: GPLv2 or later
@@ -63,6 +63,14 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 3. A section of the plugin's settings page on the admin interface.
 
 == Changelog ==
+
+= 1.5 =
+* Fixed [notice error](https://wordpress.org/support/topic/notice-error-2) when deleting post (thanks to [master412160](https://wordpress.org/support/profile/master412160) and [wido](https://wordpress.org/support/profile/wido)).
+* Fixed [bug](https://wordpress.org/support/topic/issue-when-filtering-posts-by-category) occurring when filtering posts within the admin area (thanks to [Chillington](https://wordpress.org/support/profile/chillington)).
+* Code cleanup and JS refactoring.
+* Performance fixes.
+* Updated translations.
+* Compatibility for WordPress 4.2.1.
 
 = 1.4 =
 * Added `$use_settings` parameter to `get_secondary_title()` and others which defines whether the secondary title should only be displayed if it matches the plugin's settings. Default `false`.
@@ -170,6 +178,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5 =
+Two bugs fixed and some code cleanup.
 
 = 1.4 =
 Code rearrangements and added `$use_settings` parameter to `get_secondary_title()` and related functions that defines whether or not the plugin settings should be validated.

@@ -1,17 +1,21 @@
 jQuery(document).ready(
 	function() {
+		"use strict";
+
+		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinksCustomDescription;
+
 		/**
 		 * Inserts the secondary title input field on edit pages.
 		 */
-		var selector_title_input = jQuery("#secondary-title-input");
-		var title_input_position = jQuery("#secondary-title-input-position").attr("value");
-		if(title_input_position == "above") {
+		var selectorTitleInput = jQuery("#secondary-title-input");
+		var titleInputPosition = jQuery("#secondary-title-input-position").attr("value");
+		if(titleInputPosition === "above") {
 			/** Move down the "Enter title here" text displayed when the standard title field is empty to match with the input field */
 			jQuery("#title-prompt-text").css("padding-top", "45px");
-			selector_title_input.insertBefore("#post-body #title").css("margin-bottom", "5px").removeAttr("hidden");
+			selectorTitleInput.insertBefore("#post-body #title").css("margin-bottom", "5px").removeAttr("hidden");
 		}
-		if(title_input_position == "below") {
-			selector_title_input.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
+		if(titleInputPosition === "below") {
+			selectorTitleInput.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
 		}
 
 		/**
@@ -23,11 +27,11 @@ jQuery(document).ready(
 			 */
 			jQuery("a.editinline").click(
 				function() {
-					var post_id = jQuery(this).parents("tr").attr("id").replace("post-", "");
-					var secondary_title = jQuery("#post-" + post_id).find(".secondary-title-quick-edit-label").clone();
+					var postId = jQuery(this).parents("tr").attr("id").replace("post-", "");
+					var secondaryTitle = jQuery(".secondary-title-quick-edit-label").clone();
 					setTimeout(
 						function() {
-							jQuery("#edit-" + post_id).find(".inline-edit-col label:first").after(secondary_title).show();
+							jQuery("#edit-" + postId).find(".inline-edit-col label:first").after(secondaryTitle).show();
 						}, 50
 					);
 				}
@@ -47,16 +51,16 @@ jQuery(document).ready(
 				);
 			}
 			/** Define variables we're going to need later on */
-			var preview_selector = jQuery("#title_format_preview");
-			var title_format_input_selector = jQuery("#title-format-input");
-			var selector_preview_title = jQuery("#preview-title").attr("value");
-			var selector_preview_secondary_title = jQuery("#preview-secondary-title").attr("value");
-			var preview_label = jQuery("#preview-label").attr("value");
+			previewSelector = jQuery("#title_format_preview");
+			titleFormatInputSelector = jQuery("#title-format-input");
+			selectorPreviewTitle = jQuery("#preview-title").attr("value");
+			selectorPreviewSecondaryTitle = jQuery("#preview-secondary-title").attr("value");
+			previewLabel = jQuery("#preview-label").attr("value");
 
 			/**
 			 * Create slide down function for long category list
 			 */
-			var slided = false;
+			slided = false;
 			jQuery("#all_categories").click(
 				function() {
 					if(!slided) {
@@ -73,8 +77,8 @@ jQuery(document).ready(
 			 */
 			jQuery(".select-all").click(
 				function() {
-					var selector_parent_fieldset = jQuery(this).closest("fieldset");
-					jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(
+					var selectorParentFieldset = jQuery(this).closest("fieldset");
+					jQuery(selectorParentFieldset).find("input[type='checkbox']").each(
 						function() {
 							jQuery(this).attr("checked", "checked");
 						}
@@ -89,8 +93,8 @@ jQuery(document).ready(
 			 */
 			jQuery(".unselect-all").click(
 				function() {
-					var selector_parent_fieldset = jQuery(this).closest("fieldset");
-					jQuery(selector_parent_fieldset).find("input[type='checkbox']").each(
+					var selectorParentFieldset = jQuery(this).closest("fieldset");
+					jQuery(selectorParentFieldset).find("input[type='checkbox']").each(
 						function() {
 							jQuery(this).removeAttr("checked");
 						}
@@ -119,32 +123,32 @@ jQuery(document).ready(
 			 * Displays the auto show description and enables/disabled the "only show in
 			 * main posts" and title format field according to the selection.
 			 */
-			function ChangeAutoShow() {
-				var selector_fieldset = jQuery("#auto-show-fieldset");
-				var checked_radio = selector_fieldset.find("input[type='radio']:checked").attr("value");
-				var description_off = selector_fieldset.find("#auto-show-off-description");
-				var description_on = selector_fieldset.find("#auto-show-on-description");
-				var only_show_in_main_post = jQuery("#only-show-in-main-posts-fieldset").find("input[type='radio']");
-				var title_format = jQuery("#title-format-input");
+			function changeAutoShow() {
+				var selectorFieldset = jQuery("#auto-show-fieldset");
+				var checkedRadio = selectorFieldset.find("input[type='radio']:checked").attr("value");
+				var descriptionOff = selectorFieldset.find("#auto-show-off-description");
+				var descriptionOn = selectorFieldset.find("#auto-show-on-description");
+				var onlyShowInMainPost = jQuery("#only-show-in-main-posts-fieldset").find("input[type='radio']");
+				var titleFormat = jQuery("#title-format-input");
 
-				if(checked_radio == "on") {
-					description_off.hide();
-					description_on.fadeIn();
-					title_format.removeAttr("disabled");
-					only_show_in_main_post.removeAttr("disabled");
+				if(checkedRadio === "on") {
+					descriptionOff.hide();
+					descriptionOn.fadeIn();
+					titleFormat.removeAttr("disabled");
+					onlyShowInMainPost.removeAttr("disabled");
 				}
-				if(checked_radio == "off") {
-					description_on.hide();
-					description_off.fadeIn();
-					title_format.attr("disabled", "disabled");
-					only_show_in_main_post.attr("disabled", "disabled");
+				if(checkedRadio === "off") {
+					descriptionOn.hide();
+					descriptionOff.fadeIn();
+					titleFormat.attr("disabled", "disabled");
+					onlyShowInMainPost.attr("disabled", "disabled");
 				}
 			}
 
 			/** Change when clicked */
 			jQuery("#auto-show-fieldset").find("input[type='radio']").click(
 				function() {
-					ChangeAutoShow();
+					changeAutoShow();
 				}
 			);
 
@@ -152,25 +156,25 @@ jQuery(document).ready(
 			 * Set auto show description and "only show in main posts" +
 			 * title format fields on page load
 			 */
-			ChangeAutoShow();
+			changeAutoShow();
 
 			/**
 			 * Read value of the text format input and replace placeholders with random post titles.
 			 *
 			 * @return {boolean}
 			 */
-			function InsertTitlePreview() {
-				var title_format_input_selector = jQuery("#title-format-input");
+			function insertTitlePreview() {
+				var titleFormatInputSelector = jQuery("#title-format-input");
 				/** Wait 50ms to let the entered value get ready for jQuery to get */
 				setTimeout(
 					function() {
-						var preview_title = title_format_input_selector.val();
-						preview_title = preview_title.replace(/%title%/g, selector_preview_title);
-						preview_title = preview_title.replace(/%secondary_title%/g, selector_preview_secondary_title);
+						var previewTitle = titleFormatInputSelector.val();
+						previewTitle = previewTitle.replace(/%title%/g, selectorPreviewTitle);
+						previewTitle = previewTitle.replace(/%secondary_title%/g, selectorPreviewSecondaryTitle);
 						/** Insert the preview */
-						jQuery(preview_selector).html("<strong>" + preview_label + ":</strong> " + preview_title);
-						if(jQuery(preview_selector).attr("hidden") == "hidden") {
-							jQuery(preview_selector).removeAttr("hidden").hide().fadeIn();
+						jQuery(previewSelector).html("<strong>" + previewLabel + ":</strong> " + previewTitle);
+						if(jQuery(previewSelector).attr("hidden") === "hidden") {
+							jQuery(previewSelector).removeAttr("hidden").hide().fadeIn();
 						}
 					}, 50
 				);
@@ -180,33 +184,33 @@ jQuery(document).ready(
 			/**
 			 * Check if text input is empty when page loads.
 			 */
-			if(title_format_input_selector.val() !== "") {
+			if(titleFormatInputSelector.val() !== "") {
 				/** Insert the formatted preview title */
-				new InsertTitlePreview();
+				insertTitlePreview();
 			}
 
 			/**
 			 * Update preview title when a new character is entered into the text input.
 			 */
-			title_format_input_selector.keypress(
+			titleFormatInputSelector.keypress(
 				function() {
 					/** Insert the formatted preview title */
-					new InsertTitlePreview();
+					insertTitlePreview();
 				}
 			);
 
 			/**
 			 * Resets the title format input.
 			 */
-			var saved_title_format = title_format_input_selector.attr("value");
+			savedTitleFormat = titleFormatInputSelector.attr("value");
 			jQuery("#button-reset").click(
 				function() {
 					/** Don't do anything if title format input is disabled */
-					if(title_format_input_selector.attr("disabled") == "disabled") {
+					if(titleFormatInputSelector.attr("disabled") === "disabled") {
 						return false;
 					}
-					title_format_input_selector.attr("value", saved_title_format);
-					new InsertTitlePreview();
+					titleFormatInputSelector.attr("value", savedTitleFormat);
+					insertTitlePreview();
 					return true;
 				}
 			);
@@ -217,25 +221,25 @@ jQuery(document).ready(
 			jQuery("#title-format").find(".description code").click(
 				function() {
 					/** Don't insert variable if title format input is disabled */
-					if(title_format_input_selector.attr("disabled") == "disabled") {
+					if(titleFormatInputSelector.attr("disabled") === "disabled") {
 						return false;
 					}
-					var code_content = jQuery(this).text();
-					var input_value = title_format_input_selector.attr("value");
-					title_format_input_selector.attr("value", input_value + code_content);
-					new InsertTitlePreview();
+					codeContent = jQuery(this).text();
+					inputValue = titleFormatInputSelector.attr("value");
+					titleFormatInputSelector.attr("value", inputValue + codeContent);
+					insertTitlePreview();
 					return true;
 				}
 			);
 
 			jQuery("#use-in-permalinks-row").find("input").click(
 				function() {
-					var selector_permalinks_custom_description = jQuery("#use-in-permalinks-custom-description");
-					var value = jQuery(this).attr("value");
-					if(value == "custom") {
-						selector_permalinks_custom_description.fadeIn();
+					selectorPermalinksCustomDescription = jQuery("#use-in-permalinks-custom-description");
+					value = jQuery(this).attr("value");
+					if(value === "custom") {
+						selectorPermalinksCustomDescription.fadeIn();
 					} else {
-						selector_permalinks_custom_description.fadeOut();
+						selectorPermalinksCustomDescription.fadeOut();
 					}
 				}
 			);

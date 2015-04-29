@@ -2,17 +2,17 @@
  * Edit/add post/page page.
  */
 #secondary-title-text {
-	width:  100%;
 	height: 30px;
+	width:  100%;
 }
 
 /**
  * Settings page
  */
 #secondary-title-settings input[type="text"] {
+	bottom:   1px;
 	height:   28px;
 	position: relative;
-	bottom:   1px;
 }
 
 #secondary-title-settings .clear {
@@ -28,8 +28,8 @@
 }
 
 #secondary-title-settings #categories-list .category-batch {
-	width: 20%;
 	float: left;
+	width: 20%;
 }
 
 #secondary-title-settings #categories-list .category-batch li {

@@ -36,7 +36,7 @@
 	/**
 	 * Returns all settings and their default values used by Secondary Title.
 	 *
-	 * @return array|mixed|void
+	 * @return array|mixed
 	 *
 	 * @since 0.1
 	 */
@@ -69,17 +69,14 @@
 	function secondary_title_get_default_setting($setting) {
 		/** Setting up default settings and values */
 		$default_settings = secondary_title_get_default_settings();
+		$output           = false;
+
 		/** Check if parameter is set; else use default setting value */
-		if(!empty($setting)) {
-			if(isset($default_settings[$setting])) {
-				$default_settings = $default_settings[$setting];
-			}
-			else {
-				$default_settings = false;
-			}
+		if(isset($default_settings[$setting])) {
+			$output = $default_settings[$setting];
 		}
 
-		return $default_settings;
+		return $output;
 	}
 
 	/**
@@ -182,7 +179,7 @@
 	function get_secondary_title($post_id = 0, $prefix = "", $suffix = "", $use_settings = false) {
 		/** If $post_id not set, use current post ID */
 		if(!$post_id) {
-			$post_id = get_the_ID();
+			$post_id = (int)get_the_ID();
 		}
 
 		/** Get the secondary title and return false if it's empty actually empty */
@@ -204,7 +201,7 @@
 			$secondary_title = $word_filter->filter_title($secondary_title);
 		}
 		$secondary_title = apply_filters("get_secondary_title", $secondary_title, $post_id, $prefix, $suffix);
-		
+
 		return $secondary_title;
 	}
 
@@ -238,7 +235,7 @@
 	function get_secondary_title_link($post_id = 0, $prefix = "", $suffix = "", $use_settings = false, array $options = array()) {
 		/** If $post_id not set, use current post ID */
 		if(!$post_id) {
-			$post_id = get_the_ID();
+			$post_id = (int)get_the_ID();
 		}
 		$secondary_title = get_secondary_title($post_id, $prefix, $suffix, $use_settings);
 
@@ -255,17 +252,15 @@
 			"before"      => "",
 			"after"       => "",
 			"before_link" => "",
-			"after_link"  => "",
+			"after_link"  => ""
 		);
 		$merged_options  = array();
 
 		/** Use default option value if option is not set */
 		foreach($default_options as $default_option => $default_value) {
+			$value = $default_value;
 			if(isset($options[$default_option])) {
 				$value = $options[$default_option];
-			}
-			else {
-				$value = $default_value;
 			}
 			$merged_options[$default_option] = $value;
 		}
@@ -318,7 +313,7 @@
 	function has_secondary_title($post_id = 0) {
 		$secondary_title = get_secondary_title($post_id);
 		$has             = false;
-		if(!empty($secondary_title)) {
+		if($secondary_title) {
 			$has = true;
 		}
 
@@ -356,7 +351,7 @@
 	 *
 	 * @return array
 	 */
-	function get_posts_with_secondary_title($additional_query = array()) {
+	function get_posts_with_secondary_title(array $additional_query = array()) {
 		$query_arguments = array(
 			"post_type"    => "any",
 			"meta_key"     => "_secondary_title",
@@ -380,7 +375,7 @@
 	 *
 	 * @since 0.9.2
 	 *
-	 * @return bool
+	 * @return bool|WP_Post
 	 */
 	function get_random_post_with_secondary_title() {
 		$post = get_posts_with_secondary_title(
@@ -420,7 +415,7 @@
 		$saved  = false;
 		$arrays = array(
 			"post_types",
-			"categories",
+			"categories"
 		);
 		foreach(secondary_title_get_default_settings() as $full_setting_name => $default_value) {
 			$setting_name = str_replace("secondary_title_", "", $full_setting_name);
@@ -435,7 +430,7 @@
 					$value = array();
 				}
 			}
-			if(in_array($setting_name, $arrays) && !isset($new_settings[$setting_name])) {
+			if(!isset($new_settings[$setting_name]) || in_array($setting_name, $arrays, false)) {
 				$value = array();
 			}
 			if(update_option($full_setting_name, $value)) {
@@ -464,25 +459,20 @@
 		$post_categories    = wp_get_post_categories($post_id);
 
 		/** Check if post type is among the allowed post types */
-		if(count($allowed_post_types) && !in_array(get_post_type($post_id), $allowed_post_types)) {
+		if(count($allowed_post_types) && !in_array(get_post_type($post_id), $allowed_post_types, false)) {
 			return false;
 		}
 
 		/** Check if post's categories are among the allowed categories */
 		$in_categories = false;
 		foreach($post_categories as $category_id) {
-			if(in_array($category_id, $allowed_categories)) {
+			if(in_array($category_id, $allowed_categories, false)) {
 				$in_categories = true;
 			}
 		}
-		if(count($allowed_categories) && !$in_categories) {
+		if(!$in_categories && count($allowed_categories)) {
 			return false;
 		}
 
-		/** Check if post ID is among the allowed post IDs */
-		if(count($allowed_post_ids) && !in_array($post_id, $allowed_post_ids)) {
-			return false;
-		}
-
-		return true;
+		return in_array($post_id, $allowed_post_ids, false);
 	}
