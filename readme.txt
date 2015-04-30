@@ -64,6 +64,9 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.5.2 =
+* Small bug fix for JavaScript in Firefox.
+
 = 1.5.1 =
 * Hotfix for 1.5.1.
 
@@ -181,6 +184,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.2 =
+Small bug fix for JavaScript in Firefox.
 
 = 1.5.1 =
 Hotfix for 1.5.1.

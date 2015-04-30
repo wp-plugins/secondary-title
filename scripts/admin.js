@@ -1,8 +1,6 @@
 jQuery(document).ready(
 	function() {
-		"use strict";
-
-		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinksCustomDescription;
+		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinkDescription;
 
 		/**
 		 * Inserts the secondary title input field on edit pages.
@@ -234,12 +232,12 @@ jQuery(document).ready(
 
 			jQuery("#use-in-permalinks-row").find("input").click(
 				function() {
-					selectorPermalinksCustomDescription = jQuery("#use-in-permalinks-custom-description");
+					selectorPermalinkDescription = jQuery("#use-in-permalinks-custom-description");
 					value = jQuery(this).attr("value");
 					if(value === "custom") {
-						selectorPermalinksCustomDescription.fadeIn();
+						selectorPermalinkDescription.fadeIn();
 					} else {
-						selectorPermalinksCustomDescription.fadeOut();
+						selectorPermalinkDescription.fadeOut();
 					}
 				}
 			);
