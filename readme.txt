@@ -64,6 +64,9 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.5.1 =
+* Hotfix for 1.5.1.
+
 = 1.5 =
 * Fixed [notice error](https://wordpress.org/support/topic/notice-error-2) when deleting post (thanks to [master412160](https://wordpress.org/support/profile/master412160) and [wido](https://wordpress.org/support/profile/wido)).
 * Fixed [bug](https://wordpress.org/support/topic/issue-when-filtering-posts-by-category) occurring when filtering posts within the admin area (thanks to [Chillington](https://wordpress.org/support/profile/chillington)).
@@ -178,6 +181,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Hotfix for 1.5.1.
 
 = 1.5 =
 Two bugs fixed and some code cleanup.

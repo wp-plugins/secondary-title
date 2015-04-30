@@ -24,18 +24,26 @@
 	 */
 	function init_secondary_title_admin_posts() {
 		$current_screen = get_current_screen();
+
 		/** Don't insert the text input when not viewing the post or edit page */
 		if($current_screen->base != "post" && $current_screen->base != "edit") {
 			return false;
 		}
+
 		$post_types = get_option("secondary_title_post_types");
 		$post_ids   = get_option("secondary_title_post_ids");
+
 		if(is_array($post_types) || is_array($post_ids)) {
+			print_r($post_ids);
+			if((count($post_ids) && !in_array(get_the_ID(), $post_ids, true))) {
+				print_r($post_types);
+			}
 			/** Stop script when post_type is not among the set post types, same with post IDs */
-			if((count($post_types) != 0 && !in_array(get_post_type(), $post_types, false)) || (count($post_ids) != 0 && !in_array(get_the_ID(), $post_ids, false))) {
+			if((count($post_types) && !in_array(get_post_type(), $post_types, false)) || (count($post_ids) != 0 && !in_array(get_the_ID(), $post_ids, false))) {
 				return false;
 			}
 		}
+
 		?>
 		<input type="hidden" id="secondary-title-input-position" value="<?php echo secondary_title_get_setting("title_input_position"); ?>"/>
 		<style type="text/css">

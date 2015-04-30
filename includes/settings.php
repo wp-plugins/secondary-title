@@ -114,8 +114,8 @@
 									$checked = " checked";
 								}
 								echo "<li>";
-								echo '<input type="checkbox" name="categories[]" id="category-$category->slug" value="$category->term_id" ' . $checked . '/>';
-								echo "<label for=\"category-$category->slug\">$category->name (<span class=\"count\">$category->count</span>)</label>";
+								echo '<input type="checkbox" name="categories[]" id="category-' . $category->slug . '" value="' . $category->term_id . '"' . $checked . '/>';
+								echo '<label for="category-' . $category->slug . '">' . $category->name . ' (<span class="count">' . $category->count . '</span>)</label>';
 								echo "</li>";
 								if($batch_counter == 10 || $counter == count($categories)) {
 									echo '</ul>';

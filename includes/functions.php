@@ -417,6 +417,7 @@
 			"post_types",
 			"categories"
 		);
+
 		foreach(secondary_title_get_default_settings() as $full_setting_name => $default_value) {
 			$setting_name = str_replace("secondary_title_", "", $full_setting_name);
 			$value        = "";
@@ -426,11 +427,11 @@
 					$value = preg_replace("'[^0-9,]'", "", $value);
 					$value = explode(",", $value);
 				}
-				if($setting_name == "post_ids" && empty($new_settings[$setting_name])) {
+				if($setting_name == "post_ids" && !$new_settings[$setting_name]) {
 					$value = array();
 				}
 			}
-			if(!isset($new_settings[$setting_name]) || in_array($setting_name, $arrays, false)) {
+			elseif(in_array($setting_name, $arrays, true)) {
 				$value = array();
 			}
 			if(update_option($full_setting_name, $value)) {
@@ -474,5 +475,5 @@
 			return false;
 		}
 
-		return in_array($post_id, $allowed_post_ids, false);
+		return !in_array($post_id, $allowed_post_ids, false);
 	}
