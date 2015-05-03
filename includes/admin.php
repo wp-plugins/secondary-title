@@ -34,10 +34,6 @@
 		$post_ids   = get_option("secondary_title_post_ids");
 
 		if(is_array($post_types) || is_array($post_ids)) {
-			print_r($post_ids);
-			if((count($post_ids) && !in_array(get_the_ID(), $post_ids, true))) {
-				print_r($post_types);
-			}
 			/** Stop script when post_type is not among the set post types, same with post IDs */
 			if((count($post_types) && !in_array(get_post_type(), $post_types, false)) || (count($post_ids) != 0 && !in_array(get_the_ID(), $post_ids, false))) {
 				return false;

@@ -64,6 +64,9 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.5.3 =
+* Removed [unnecessary character](https://wordpress.org/support/topic/plugin-adds-characters-at-top-of-edit-screens) from post screen (thanks to [Julie @Niackery](https://wordpress.org/support/profile/habannah)).
+
 = 1.5.2 =
 * Small bug fix for JavaScript in Firefox.
 
@@ -184,6 +187,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+Removed unnecessary character from post screen.
 
 = 1.5.2 =
 Small bug fix for JavaScript in Firefox.
