@@ -31,7 +31,7 @@
 			<div class="updated settings-updated">
 				<p><?php _e("The settings have been successfully saved.", "secondary_title"); ?></p>
 			</div>
-		<?php
+			<?php
 		}
 		/** Get a random post with a secondary title */
 		$random_post = get_random_post_with_secondary_title();
@@ -220,7 +220,7 @@
 			</tr>
 			<tr id="use-in-permalinks-row">
 				<th id="use-in-permalinks">
-					<label for="use-in-permalinks-auto"><?php _e("Use secondary title in permalinks", "secondary_title"); ?></label>
+					<label for="use-in-permalinks-custom"><?php _e("Use secondary title in permalinks", "secondary_title"); ?></label>
 				</th>
 				<td>
 					<?php
@@ -243,11 +243,6 @@
 					?>
 					<fieldset<?php echo $disabled; ?>>
 						<p>
-							<input type="radio" name="use_in_permalinks" id="use-in-permalinks-auto" value="auto"<?php chk("use_in_permalinks", "auto"); ?>/>
-							<label for="use-in-permalinks-auto"><?php _e("Yes, automatically append to main title.", "secondary_title"); ?></label>
-						</p>
-
-						<p>
 							<input type="radio" name="use_in_permalinks" id="use-in-permalinks-custom" value="custom"<?php chk("use_in_permalinks", "custom"); ?> />
 							<label for="use-in-permalinks-custom"><?php echo sprintf(__('Yes, use <a href="%s" title="Custom permalinks won WordPress.org" target="_blank">custom permalink structure</a>.', "secondary_title"), "http://codex.wordpress.org/Using_Permalinks#Choosing_your_permalink_structure"); ?></label>
 							<?php
@@ -257,10 +252,10 @@
 								}
 							?>
 
-						<p class="description" id="use-in-permalinks-custom-description"<?php echo $hidden; ?>><?php echo sprintf(__('Use %s as a <a href="%s" title="Permalink tags on WordPress.org" target="_blank">permalink tag</a> to display the secondary title.', "secondary_title"), "<code>%secondary_title%</code>", "http://codex.wordpress.org/Using_Permalinks#Structure_Tags"); ?></p>
+						<p class="description" id="use-in-permalinks-custom-description"<?php echo $hidden; ?>><?php echo sprintf(__('Use %s as a <a href="%s" title="Permalink tags on WordPress.org" target="_blank">permalink tag</a> to display the secondary title.<br />You must hit "Save Changes" on the permalinks page to let WordPress regenerate them.', "secondary_title"), "<code>%secondary_title%</code>", "http://codex.wordpress.org/Using_Permalinks#Structure_Tags"); ?></p>
 
 						<p>
-							<input type="radio" name="use_in_permalinks" id="use-in-permalinks-off" value="off"<?php chk("use_in_permalinks", "no"); ?>/>
+							<input type="radio" name="use_in_permalinks" id="use-in-permalinks-off" value="off"<?php chk("use_in_permalinks", "off"); ?>/>
 							<label for="use-in-permalinks-off"><?php _e("No", "secondary_title"); ?></label>
 						</p>
 					</fieldset>
@@ -277,10 +272,10 @@
 		</table>
 		<?php wp_nonce_field("save_settings", "nonce"); ?>
 		<input type="hidden" name="submitted" value="true"/>
-		<input type="submit" class="button button-primary" value="<?php _e("Save changes", "secondary_title"); ?>"/>
+		<input type="submit" class="button button-primary" value="<?php _e("Save Changes", "secondary_title"); ?>"/>
 
 		<div id="report-bug">
-			<small><?php echo sprintf(__('Found an error? Help making Secondary Title better by <a href="%s" title="Click here to report a bug" target="_blank">quickly reporting the bug</a>.', "sathon"), "http://www.wordpress.org/support/plugin/secondary-title#postform"); ?></small>
+			<small><?php echo sprintf(__('Found an error? Help making Secondary Title better by <a href="%s" title="Click here to report a bug" target="_blank">quickly reporting the bug</a>.', "secondary_title"), "http://www.wordpress.org/support/plugin/secondary-title#postform"); ?></small>
 		</div>
-	<?php
+		<?php
 	}

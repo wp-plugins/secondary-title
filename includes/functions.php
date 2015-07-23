@@ -50,7 +50,8 @@
 			"secondary_title_title_format"           => "%secondary_title%: %title%",
 			"secondary_title_title_input_position"   => "above",
 			"secondary_title_only_show_in_main_post" => "on",
-			"secondary_title_use_in_permalinks"      => "off"
+			"secondary_title_use_in_permalinks"      => "off",
+			"secondary_title_permalinks_position"    => "prepend",
 		);
 		$default_settings = apply_filters("secondary_title_get_default_settings", $default_settings);
 

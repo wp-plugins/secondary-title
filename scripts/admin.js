@@ -5,6 +5,7 @@ jQuery(document).ready(
 		/**
 		 * Inserts the secondary title input field on edit pages.
 		 */
+		var selectorPrimaryTitle = jQuery("#title");
 		var selectorTitleInput = jQuery("#secondary-title-input");
 		var titleInputPosition = jQuery("#secondary-title-input-position").attr("value");
 		if(titleInputPosition === "above") {
@@ -16,6 +17,16 @@ jQuery(document).ready(
 			selectorTitleInput.insertAfter("#post-body #title").css("margin-top", "5px").removeAttr("hidden");
 		}
 
+		if(selectorPrimaryTitle.length >= 1 && selectorTitleInput.length >= 1 && titleInputPosition === "below") {
+			selectorPrimaryTitle.keydown(
+				function(e) {
+					if(e.which === 9) {
+						selectorTitleInput.active();
+					}
+				}
+			);
+		}
+
 		/**
 		 * Scripts executed on post overview page.
 		 */
@@ -23,13 +34,15 @@ jQuery(document).ready(
 			/**
 			 * Add the "Sec. title" input field to the quick edit.
 			 */
+			jQuery("tr#inline-edit td .inline-edit-col-left > .inline-edit-col > label").eq(0).after(jQuery(".secondary-title-quick-edit-label"));
 			jQuery("a.editinline").click(
 				function() {
 					var postId = jQuery(this).parents("tr").attr("id").replace("post-", "");
-					var secondaryTitle = jQuery(".secondary-title-quick-edit-label").clone();
 					setTimeout(
 						function() {
-							jQuery("#edit-" + postId).find(".inline-edit-col label:first").after(secondaryTitle).show();
+							jQuery("#edit-" + postId).find(".secondary-title-quick-edit-label input").val(
+								jQuery("#post-" + postId).find(".column-secondary_title").text()
+							);
 						}, 50
 					);
 				}

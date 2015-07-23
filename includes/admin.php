@@ -26,7 +26,7 @@
 		$current_screen = get_current_screen();
 
 		/** Don't insert the text input when not viewing the post or edit page */
-		if($current_screen->base != "post" && $current_screen->base != "edit") {
+		if($current_screen->base != "post" && $current_screen->base != "edit" || strstr($current_screen->id, "edit-")) {
 			return false;
 		}
 
@@ -40,17 +40,13 @@
 			}
 		}
 
-		?>
-		<input type="hidden" id="secondary-title-input-position" value="<?php echo secondary_title_get_setting("title_input_position"); ?>"/>
-		<style type="text/css">
+		$title_input_position = secondary_title_get_setting("title_input_position");
 
-		</style>
-		<div id="secondary-title-input" hidden="hidden">
-			<label for="secondary-title-text" id="secondary-title-text-label" hidden="hidden"></label>
-			<input type="text" size="30" id="secondary-title-text" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php echo get_post_meta(get_the_ID(), "_secondary_title", true); ?>"/>
-		</div>
+		?>
+		<span id="hide-secondary-title" hidden="hidden">
+		<input type="hidden" id="secondary-title-input-position" value="<?php echo $title_input_position; ?>"/>
+		<input type="text" size="30" id="secondary-title-input" placeholder="<?php _e("Enter secondary title here", "secondary_title"); ?>" name="secondary_post_title" value="<?php echo get_post_meta(get_the_ID(), "_secondary_title", true); ?>"/>
+		</span>
 		<?php
 		return true;
 	}
-
-	add_action("admin_head", "init_secondary_title_admin_posts");

@@ -18,17 +18,6 @@
 	}
 
 	/**
-	 * Loads the text domain for localization.
-	 *
-	 * @since 0.1
-	 */
-	function secondary_title_init_translations() {
-		load_plugin_textdomain("secondary_title", false, dirname(plugin_basename(__FILE__)) . "/languages/");
-	}
-
-	add_action("plugins_loaded", "secondary_title_init_translations");
-
-	/**
 	 * Updates the secondary title when "Edit post" screen
 	 * is being saved.
 	 *
@@ -150,14 +139,23 @@
 		}
 	}
 
-	function secondary_title_overview_quick_edit() {
-		echo '<label class="secondary-title-quick-edit-label" hidden="hidden">';
+	/**
+	 * @param $column_name
+	 *
+	 * @since 1.5.4
+	 */
+	function secondary_title_overview_quick_edit($column_name) {
+		if($column_name !== "secondary_title") {
+			return;
+		}
+
+		echo '<label class="secondary-title-quick-edit-label">';
 		echo '<span class="title">' . __("Sec. title", "secondary_title") . '</span>';
-		echo '<span class="input-text-wrap"><input type="text" name="secondary_title" value="' . get_secondary_title() . '" /></span>';
+		echo '<span class="input-text-wrap"><input type="text" name="secondary_title" value="" /></span>';
 		echo "</label>";
 	}
 
-	add_action("admin_notices", "secondary_title_overview_quick_edit");
+	add_action("quick_edit_custom_box", "secondary_title_overview_quick_edit", 10);
 
 	/**
 	 * If auto show function is set, replace the post titles
@@ -192,7 +190,7 @@
 		$title  = str_replace("%title%", $title, $format);
 		$title  = str_replace("%secondary_title%", html_entity_decode($secondary_title), $title);
 
-		/** Only display if title is within the main lop */
+		/** Only display if title is within the main loop */
 		if(secondary_title_get_setting("only_show_in_main_post") == "on") {
 			global $wp_query;
 			if(!$wp_query->in_the_loop) {
@@ -219,51 +217,6 @@
 	add_action("admin_enqueue_scripts", "secondary_title_scripts_and_styles");
 
 	/**
-	 * Registers the %secondary_title% tag as a
-	 * permalink tag.
-	 *
-	 * @since 0.8
-	 */
-	function secondary_title_permalinks_init() {
-		add_rewrite_tag("%secondary_title%", "([^&]+)");
-	}
-
-	add_action("init", "secondary_title_permalinks_init");
-
-	/**
-	 * @param $permalink
-	 * @param $post
-	 *
-	 * @since 0.8
-	 *
-	 * @return mixed
-	 */
-	function secondary_title_permalinks($permalink, $post) {
-		$setting                   = secondary_title_get_setting("use_in_permalinks");
-		$secondary_title           = get_secondary_title($post->ID);
-		$secondary_title_sanitized = sanitize_title($secondary_title);
-		if($setting == "auto" && $secondary_title) {
-			$permalink = str_replace($post->post_name, $secondary_title_sanitized . "-" . $post->post_name, $permalink);
-		}
-		elseif($setting == "custom" && $secondary_title) {
-			$permalink = str_replace("%secondary_title%", $secondary_title_sanitized, $permalink);
-		}
-		else {
-			$permalink = str_replace("%secondary_title%", "", $permalink);
-		}
-
-		/** Remove possible double slash */
-		$permalink_ending = substr($permalink, strlen($permalink) - 2, strlen($permalink));
-		if($permalink_ending == "//") {
-			$permalink = substr($permalink, 0, strlen($permalink) - 1);
-		}
-
-		return $permalink;
-	}
-
-	add_filter("post_link", "secondary_title_permalinks", 10, 2);
-
-	/**
 	 * Initialize setting on admin interface.
 	 *
 	 * @since 0.1
@@ -274,3 +227,48 @@
 	}
 
 	add_action("admin_menu", "init_admin_settings");
+
+	/**
+	 * Registers the %secondary_title% tag as a
+	 * permalink tag.
+	 *
+	 * @since 0.8
+	 */
+	function secondary_title_permalinks_init() {
+		if(secondary_title_get_setting("use_in_permalinks") === "custom") {
+			add_rewrite_tag("%secondary_title%", "([^&]+)");
+		}
+	}
+
+	add_action("init", "secondary_title_permalinks_init");
+
+	/**
+	 * @param $permalink
+	 * @param $post
+	 *
+	 * @since 1.5.4
+	 *
+	 * @return mixed
+	 **/
+	function secondary_title_modify_permalink($permalink, $post) {
+		$secondary_title         = get_secondary_title($post->ID);
+		$secondary_title_setting = secondary_title_get_setting("use_in_permalinks");
+
+		/** Don't do anything if option is not activated */
+		if($secondary_title_setting !== "custom") {
+			return $permalink;
+		}
+		$placeholder = "%secondary_title%";
+
+		if($secondary_title) {
+			$permalink = str_replace($placeholder, $secondary_title, $permalink);
+		}
+		else {
+			/** Remove placeholder from permalink if no secondary title exists */
+			$permalink = str_replace($placeholder, "", $permalink);
+		}
+
+		return $permalink;
+	}
+
+	add_filter("post_link", "secondary_title_modify_permalink", 10, 2);

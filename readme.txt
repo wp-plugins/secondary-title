@@ -1,7 +1,7 @@
 === Secondary Title ===
 Contributors: thaikolja
 Tags: title, alternative title, secondary title, second title, additional title, post title
-Tested up to: 4.2.1
+Tested up to: 4.2.3
 Stable tag: 0.1
 Requires at least: 3.0.1
 License: GPLv2 or later
@@ -21,7 +21,7 @@ shown on,
 *	the format both titles are being shown (only works when *Auto show* is activated),
 *	the position where the secondary title input field should be displayed (above or below the standard title) within the admin interface,
 * whether the secondary title should only be displayed in the main post and not within widgets etc.,
-* if the secondary title should be added to the [permalinks](http://codex.wordpress.org/Using_Permalinks).
+* if the secondary title should be usable in [permalinks](http://codex.wordpress.org/Using_Permalinks).
 
 **Please see the [official website](http://www.koljanolte.com/wordpress/plugins/secondary-title/) for a full
 documentation.**
@@ -63,6 +63,11 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 3. A section of the plugin's settings page on the admin interface.
 
 == Changelog ==
+
+= 1.5.4 =
+* Removed "Automatically append to permalinks" option because it turned out to cause several 404 errors.
+* Added JS fix to let users jump from primary title to secondary title when tab is pressed.
+* Fixed bug in "quick edit" dropdown (thanks to [madaplus](https://wordpress.org/support/profile/madaplus) for reporting and [simne7](https://wordpress.org/support/profile/simne7) for offering a fix.
 
 = 1.5.3 =
 * Removed [unnecessary character](https://wordpress.org/support/topic/plugin-adds-characters-at-top-of-edit-screens) from post screen (thanks to [Julie @Niackery](https://wordpress.org/support/profile/habannah)).
@@ -187,6 +192,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.4 =
+The option "Automatically append to permalink" has been removed; please use "Yes, use custom permalink structure" on the plugin's settings page instead.
 
 = 1.5.3 =
 Removed unnecessary character from post screen.
