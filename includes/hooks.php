@@ -18,6 +18,18 @@
 	}
 
 	/**
+	 * Loads the text domain for localization.
+	 *
+	 * @since 0.1
+	 */
+	function secondary_title_init_translations() {
+		$translation_path = plugin_dir_path(__FILE__) . "/../languages/" . get_site_option("WPLANG") . ".mo";
+		load_textdomain("secondary_title", $translation_path);
+	}
+
+	add_action("init", "secondary_title_init_translations");
+
+	/**
 	 * Updates the secondary title when "Edit post" screen
 	 * is being saved.
 	 *

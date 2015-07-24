@@ -64,6 +64,10 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.5.5 =
+* Fixed bug preventing secondary title input field from displaying.
+* Updated translations.
+
 = 1.5.4 =
 * Removed "Automatically append to permalinks" option because it turned out to cause several 404 errors.
 * Added JS fix to let users jump from primary title to secondary title when tab is pressed.
@@ -192,6 +196,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.5 =
+Urgent hotfix for 1.5.4.
 
 = 1.5.4 =
 The option "Automatically append to permalink" has been removed; please use "Yes, use custom permalink structure" on the plugin's settings page instead.

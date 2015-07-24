@@ -1,115 +1,115 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Secondary Title\n"
-"POT-Creation-Date: 2015-01-07 00:50+0700\n"
-"PO-Revision-Date: 2015-01-07 00:50+0700\n"
+"POT-Creation-Date: 2015-07-24 14:14+0700\n"
+"PO-Revision-Date: 2015-07-24 14:14+0700\n"
 "Last-Translator: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language-Team: Kolja Nolte <kolja.nolte@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.7.6\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admin.php:46
+#: includes/admin.php:48
 msgid "Enter secondary title here"
 msgstr ""
 
-#: includes/hooks.php:80
+#: includes/hooks.php:102
 msgid "Secondary title"
 msgstr ""
 
-#: includes/hooks.php:129
+#: includes/hooks.php:165
 msgid "Sec. title"
 msgstr ""
 
-#: includes/hooks.php:257
+#: includes/hooks.php:238
 msgid "Settings"
 msgstr ""
 
-#: includes/settings.php:47
+#: includes/settings.php:32
 msgid "The settings have been successfully saved."
 msgstr ""
 
-#: includes/settings.php:58
+#: includes/settings.php:43
 msgid "Malaysian Airlines flight MH370 lost over Gulf of Thailand"
 msgstr ""
 
-#: includes/settings.php:59
+#: includes/settings.php:44
 msgid "Plane missing"
 msgstr ""
 
-#: includes/settings.php:63
+#: includes/settings.php:48
 msgid "Preview"
 msgstr ""
 
-#: includes/settings.php:69
+#: includes/settings.php:54
 msgid "Post types"
 msgstr ""
 
-#: includes/settings.php:99 includes/settings.php:147
+#: includes/settings.php:82 includes/settings.php:129
 msgid "Select all"
 msgstr ""
 
-#: includes/settings.php:100 includes/settings.php:148
+#: includes/settings.php:83 includes/settings.php:130
 msgid "Unselect all"
 msgstr ""
 
-#: includes/settings.php:103
+#: includes/settings.php:86
 msgid ""
 "Post types for which secondary titles should be activated.<br /> Select none "
 "to use all available post types."
 msgstr ""
 
-#: includes/settings.php:108
+#: includes/settings.php:91
 msgid "Categories"
 msgstr ""
 
-#: includes/settings.php:150
+#: includes/settings.php:132
 msgid "Select non-empty categories"
 msgstr ""
 
-#: includes/settings.php:153
+#: includes/settings.php:135
 msgid ""
 "Categories for which secondary titles should be activated.<br /> Select none "
 "to use all available categories."
 msgstr ""
 
-#: includes/settings.php:159
+#: includes/settings.php:141
 msgid "Post IDs"
 msgstr ""
 
-#: includes/settings.php:162
+#: includes/settings.php:144
 msgid "E.g.: 4, 28, 104"
 msgstr ""
 
-#: includes/settings.php:165
+#: includes/settings.php:147
 msgid "Only use secondary title for specific posts. Separate IDs with commas."
 msgstr ""
 
-#: includes/settings.php:170
+#: includes/settings.php:152
 msgid "Insert automatically"
 msgstr ""
 
-#: includes/settings.php:175 includes/settings.php:230
+#: includes/settings.php:157 includes/settings.php:213
 msgid "Yes"
 msgstr ""
 
-#: includes/settings.php:178 includes/settings.php:232
-#: includes/settings.php:281
+#: includes/settings.php:160 includes/settings.php:215
+#: includes/settings.php:259
 msgid "No"
 msgstr ""
 
-#: includes/settings.php:180
+#: includes/settings.php:162
 msgid "Automatically merges the secondary title with the standard title."
 msgstr ""
 
-#: includes/settings.php:184
+#: includes/settings.php:166
 #, php-format
 msgid ""
 "To manually insert the secondary title in your theme, use %s or %s. See the "
@@ -117,32 +117,32 @@ msgid ""
 ">official documentation</a> for additional parameters."
 msgstr ""
 
-#: includes/settings.php:192
+#: includes/settings.php:174
 msgid "Title format"
 msgstr ""
 
-#: includes/settings.php:195
+#: includes/settings.php:177
 msgid "E.g.: %secondary_title%: %title%"
 msgstr ""
 
-#: includes/settings.php:196
+#: includes/settings.php:178
 msgid "Reset"
 msgstr ""
 
-#: includes/settings.php:199
+#: includes/settings.php:181
 #, php-format
 msgid "Use %s for the main title and %s for the secondary title."
 msgstr ""
 
-#: includes/settings.php:199
+#: includes/settings.php:181
 msgid "Add title to title format input"
 msgstr ""
 
-#: includes/settings.php:199
+#: includes/settings.php:181
 msgid "Add secondary title to title format input"
 msgstr ""
 
-#: includes/settings.php:205
+#: includes/settings.php:188
 #, php-format
 msgid ""
 "<b>Note:</b> To style the output, use the <a href=\"%s\" title=\"See an "
@@ -150,23 +150,23 @@ msgid ""
 "g.:<br />%s"
 msgstr ""
 
-#: includes/settings.php:205
+#: includes/settings.php:188
 msgid "Add code to title format input"
 msgstr ""
 
-#: includes/settings.php:212
+#: includes/settings.php:195
 msgid "Secondary title input position"
 msgstr ""
 
-#: includes/settings.php:216
+#: includes/settings.php:199
 msgid "Above"
 msgstr ""
 
-#: includes/settings.php:218
+#: includes/settings.php:201
 msgid "Below"
 msgstr ""
 
-#: includes/settings.php:220
+#: includes/settings.php:203
 #, php-format
 msgid ""
 "Defines whether input field for the secondary title should be displayed "
@@ -176,58 +176,55 @@ msgid ""
 "effect on your front end."
 msgstr ""
 
-#: includes/settings.php:225
+#: includes/settings.php:208
 msgid "Only show in main post"
 msgstr ""
 
-#: includes/settings.php:234
+#: includes/settings.php:217
 msgid ""
 "If activated, the secondary title will only be shown within the main post;"
 "<br /> sidebars, menu items etc. will be ignored. <strong>Only works when "
 "\"Insert automatically\" is enabled.</strong>"
 msgstr ""
 
-#: includes/settings.php:240
+#: includes/settings.php:223
 msgid "Use secondary title in permalinks"
 msgstr ""
 
-#: includes/settings.php:264
-msgid "Yes, automatically append to main title."
-msgstr ""
-
-#: includes/settings.php:269
+#: includes/settings.php:247
 #, php-format
 msgid ""
 "Yes, use <a href=\"%s\" title=\"Custom permalinks won WordPress.org\" target="
 "\"_blank\">custom permalink structure</a>."
 msgstr ""
 
-#: includes/settings.php:277
+#: includes/settings.php:255
 #, php-format
 msgid ""
 "Use %s as a <a href=\"%s\" title=\"Permalink tags on WordPress.org\" target="
-"\"_blank\">permalink tag</a> to display the secondary title."
+"\"_blank\">permalink tag</a> to display the secondary title.<br />You must "
+"hit \"Save Changes\" on the permalinks page to let WordPress regenerate them."
 msgstr ""
 
-#: includes/settings.php:286
+#: includes/settings.php:264
 #, php-format
 msgid ""
 "Lets you use the secondary title in <a href=\"%s\" title=\"Permalinks on "
 "WordPress.org\" target=\"_blank\">permalinks</a>."
 msgstr ""
 
-#: includes/settings.php:288
+#: includes/settings.php:266
 #, php-format
 msgid ""
 "Please <a href=\"%s\" title=\"Turn on permalinks\" target=\"_blank\">turn on "
 "permalinks</a> to use this feature."
 msgstr ""
 
-#: includes/settings.php:297
-msgid "Save changes"
+#: includes/settings.php:275
+msgid "Save Changes"
 msgstr ""
 
-#: includes/settings.php:300
+#: includes/settings.php:278
 #, php-format
 msgid ""
 "Found an error? Help making Secondary Title better by <a href=\"%s\" title="

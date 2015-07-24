@@ -50,3 +50,5 @@
 		<?php
 		return true;
 	}
+
+	add_action("admin_head", "init_secondary_title_admin_posts");
