@@ -64,6 +64,9 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.5.6 =
+* Remove unnecessary slash in css link.
+
 = 1.5.5 =
 * Fixed bug preventing secondary title input field from displaying.
 * Updated translations.
@@ -196,6 +199,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.5.6 =
+Small CSS fix.
 
 = 1.5.5 =
 Urgent hotfix for 1.5.4.

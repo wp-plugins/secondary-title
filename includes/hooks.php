@@ -222,8 +222,8 @@
 	 */
 	function secondary_title_scripts_and_styles() {
 		$plugin_folder = plugin_dir_url(dirname(__FILE__));
-		wp_enqueue_script("secondary-title-script-admin", "$plugin_folder/scripts/admin.js");
-		wp_enqueue_style("secondary-title-style-admin", "$plugin_folder/styles/admin.css");
+		wp_enqueue_script("secondary-title-script-admin", "{$plugin_folder}scripts/admin.js");
+		wp_enqueue_style("secondary-title-style-admin", "{$plugin_folder}styles/admin.css");
 	}
 
 	add_action("admin_enqueue_scripts", "secondary_title_scripts_and_styles");
