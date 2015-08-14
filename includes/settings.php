@@ -23,7 +23,10 @@
 		/** Check if the submit button was hit and call is authorized */
 		?>
 		<div class="wrap" id="secondary-title-settings">
-		<h2><?php echo "Secondary Title &rsaquo; " . get_admin_page_title(); ?></h2>
+		<h2>
+			<i class="fa fa-cog"></i>
+			<?php echo "Secondary Title " . get_admin_page_title(); ?>
+		</h2>
 		<?php
 		if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nonce"]) && wp_verify_nonce($_POST["nonce"], "save_settings")) {
 			secondary_title_update_settings($_POST)
@@ -33,6 +36,12 @@
 			</div>
 			<?php
 		}
+		elseif($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["nonce"]) && wp_verify_nonce($_GET["nonce"], "secondary_title_reset_settings")) {
+			if(secondary_title_reset_settings()) {
+				echo secondary_title_get_message(__("All settings have been successfully resetted.", "secondary_title"), "success");
+			}
+		}
+
 		/** Get a random post with a secondary title */
 		$random_post = get_random_post_with_secondary_title();
 		if($random_post) {
@@ -45,13 +54,16 @@
 		}
 		?>
 		<!-- Additional information provided for jQuery -->
-		<input type="hidden" id="preview-label" value="<?php _e("Preview", "secondary_title"); ?>"/>
+		<input type="hidden" id="preview - label" value=" <?php _e("Preview", "secondary_title"); ?>"/>
 		<input type="hidden" id="preview-title" value="<?php echo $preview_title; ?>"/>
 		<input type="hidden" id="preview-secondary-title" value="<?php echo $preview_secondary_title; ?>"/>
 		<form method="post" id="secondary-title-settings">
 		<table class="form-table">
 			<tr>
-				<th><label for="post_types"><?php _e("Post types", "secondary_title"); ?></label></th>
+				<th>
+					<i class="fa fa-file-text-o"></i>
+					<?php _e("Post types", "secondary_title"); ?>
+				</th>
 				<td>
 					<fieldset>
 						<?php
@@ -88,7 +100,8 @@
 				</td>
 			<tr>
 				<th>
-					<label for="categories"><?php _e("Categories", "secondary_title"); ?></label>
+					<i class="fa fa-folder-o"></i>
+					<?php _e("Categories", "secondary_title"); ?>
 				</th>
 				<td>
 					<fieldset id="categories-list">
@@ -138,7 +151,10 @@
 			</tr>
 			<tr>
 				<th>
-					<label for="post_ids"><?php _e("Post IDs", "secondary_title"); ?></label>
+					<label for="post_ids">
+						<i class="fa fa-sort-numeric-asc"></i>
+						<?php _e("By post IDs", "secondary_title"); ?>
+					</label>
 				</th>
 				<td>
 					<input type="text" id="post_ids" class="regular-text" name="post_ids" placeholder="<?php _e("E.g.: 4, 28, 104", "secondary_title"); ?>" value="<?php echo implode(", ", get_secondary_title_post_ids()); ?>"/>
@@ -149,7 +165,8 @@
 			</tr>
 			<tr>
 				<th>
-					<label for="auto-show-radio-on"><?php _e("Insert automatically", "secondary_title"); ?></label>
+					<i class="fa fa-magic"></i>
+					<?php _e("Insert automatically", "secondary_title"); ?>
 				</th>
 				<td>
 					<fieldset id="auto-show-fieldset">
@@ -171,11 +188,17 @@
 			</tr>
 			<tr id="title-format">
 				<th>
-					<label for="title-format-input"><?php _e("Title format", "secondary_title"); ?></label>
+					<label for="title-format-input">
+						<i class="fa fa-keyboard-o"></i>
+						<?php _e("Title format", "secondary_title"); ?>
+					</label>
 				</th>
 				<td>
 					<input type="text" name="title_format" id="title-format-input" class="regular-text" placeholder="<?php _e("E.g.: %secondary_title%: %title%", "secondary_title"); ?>" value="<?php echo stripslashes(esc_attr(get_option("secondary_title_title_format"))); ?>" autocomplete="off"/>
-					<input type="button" class="button" id="button-reset" value="<?php _e("Reset", "secondary_title"); ?>"/>
+					<a href="#" id="button-reset" class="button">
+						<i class="fa fa-undo"></i>
+						<?php _e("Reset", "secondary_title"); ?>
+					</a>
 
 					<p class="description">
 						<?php echo sprintf(__('Use %s for the main title and %s for the secondary title.', "secondary_title"), '<code title="' . __("Add title to title format input", "secondary_title") . '">%title%</code>', '<code title="' . __("Add secondary title to title format input", "secondary_title") . '">%secondary_title%</code>'); ?>
@@ -192,7 +215,8 @@
 			</tr>
 			<tr>
 				<th>
-					<label for="title_input_position_above"><?php _e("Secondary title input position", "secondary_title"); ?></label>
+					<i class="fa fa-arrow-up"></i>
+					<?php _e("Input field position", "secondary_title"); ?>
 				</th>
 				<td>
 					<input type="radio" name="title_input_position" id="title_input_position_above" value="above"<?php chk("title_input_position", "above"); ?> />
@@ -204,8 +228,26 @@
 				</td>
 			</tr>
 			<tr>
+				<th>
+					<i class="fa fa-arrow-left"></i>
+					<?php _e("Column position", "secondary_title"); ?>
+				</th>
+				<td>
+					<input type="radio" name="column_position" value="after" id="column-position-after"<?php chk("column_position", "after"); ?>/>
+					<label for="column-position-after"><?php _e("After primary title (default)", "secondary_title"); ?></label>
+
+					<input type="radio" name="column_position" value="before" id="column-position-before"<?php chk("column_position", "before"); ?>/>
+					<label for="column-position-before"><?php _e("Before primary title", "secondary_title"); ?></label>
+
+					<p class="description">
+						<?php _e("Sets the position of the <em>Secondary Title</em> column on posts, pages or custom post types overview sites relative to the primary title.", "secondary_title"); ?>
+					</p>
+				</td>
+			</tr>
+			<tr>
 				<th id="only_show_in_main_post">
-					<label for="only_show_in_main_post_yes"><?php _e("Only show in main post", "secondary_title"); ?></label>
+					<i class="fa fa-eye"></i>
+					<?php _e("Only show in main post", "secondary_title"); ?>
 				</th>
 				<td>
 					<fieldset id="only-show-in-main-posts-fieldset">
@@ -220,7 +262,8 @@
 			</tr>
 			<tr id="use-in-permalinks-row">
 				<th id="use-in-permalinks">
-					<label for="use-in-permalinks-custom"><?php _e("Use secondary title in permalinks", "secondary_title"); ?></label>
+					<i class="fa fa-link"></i>
+					<?php _e("Secondary title in permalinks", "secondary_title"); ?>
 				</th>
 				<td>
 					<?php
@@ -253,7 +296,6 @@
 							?>
 
 						<p class="description" id="use-in-permalinks-custom-description"<?php echo $hidden; ?>><?php echo sprintf(__('Use %s as a <a href="%s" title="Permalink tags on WordPress.org" target="_blank">permalink tag</a> to display the secondary title.<br />You must hit "Save Changes" on the permalinks page to let WordPress regenerate them.', "secondary_title"), "<code>%secondary_title%</code>", "http://codex.wordpress.org/Using_Permalinks#Structure_Tags"); ?></p>
-
 						<p>
 							<input type="radio" name="use_in_permalinks" id="use-in-permalinks-off" value="off"<?php chk("use_in_permalinks", "off"); ?>/>
 							<label for="use-in-permalinks-off"><?php _e("No", "secondary_title"); ?></label>
@@ -261,7 +303,7 @@
 					</fieldset>
 					<p class="description">
 						<?php
-							echo sprintf(__('Lets you use the secondary title in <a href="%s" title="Permalinks on WordPress.org" target="_blank">permalinks</a>.', "secondary_title"), "http://codex.wordpress.org/Using_Permalinks");
+							_e("Deactivate the <code>%secondary_title%</code> permalink tag.", "secondary_title");
 							if(!$permalinks_on) {
 								echo "<br /><strong>" . sprintf(__('Please <a href="%s" title="Turn on permalinks" target="_blank">turn on permalinks</a> to use this feature.', "secondary_title"), get_bloginfo("url") . "/wp-admin/options-permalink.php") . "</strong>";
 							}
@@ -270,9 +312,18 @@
 				</td>
 			</tr>
 		</table>
+
 		<?php wp_nonce_field("save_settings", "nonce"); ?>
 		<input type="hidden" name="submitted" value="true"/>
-		<input type="submit" class="button button-primary" value="<?php _e("Save Changes", "secondary_title"); ?>"/>
+		<a href="#" id="button-submit" class="button-primary margin-right">
+			<i class="fa fa-floppy-o"></i>
+			<?php _e("Save Changes", "secondary_title"); ?>
+		</a>
+
+		<a href="<?php echo wp_nonce_url(get_admin_url() . "options-general.php?page=secondary-title&action=reset", "secondary_title_reset_settings", "nonce"); ?>" class="button">
+			<i class="fa fa-trash-o"></i>
+			<?php _e("Reset settings to default", "secondary_title"); ?>
+		</a>
 
 		<div id="report-bug">
 			<small><?php echo sprintf(__('Found an error? Help making Secondary Title better by <a href="%s" title="Click here to report a bug" target="_blank">quickly reporting the bug</a>.', "secondary_title"), "http://www.wordpress.org/support/plugin/secondary-title#postform"); ?></small>

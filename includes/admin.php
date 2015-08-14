@@ -26,7 +26,7 @@
 		$current_screen = get_current_screen();
 
 		/** Don't insert the text input when not viewing the post or edit page */
-		if($current_screen->base != "post" && $current_screen->base != "edit" || strstr($current_screen->id, "edit-")) {
+		if(($current_screen->base != "post" && $current_screen->base != "edit") || strstr($current_screen->id, "edit-")) {
 			return false;
 		}
 
@@ -52,3 +52,49 @@
 	}
 
 	add_action("admin_head", "init_secondary_title_admin_posts");
+
+	function secondary_title_change_column_position() {
+		$column_position = secondary_title_get_setting("column_position");
+		if($column_position !== "before") {
+			return;
+		}
+		?>
+		<script type="text/javascript">
+			jQuery(document).ready(
+				function() {
+					"use strict";
+
+					var secondaryTitleHeadCell, primaryTitleHeadCell, posts, primaryTitleColumn, secondaryTitleColumn, post;
+
+					secondaryTitleHeadCell = jQuery("#secondary_title");
+					primaryTitleHeadCell = jQuery("#title");
+					posts = jQuery("#the-list").find("tr");
+
+					/** Stop script if there's no secondary title column */
+					if(secondaryTitleHeadCell.length === 0) {
+						return false;
+					}
+
+					/**
+					 * Function to move columns, including header cells.
+					 *
+					 * @since 1.0.0
+					 */
+					function moveColumns() {
+						secondaryTitleHeadCell.insertBefore(primaryTitleHeadCell);
+						posts.each(
+							function() {
+								post = jQuery(this);
+								post.find(".column-secondary_title").insertBefore(post.find(".column-title"));
+							}
+						);
+					}
+
+					moveColumns();
+				}
+			);
+		</script>
+		<?php
+	}
+
+	add_action("admin_head", "secondary_title_change_column_position");

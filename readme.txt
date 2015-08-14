@@ -1,11 +1,11 @@
 === Secondary Title ===
-Contributors: thaikolja
-Tags: title, alternative title, secondary title, second title, additional title, post title
-Tested up to: 4.2.3
-Stable tag: 0.1
-Requires at least: 3.0.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors:        thaikolja
+Tags: title,         alternative title, secondary title, second title, additional title, post title
+Tested up to:        4.2.4
+Stable tag:          0.1
+Requires at least:   3.0.1
+License:             GPLv2 or later
+License URI:         http://www.gnu.org/licenses/gpl-2.0.html
 
 Adds a secondary title to posts, pages and custom post types.
 
@@ -63,6 +63,12 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 3. A section of the plugin's settings page on the admin interface.
 
 == Changelog ==
+
+= 1.6.0 =
+* Added new setting that can determine whether the secondary title should be displayed before or after the primary title on post, pages or custom post types overview site.
+* Added FontAwesome icons on Secondary Title settings page.
+* General code optimization.
+* Updated translations.
 
 = 1.5.6 =
 * Remove unnecessary slash in css link.
@@ -199,6 +205,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+New setting added to change the position of the secondary title column on post, pages or custom post types overview sites.
 
 = 1.5.6 =
 Small CSS fix.

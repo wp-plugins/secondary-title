@@ -9,6 +9,15 @@
 /**
  * Settings page
  */
+
+#secondary-title-settings .margin-right {
+	margin-right: 10px;
+}
+
+#secondary-title-settings .fa {
+	margin-right: 5px;
+}
+
 #secondary-title-settings input[type="text"] {
 	bottom:   1px;
 	height:   28px;

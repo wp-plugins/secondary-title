@@ -1,6 +1,32 @@
 jQuery(document).ready(
 	function() {
-		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinkDescription;
+		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinkDescription; // jshint ignore:line
+
+		/**
+		 * Displays the auto show description and enables/disabled the "only show in
+		 * main posts" and title format field according to the selection.
+		 */
+		function changeAutoShow() {
+			var selectorFieldset = jQuery("#auto-show-fieldset");
+			var checkedRadio = selectorFieldset.find("input[type='radio']:checked").attr("value");
+			var descriptionOff = selectorFieldset.find("#auto-show-off-description");
+			var descriptionOn = selectorFieldset.find("#auto-show-on-description");
+			var onlyShowInMainPost = jQuery("#only-show-in-main-posts-fieldset").find("input[type='radio']");
+			var titleFormat = jQuery("#title-format-input");
+
+			if(checkedRadio === "on") {
+				descriptionOff.hide();
+				descriptionOn.fadeIn();
+				titleFormat.removeAttr("disabled");
+				onlyShowInMainPost.removeAttr("disabled");
+			}
+			if(checkedRadio === "off") {
+				descriptionOn.hide();
+				descriptionOff.fadeIn();
+				titleFormat.attr("disabled", "disabled");
+				onlyShowInMainPost.attr("disabled", "disabled");
+			}
+		}
 
 		/**
 		 * Inserts the secondary title input field on edit pages.
@@ -54,13 +80,14 @@ jQuery(document).ready(
 		 */
 		if(jQuery("#secondary-title-settings").length > 0) {
 			/** Fade out "Settings saved" message after 5 seconds */
-			if(jQuery(".settings-updated").length > 0) {
+			if(jQuery(".updated, .error").length > 0) {
 				setTimeout(
 					function() {
-						jQuery(".settings-updated").fadeOut();
+						jQuery(".updated, .error").fadeOut();
 					}, 5000
 				);
 			}
+
 			/** Define variables we're going to need later on */
 			previewSelector = jQuery("#title_format_preview");
 			titleFormatInputSelector = jQuery("#title-format-input");
@@ -130,32 +157,6 @@ jQuery(document).ready(
 				}
 			);
 
-			/**
-			 * Displays the auto show description and enables/disabled the "only show in
-			 * main posts" and title format field according to the selection.
-			 */
-			function changeAutoShow() {
-				var selectorFieldset = jQuery("#auto-show-fieldset");
-				var checkedRadio = selectorFieldset.find("input[type='radio']:checked").attr("value");
-				var descriptionOff = selectorFieldset.find("#auto-show-off-description");
-				var descriptionOn = selectorFieldset.find("#auto-show-on-description");
-				var onlyShowInMainPost = jQuery("#only-show-in-main-posts-fieldset").find("input[type='radio']");
-				var titleFormat = jQuery("#title-format-input");
-
-				if(checkedRadio === "on") {
-					descriptionOff.hide();
-					descriptionOn.fadeIn();
-					titleFormat.removeAttr("disabled");
-					onlyShowInMainPost.removeAttr("disabled");
-				}
-				if(checkedRadio === "off") {
-					descriptionOn.hide();
-					descriptionOff.fadeIn();
-					titleFormat.attr("disabled", "disabled");
-					onlyShowInMainPost.attr("disabled", "disabled");
-				}
-			}
-
 			/** Change when clicked */
 			jQuery("#auto-show-fieldset").find("input[type='radio']").click(
 				function() {
@@ -222,12 +223,24 @@ jQuery(document).ready(
 					}
 					titleFormatInputSelector.attr("value", savedTitleFormat);
 					insertTitlePreview();
-					return true;
+					event.preventDefault();
+				}
+			);
+
+			/**
+			 * Submits the form when save link is being clicked.
+			 */
+			jQuery("#button-submit").click(
+				function() {
+					jQuery(this).parents("form").submit();
+					event.preventDefault();
 				}
 			);
 
 			/**
 			 * Adds the clicked variable to the title format input.
+			 *
+			 * @since 1.0.0
 			 */
 			jQuery("#title-format").find(".description code").click(
 				function() {
@@ -243,6 +256,11 @@ jQuery(document).ready(
 				}
 			);
 
+			/**
+			 * Displays description of selected permalink setting.
+			 *
+			 * @since 1.0.0
+			 */
 			jQuery("#use-in-permalinks-row").find("input").click(
 				function() {
 					selectorPermalinkDescription = jQuery("#use-in-permalinks-custom-description");
@@ -255,5 +273,7 @@ jQuery(document).ready(
 				}
 			);
 		}
+		/** End functions on settings page */
 	}
+	/** End of jQuery function */
 );
