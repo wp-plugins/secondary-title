@@ -64,6 +64,9 @@ in your theme file(s) (e.g. single.php) to display the secondary title.
 
 == Changelog ==
 
+= 1.6.1 =
+* Fixed bug occurring when clicking "Save Changes" on settings page.
+
 = 1.6.0 =
 * Added new setting that can determine whether the secondary title should be displayed before or after the primary title on post, pages or custom post types overview site.
 * Added FontAwesome icons on Secondary Title settings page.
@@ -205,6 +208,9 @@ conflicts.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+Fixed bug occurring when clicking "Save Changes" on settings page.
 
 = 1.6.0 =
 New setting added to change the position of the secondary title column on post, pages or custom post types overview sites.

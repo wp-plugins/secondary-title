@@ -2,6 +2,10 @@ jQuery(document).ready(
 	function() {
 		var previewSelector, titleFormatInputSelector, selectorPreviewTitle, selectorPreviewSecondaryTitle, previewLabel, slided, savedTitleFormat, inputValue, codeContent, value, selectorPermalinkDescription; // jshint ignore:line
 
+		var selectorPrimaryTitle = jQuery("#title");
+		var selectorTitleInput = jQuery("#secondary-title-input");
+		var titleInputPosition = jQuery("#secondary-title-input-position").attr("value");
+
 		/**
 		 * Displays the auto show description and enables/disabled the "only show in
 		 * main posts" and title format field according to the selection.
@@ -29,11 +33,18 @@ jQuery(document).ready(
 		}
 
 		/**
+		 * Submits the form when save link is being clicked.
+		 */
+		jQuery("#button-submit").click(
+			function() {
+				event.preventDefault();
+				jQuery(this).parents("form").submit();
+			}
+		);
+
+		/**
 		 * Inserts the secondary title input field on edit pages.
 		 */
-		var selectorPrimaryTitle = jQuery("#title");
-		var selectorTitleInput = jQuery("#secondary-title-input");
-		var titleInputPosition = jQuery("#secondary-title-input-position").attr("value");
 		if(titleInputPosition === "above") {
 			/** Move down the "Enter title here" text displayed when the standard title field is empty to match with the input field */
 			jQuery("#title-prompt-text").css("padding-top", "45px");
@@ -223,16 +234,6 @@ jQuery(document).ready(
 					}
 					titleFormatInputSelector.attr("value", savedTitleFormat);
 					insertTitlePreview();
-					event.preventDefault();
-				}
-			);
-
-			/**
-			 * Submits the form when save link is being clicked.
-			 */
-			jQuery("#button-submit").click(
-				function() {
-					jQuery(this).parents("form").submit();
 					event.preventDefault();
 				}
 			);
